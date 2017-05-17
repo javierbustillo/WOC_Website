@@ -1,4 +1,4 @@
-var user = firebase.auth().currentUser;
+/*var user = firebase.auth().currentUser;
 
 if(user != null) {
   console.log(user);
@@ -6,3 +6,4 @@ if(user != null) {
 } else {
   console.log("not logged in ");
 }
+*/

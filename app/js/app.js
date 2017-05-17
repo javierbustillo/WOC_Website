@@ -17,10 +17,3 @@ const dbRefObject = firebase.database().ref().child('object');
 
 //Sync object changes
 dbRefObject.on('value', snap => console.log(snap.val()));
-
-var user = firebase.auth().currentUser;
-
-firebase.auth().onAuthStateChanged(function(user) {
-      window.user = user; // user is undefined if no user signed in
-      console.log('inside-user', user);
-});
