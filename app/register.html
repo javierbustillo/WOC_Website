@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/login.css"/>
   <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-  <script src="js/login.js" type="text/javascript" language="javascript"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script src="js/app.js" type="text/javascript" language="javascript"></script>
+  <script src="js/register.js" type="text/javascript" language="javascript"></script>
 </head>
 <body id="bodylogin">
 <div>
@@ -14,10 +16,9 @@
 <div class="login-page">
   <div class="form">
     <form class="login-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <input type="date" placeholder="birthday" />
+      <input type="text" id="name" placeholder="name"/>
+      <input type="text" id="email" placeholder="email address"/>
+      <input type="password" id="password" placeholder="password"/>
       <input type="button" value="create" id="createButton"/>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>

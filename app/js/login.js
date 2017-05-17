@@ -1,6 +1,7 @@
 window.onload = function(){
 
 	var loginButton = document.getElementById("loginButton");
+	var createButton = document.getElementById("create_account");
 	console.log('user', firebase.auth().currentUser);
 
 	loginButton.onclick = function(){
@@ -10,8 +11,6 @@ window.onload = function(){
 		if(!email || !password) {
 			return console.log("email and password required");
 		}
-
-
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		   .catch(function(error) {
@@ -29,9 +28,22 @@ window.onload = function(){
 
  		firebase.auth().onAuthStateChanged(function(user) {
 			window.user = user; // user is undefined if no user signed in
-			 console.log('user', user);
+			console.log('user', user);
+			var name, email;
+			if (user != null) {
+			email = user.email;
+			alert(email);
+		  	// The user's ID, unique to the Firebase project. Do NOT use
+                   			 // this value to authenticate with your backend server, if
+                  			 // you have one. Use User.getToken() instead.
+            window.location = "index.html";
+            alert("HERE");
+			}
 		});
+	}
 
+	createButton.onclick = function(){
+		window.location = "register.html";
 	}
 }
 
