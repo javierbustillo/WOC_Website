@@ -1,25 +1,37 @@
 window.onload = function(){
 
 	var loginButton = document.getElementById("loginButton");
-	var email = document.getElementById("email");
-	var password = document.getElementById("password").value;
+	console.log('user', firebase.auth().currentUser);
 
-	console.log("we're here");
+	loginButton.onclick = function(){
+		var email = document.getElementById("email").value;
+		var password = document.getElementById("password").value;
+
+		if(!email || !password) {
+			return console.log("email and password required");
+		}
 
 
-	loginButton.onclick = function(email,password){
-		console.log(email);
+
 		firebase.auth().signInWithEmailAndPassword(email, password)
-		 .catch(function(err) {
-		 	alert("error");
-		 	console.log("there is an error");
-		 });
+		   .catch(function(error) {
 
-		firebase.auth().onAuthStateChanged(function(user) {
-		 window.user = user; // user is undefined if no user signed in
+		  // Handle Errors here.
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		  if (errorCode === 'auth/wrong-password') {
+		    alert('Wrong password.');
+		  } else {
+		    alert(errorMessage);
+		  }
+		  console.log(error);
 		});
 
-		window.location = "http://google.com";
+ 		firebase.auth().onAuthStateChanged(function(user) {
+			 window.user = user; // user is undefined if no user signed in
+			 console.log('user', user);
+		});
+
 	}
 }
 
