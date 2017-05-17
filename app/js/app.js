@@ -1,4 +1,4 @@
- 
+
   var config = {
      apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
      authDomain: "whats-on-campus.firebaseapp.com",
@@ -15,5 +15,12 @@ const preObject = document.getElementById("object");
 //Create reference
 const dbRefObject = firebase.database().ref().child('object');
 
-//Sync object changes 
+//Sync object changes
 dbRefObject.on('value', snap => console.log(snap.val()));
+
+var user = firebase.auth().currentUser;
+
+firebase.auth().onAuthStateChanged(function(user) {
+      window.user = user; // user is undefined if no user signed in
+      //console.log('inside-user', user);
+});
