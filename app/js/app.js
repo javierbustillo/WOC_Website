@@ -7,7 +7,3 @@
      messagingSenderId: "2443063959"
   };
   firebase.initializeApp(config);
-
-if(firebase.auth().currentUser=undefined) {
-  window.location = "login.html";
-}
