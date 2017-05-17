@@ -1,6 +1,8 @@
-if(firebase.auth().currentUser==null) {
-  window.location = "login.html";
+var user = firebase.auth().currentUser;
+
+if(user != null) {
+	console.log(user);
 } else {
-    console.log("lelz");
-   console.log(firebase.auth().currentUser);
+	console.log("not logged in ");
+	window.location = "login.html";
 }
