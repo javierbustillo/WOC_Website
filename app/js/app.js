@@ -8,11 +8,3 @@ var config = {
   };
   firebase.initializeApp(config);
 
-  //Get elements
-  const preObject = document.getElementById('newsfeed');
-
-  //Create references
-  const dbRefObject = firebase.database().ref().child('events');
-
-  // Sync object
-  dbRefObject.on('value', snap=> console.log(snap.val()));
