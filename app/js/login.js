@@ -1,21 +1,42 @@
-window.onload=function(){
+window.onload = function(){
+
 	var loginButton = document.getElementById("loginButton");
-	loginButton.onclick=function(){
-		location.href = "index.html";
+	var email = document.getElementById("email");
+	var password = document.getElementById("password").value;
+
+	console.log("we're here");
+
+
+	loginButton.onclick = function(email,password){
+		console.log(email);
+		firebase.auth().signInWithEmailAndPassword(email, password)
+		 .catch(function(err) {
+		 	alert("error");
+		 	console.log("there is an error");
+		 });
+
+		firebase.auth().onAuthStateChanged(function(user) {
+		 window.user = user; // user is undefined if no user signed in
+		});
+
+		window.location = "http://google.com";
 	}
 }
 
-firebase.auth().onAuthStateChanged(function (firebaseUser) {
-        if (firebaseUser) {
-          firebaseUser.sendEmailVerification().then(function() {
-            // Email sent.
-          }, function(error) {
-            // An error happened.
-          })
-            ....
+// // Register a new user
+// firebase.auth().createUserWithEmailAndPassword(email, password)
+//  .catch(function (err) {
+//    // Handle errors
+//  });
 
-        } else {
-            ....
-        }
-});
+// // Sign in existing user
+// firebase.auth().signInWithEmailAndPassword(email, password)
+//  .catch(function(err) {
+//    // Handle errors
+//  });
 
+// // Sign out user
+// firebase.auth().signOut()
+//  .catch(function (err) {
+//    // Handle errors
+//  });
