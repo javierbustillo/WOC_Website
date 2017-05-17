@@ -5,3 +5,17 @@ window.onload=function(){
 	}
 }
 
+firebase.auth().onAuthStateChanged(function (firebaseUser) {
+        if (firebaseUser) {
+          firebaseUser.sendEmailVerification().then(function() {
+            // Email sent.
+          }, function(error) {
+            // An error happened.
+          })
+            ....
+
+        } else {
+            ....
+        }
+});
+
