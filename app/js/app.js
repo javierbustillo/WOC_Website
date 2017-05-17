@@ -1,4 +1,4 @@
-var config = {
+  var config = {
      apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
      authDomain: "whats-on-campus.firebaseapp.com",
      databaseURL: "https://whats-on-campus.firebaseio.com",
@@ -8,3 +8,6 @@ var config = {
   };
   firebase.initializeApp(config);
 
+if(firebase.auth().currentUser=undefined) {
+  window.location = "login.html";
+}
