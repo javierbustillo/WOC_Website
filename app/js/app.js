@@ -22,5 +22,5 @@ var user = firebase.auth().currentUser;
 
 firebase.auth().onAuthStateChanged(function(user) {
       window.user = user; // user is undefined if no user signed in
-      //console.log('inside-user', user);
+      console.log('inside-user', user);
 });

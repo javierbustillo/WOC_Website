@@ -13,7 +13,17 @@ window.onload = function(){
 		}
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
-		   .catch(function(error) {
+		  .then(function(){
+    	var user = firebase.auth().currentUser;
+		console.log(user);
+		if (user) {
+		  // User is signed in.
+		  window.location = "index.html"
+		} else {
+		  alert("Something went wrong.");
+		}
+  	})
+  	 .catch(function(error) {
 
 		  // Handle Errors here.
 		  var errorCode = error.code;
@@ -24,21 +34,6 @@ window.onload = function(){
 		    alert(errorMessage);
 		  }
 		  console.log(error);
-		});
-
- 		firebase.auth().onAuthStateChanged(function(user) {
-			window.user = user; // user is undefined if no user signed in
-			console.log('user', user);
-			var name, email;
-			if (user != null) {
-			email = user.email;
-			alert(email);
-		  	// The user's ID, unique to the Firebase project. Do NOT use
-                   			 // this value to authenticate with your backend server, if
-                  			 // you have one. Use User.getToken() instead.
-            window.location = "index.html";
-            alert("HERE");
-			}
 		});
 	}
 

@@ -6,7 +6,7 @@ window.onload = function(){
   	var name = document.getElementById("name").value;
  	var email = document.getElementById("email").value;
   	var password = document.getElementById("password").value;
-  	var error = false; 
+  	var error = false;
 
   	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
     	var user = firebase.auth().currentUser;
@@ -35,16 +35,16 @@ window.onload = function(){
 	  }
 	  console.log(error);
 	})
-    
-	
 
-	
+
+
+
   }
 }
 
- 
 
 
-   
+
+
 
 
