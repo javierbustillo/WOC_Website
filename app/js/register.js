@@ -6,9 +6,18 @@ window.onload = function(){
   	var name = document.getElementById("name").value;
  	var email = document.getElementById("email").value;
   	var password = document.getElementById("password").value;
+  	var error = false; 
 
-
-  	firebase.auth().createUserWithEmailAndPassword(email, password)
+  	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+    	var user = firebase.auth().currentUser;
+		console.log(user);
+		if (user) {
+		  // User is signed in.
+		  window.location = "index.html"
+		} else {
+		  alert("Something went wrong.");
+		}
+  	})
     .catch(function(error) {
 	  // Handle Errors here.
 	  var errorCode = error.code;
@@ -25,14 +34,17 @@ window.onload = function(){
 	    alert(errorMessage);
 	  }
 	  console.log(error);
-	  alert(error);
-	});
+	})
+    
+	
 
-
-
+	
   }
-  
-
-
-  
 }
+
+ 
+
+
+   
+
+

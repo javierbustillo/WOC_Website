@@ -25,3 +25,30 @@
 [info] i  hosting: Serving hosting files from: app
 [info] ✔  hosting: Local server: http://localhost:5000
 
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.8.0
+[debug] Platform:     darwin
+[debug] Node Version: v7.10.0
+[debug] Time:         Wed May 17 2017 17:57:02 GMT-0400 (AST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/whats-on-campus  
+ Wed May 17 2017 17:57:02 GMT-0400 (AST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/whats-on-campus/tokens  
+ Wed May 17 2017 17:57:03 GMT-0400 (AST)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/mac/Documents/WOC Website Oficial'...
+[info] 
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/whats-on-campus  
+ Wed May 17 2017 17:57:04 GMT-0400 (AST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/2443063959/clients/_:getWebAppConfig  
+ Wed May 17 2017 17:57:04 GMT-0400 (AST)
+[debug] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: app
+[info] ✔  hosting: Local server: http://localhost:5000
+
