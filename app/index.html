@@ -1,49 +1,27 @@
-<!doctype html>
+<!Doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="css/style.css"/>
-  <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-  <script src="js/app.js" type="text/javascript" language="javascript"></script>
-  <script src="js/index.js" type="text/javascript" language="javascript"></script>
+	<head>
+		<meta charset="utf-8">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script src="js/jquery.js" type="text/javascript"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+		<script src="js/app.js" type="text/javascript" language="javascript"></script>
+		<script src="js/index.js" type="text/javascript" language="javascript"></script>
+		<script>
+			$(function(){
+				$("#header").load("header.html");
+				$("#footer").load("footer.html");
+			});
+		</script>
+	</head>
+	<body>
+		<div id="header"></div>
+		<!-- News Feed -->
+		<div id="newsfeed">
 
-</head>
-<body>
-<!-- HEADER -->
-  <header>
-    <div class="generalHeader">
-      <div class="header01">
-         <a id="wocTitle">WOC</a>
-         <div class="loggedAs">
-          Welcome,
-          <a id="username"></a>!<br>
-          <button id="logout_button">Log out.</button>
-         </div>
-      </div>
-      <div class="header02">
-        <ul class="menu" >
-                <li><a class="active" href="">ALL</a></li>
-                <li><a class="static">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-                <li><a class="desactive" href="">RECOMMENDED</a></li>
-                <li><a class="static">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-                <li><a class="desactive" href="">SAVED</a></li>
-                <li><a class="static"> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-                <li><a class="desactive" href="">POPULAR</a></li>
-                <li><a class="static">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</a></li>
-                <li><a class="desactive" href="">CATEGORIES</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
+		</div>
+		<div id="footer"></div>
 
-  <!-- News Feed -->
-  <div id="newsfeed">
-
-  </div>
-
-
-</body>
-
-
+	</body>
 </html>
