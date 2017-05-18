@@ -22,7 +22,7 @@ window.onload = function(){
 		  var database = firebase.database();
 
 		  console.log('user id', user_info.id);
-		  database.ref().child('usersss/' + user_info.id).push({
+		  database.ref().child('users/').push({
 		      displayName: user_info.display_name,
 		      id: user_info.id,
 		      email: user_info.email

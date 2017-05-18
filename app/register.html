@@ -1,28 +1,33 @@
-<!doctype html>
+<!Doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="css/login.css"/>
-  <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-  <script src="js/app.js" type="text/javascript" language="javascript"></script>
-  <script src="js/register.js" type="text/javascript" language="javascript"></script>
-</head>
-<body id="bodylogin">
-<div>
-  <h1>WOC</h1>
-  <h2>What's on Campus?</h2>
-</div>
-<div class="login-page">
-  <div class="form">
-    <form class="login-form">
-      <input type="text" id="name" placeholder="name"/>
-      <input type="text" id="email" placeholder="email address"/>
-      <input type="password" id="password" placeholder="password"/>
-      <input type="button" value="create" id="createButton"/>
-      <p class="message">Already registered? <a id="signin_button" href="/login.html">Sign In</a></p>
-    </form>
-  </div>
-</div>
-</body>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+		<script src="js/jquery.js" type="text/javascript" language="javascript"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+		<script src="js/app.js" type="text/javascript" language="javascript"></script>
+		<script src="js/register.js" type="text/javascript" language="javascript"></script>
+	<script>
+	$(function(){
+		$("#header").load("login_header.html");
+		$("#footer").load("login_footer.html");
+	});
+	</script>
+	</head>
+	<body id="bodylogin">
+	<div id="header"></div>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form">
+				<input type="text" id="name" placeholder="name"/>
+				<input type="text" id="email" placeholder="email address"/>
+				<input type="password" id="password" placeholder="password"/>
+				<input type="button" value="create" id="createButton"/>
+				<p class="message">Already registered? <a id="signin_button" href="/login.html">Sign In</a></p>
+			</form>
+		</div>
+	</div>
+	<div id="footer"></div>
+	</body>
 </html>

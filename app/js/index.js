@@ -1,7 +1,7 @@
 
 window.onload = function(){
 
-	var singoutButton = document.getElementById('logout_button');
+	var signoutButton = document.getElementById('logout_button');
 
   //Check if a user is logged in.
 	firebase.auth().onAuthStateChanged(function(user) {
@@ -27,7 +27,7 @@ window.onload = function(){
   	});
 
     //Checks if the log out button is pressed. 
-  	singoutButton.onclick = function(){
+  	signoutButton.onclick = function(){
   		firebase.auth().signOut().then(function() {
   		// Sign-out successful.
   		window.location = "login.html";
