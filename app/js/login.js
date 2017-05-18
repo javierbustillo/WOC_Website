@@ -2,17 +2,14 @@ window.onload = function(){
 
 	var loginButton = document.getElementById("loginButton");
 	var createButton = document.getElementById("create_account");
+
 	console.log('user', firebase.auth().currentUser);
 
 	//Executes when the login button is pressed.
 	loginButton.onclick = function(){
 		var email = document.getElementById("email").value;
 		var password = document.getElementById("password").value;
-
-		//Verifies if email and password was typed.
-		if(!email || !password) {
-			return console.log("email and password required");
-		}
+		var errorElement = document.getElementById("error");
 
 		//Sign in with email and password
 		firebase.auth().signInWithEmailAndPassword(email, password)
@@ -37,12 +34,19 @@ window.onload = function(){
 		 		// Handle Errors here.
 		  		var errorCode = error.code;
 		  		var errorMessage = error.message;
-		  		if (errorCode === 'auth/wrong-password') {
-		  		alert('Wrong password.');
-		  		} else {
-		    	alert(errorMessage);
-		  		}
-		 		console.log(error);
+		  		//Verifies if email and password was typed.
+				if(!email || !password) {
+					 errorElement.innerHTML = "Email and password required";
+				} else {
+					if (errorCode === 'auth/wrong-password') {
+						errorElement.innerHTML = "Wrong password";
+			  		} else if(errorCode==='auth/invalid-email') {
+			  			errorElement.innerHTML = "Please enter a valid email address";
+			  		} else if(errorCode==='auth/user-not-found') {
+			  			errorElement.innerHTML = "Incorrect credentials";
+			  		}
+				}
+
 			}
 		);
 	}
