@@ -1,6 +1,7 @@
 window.onload = function(){
 
   var createButton = document.getElementById("createButton");
+  var signin_button = document.getElementById("signin_button");
   createButton.onclick = function(){
   	
  	var email = document.getElementById("email").value;
@@ -36,11 +37,11 @@ window.onload = function(){
 	  }
 	  console.log(error);
 	})
-
-
-
-
   }
+
+  singoutButton.onclick = function(){
+  		window.location = "login.html";
+  	}
 }
 
 
