@@ -52,16 +52,16 @@ window.onload = function(){
       var date = document.getElementById("date").value;
       var hour = document.getElementById("hour").value;
       var place = document.getElementById("place").value;
-      var brief_description = document.getElementById("brief_description");
-      var detailed_description = document.getElementById("detailed_description");
-      var contact_email = document.getElementById("contact_email");
-      var contact_phone_number = document.getElementById("contact_phone_number");
-      var imageUrl = document.getElementById("imageUrl");
+      var brief_description = document.getElementById("brief_description").value;
+      var detailed_description = document.getElementById("detailed_description").value;
+      var contact_email = document.getElementById("contact_email").value;
+      var contact_phone_number = document.getElementById("contact_phone_number").value;
+      var imageUrl = document.getElementById("imageUrl").value;
       var organizationId = "001";
       var eventId =  "001";
 
       firebase.database().ref('events/' + organizationId + '/' + eventId).set({
-      tile: title,
+      title: title,
       date: date,
       hour: hour,
       place: place,
