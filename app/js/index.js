@@ -3,7 +3,9 @@ $(document).ready(function() {
 
 	$("#header").load("header.html", onHeaderLoad);
 
+  //To be executed after the header is loaded.
   function onHeaderLoad(){
+   
     //Checks if the log out button is pressed. 
     var signoutButton = document.getElementById("logout_button");
     signoutButton.onclick = function(){
@@ -14,6 +16,7 @@ $(document).ready(function() {
         // An error happened.
         });
     }
+    
   }
 
   //Check if a user is logged in.
