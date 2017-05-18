@@ -9,6 +9,7 @@
   };
   firebase.initializeApp(config);
 
+/*
 //Get element
 const preObject = document.getElementById("object");
 
@@ -17,3 +18,4 @@ const dbRefObject = firebase.database().ref().child('object');
 
 //Sync object changes
 dbRefObject.on('value', snap => console.log(snap.val()));
+*/

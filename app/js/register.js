@@ -1,18 +1,19 @@
 window.onload = function(){
 
   var createButton = document.getElementById("createButton");
-
   createButton.onclick = function(){
-  	var name = document.getElementById("name").value;
+  	
  	var email = document.getElementById("email").value;
   	var password = document.getElementById("password").value;
-  	var error = false;
+  	
+  	
 
   	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
     	var user = firebase.auth().currentUser;
 		console.log(user);
 		if (user) {
 		  // User is signed in.
+		  user.updateProfile({displayName: document.getElementById("name").value});
 		  window.location = "index.html"
 		} else {
 		  alert("Something went wrong.");
