@@ -137,11 +137,11 @@ ul li {
   width: 100%;
 }
 
-#hour_input{
+#hour{
   float:left;
 }
 
-#place_input{
+#place{
   float:right;
 }
 

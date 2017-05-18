@@ -4,27 +4,28 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
   <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-  <script src="js/login.js" type="text/javascript" language="javascript"></script>
+  <script src="js/submit_event.js" type="text/javascript" language="javascript"></script>
   <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
   <script src="js/Node.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
 <!-- HEADER -->
   <header>
+    <header>
     <div class="generalHeader">
       <div class="header01">
          <a id="wocTitle">WOC</a>
          <div class="loggedAs">
-          <a id="loggedAsText">Logged as</a>
-          <a id="username">username<br></a>
-          <button id="logOut">Log out.</button>
+          Welcome,
+          <a id="username"></a>!<br>
+          <button id="logout_button">Log out.</button>
          </div>
       </div>
       <div class="header02">
         <ul class="menu" >
-                <li><a class="desactive" href="">PREVIOUS EVENTS</a></li>
-                <li><a class="static" >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-                <li><a class="active" href="">CREATE A NEW EVENT</a></li>
+                <li><a class="active" href="">PREVIOUS EVENTS</a></li>
+                <li><a class="static">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
+                <li><a class="desactive" href="">CREATE A NEW EVENT</a></li>
         </ul>
       </div>
     </div>
@@ -33,16 +34,16 @@
 <!-- Submit form -->
   <div class="form">
     <form class="event-form">
-      <input class="normal" type="text" placeholder="title"/>
-      <input class="normal" type="date" placeholder="date"/>
-      <input class="small" id="hour_input" type="text" placeholder="hour"/>
-      <input class="small" id="place_input" type="text" placeholder="place"/>
-      <textarea placeholder="brief description" rows="2" ></textarea>
-      <textarea placeholder="detailed description" rows="6" ></textarea>
-      <input class="normal" type="text" placeholder="contact email"/>
-      <input class="normal" type="text" placeholder="contact phone number"/>
+      <input class="normal" id="title" type="text" placeholder="title"/>
+      <input class="normal" id="date" type="date" placeholder="date"/>
+      <input class="small" id="hour" type="text" placeholder="hour"/>
+      <input class="small" id="place" type="text" placeholder="place"/>
+      <textarea id="brief_description" placeholder="brief description" rows="2" ></textarea>
+      <textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>
+      <input class="normal" id="contact_email" type="text" placeholder="contact email"/>
+      <input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
       <a class="standard_text">Upload a cover image </a>
-      <input class="normal" type="file" name="pic" accept="image/*"/>
+      <input class="normal" id="imageURL" type="file" name="pic" accept="image/*"/>
       <button id="publish_button">publish </button><br>
       <button id="cancel_button">cancel</button>
     </form>
