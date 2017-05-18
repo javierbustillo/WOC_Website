@@ -2,6 +2,7 @@ window.onload = function(){
 
   var createButton = document.getElementById("createButton");
   var signin_button = document.getElementById("signin_button");
+
   createButton.onclick = function(){
   	
  	var email = document.getElementById("email").value;
@@ -9,12 +10,24 @@ window.onload = function(){
   	
   	
 
-  	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-    	var user = firebase.auth().currentUser;
-		console.log(user);
-		if (user) {
+  	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(result){ 
+  		console.log('result', result);
+		if (result) {
 		  // User is signed in.
-		  user.updateProfile({displayName: document.getElementById("name").value});
+		  result.updateProfile({displayName: document.getElementById("name").value});
+
+		  var user_info = {id: result.uid, email: result.email, display_name: result.displayName};
+		  console.log('user_info', user_info);
+		  // Storing user info into database.
+		  var database = firebase.database();
+
+		  console.log('user id', user_info.id);
+		  database.ref().child('usersss/' + user_info.id).push({
+		      displayName: user_info.display_name,
+		      id: user_info.id,
+		      email: user_info.email
+		   });
+		    
 		  window.location = "index.html"
 		} else {
 		  alert("Something went wrong.");
@@ -39,9 +52,10 @@ window.onload = function(){
 	})
   }
 
-  singoutButton.onclick = function(){
-  		window.location = "login.html";
-  	}
+
+  signin_button.onclick = function(){
+  	window.location = "login.html";
+  }
 }
 
 

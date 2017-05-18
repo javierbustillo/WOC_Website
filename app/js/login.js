@@ -22,7 +22,7 @@ window.onload = function(){
 				console.log(user);
 				if (user) {
 		 		// User is signed in.
-		 			//Check if have administraro permissions.
+		 			//Check if have administrative permissions.
 		 			if(user.uid=="Zv6j6upaTveRERhNHTaaPoSXiia2"){
 		 				window.location = "submit_event.html";
 		 			}

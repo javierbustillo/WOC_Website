@@ -3,7 +3,6 @@ window.onload = function(){
 
   /* HEADER - HEADER - HEADER - HEADER - HEADER - HEADER - HEADER */
 	var singoutButton = document.getElementById('logout_button');
-
   //Check if a user is logged in.
 	firebase.auth().onAuthStateChanged(function(user) {
 		console.log(user);
@@ -41,11 +40,14 @@ window.onload = function(){
   var database = firebase.database();
 
   var publish_button = document.getElementById("publish_button");
-
-  publish_button.onclick = postNewEvent;
+  publish_button = postNewEvent();
 
   function postNewEvent(){
-      alert("HERE");
+      console.log("HERE");
+      var userId = firebase.auth().currentUser;
+      console.log("UserID = "+userId);
+      userId = userId.uid;
+      console.log(userId);
       var title = document.getElementById("title").value;
       var date = document.getElementById("date").value;
       var hour = document.getElementById("hour").value;
@@ -55,10 +57,21 @@ window.onload = function(){
       var contact_email = document.getElementById("contact_email").value;
       var contact_phone_number = document.getElementById("contact_phone_number").value;
       var imageUrl = document.getElementById("imageUrl").value;
-      var organizationId = "001";
-      var eventId =  "001";
+   
+      /*
+      eventId = firebase.database().ref('/events/' + userId +'/event_counter');
+      eventId.once('value').then(function(snapshot) {
+          var event_counter = snapshot.val().event_counter;
+         return event_counter+1;});
+      console.log("event ID = "+eventId);
 
-      firebase.database().ref('events/' + organizationId + '/' + eventId).set({
+      firebase.database().ref('events/' + organizationId).set({
+        event_counter: eventId
+      });
+      */
+
+
+      firebase.database().ref('events/' + userId + '/001').set({
       title: title,
       date: date,
       hour: hour,
