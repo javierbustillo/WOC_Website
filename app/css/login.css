@@ -29,8 +29,14 @@ h2{
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
+  padding-top:  30px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form #error {
+  padding-bottom:  15px;
+  color: red;
 }
 .form input {
   font-family: "Roboto", sans-serif;
@@ -115,5 +121,5 @@ h2{
   background: linear-gradient(to left, #76b852, #8DC26F);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }
