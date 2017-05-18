@@ -22,7 +22,13 @@ window.onload = function(){
 				console.log(user);
 				if (user) {
 		 		// User is signed in.
-		  		window.location = "index.html"
+		 			//Check if have administraro permissions.
+		 			if(user.uid=="Zv6j6upaTveRERhNHTaaPoSXiia2"){
+		 				window.location = "submit_event.html";
+		 			}
+		 			else{
+		 				window.location = "index.html";
+		 			}
 				} else {
 			 	 alert("Something went wrong.");
 			}

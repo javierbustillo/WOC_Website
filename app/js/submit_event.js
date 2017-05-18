@@ -22,7 +22,7 @@ window.onload = function(){
         //If the user is not logged in, 
         //returns it to the login page.
   		} else {
-    		window.location = "login.html";
+    		//window.location = "login.html";
   		}
   	});
 
@@ -36,6 +36,42 @@ window.onload = function(){
 		});
   	}
 
+  /* SETTING DATABASE - SETTING DATABASE - SETTING DATABASE */
+   
+
+  /* FORM - FORM - FORM - FORM - FORM - FORM - FORM - FORM */
+ 
+
+  var database = firebase.database();
+
+  var publish_button = document.getElementById("publish_button");
+
+  publish_button.onclick = function(){
+      alert("HERE");
+      var title = document.getElementById("title").value;
+      var date = document.getElementById("date").value;
+      var hour = document.getElementById("hour").value;
+      var place = document.getElementById("place").value;
+      var brief_description = document.getElementById("brief_description");
+      var detailed_description = document.getElementById("detailed_description");
+      var contact_email = document.getElementById("contact_email");
+      var contact_phone_number = document.getElementById("contact_phone_number");
+      var imageUrl = document.getElementById("imageUrl");
+      var organizationId = "001";
+      var eventId =  "001";
+
+      firebase.database().ref('events/' + organizationId + '/' + eventId).set({
+      tile: title,
+      date: date,
+      hour: hour,
+      place: place,
+      brief_description: brief_description,
+      detailed_description: detailed_description,
+      contact_email: contact_email,
+      contact_phone_number: contact_phone_number,
+      imageUrl: imageUrl
+    });
+  }
 
 }
 
