@@ -1,7 +1,20 @@
 
-window.onload = function(){
+$(document).ready(function() {
 
-	var signoutButton = document.getElementById('logout_button');
+	$("#header").load("header.html", onHeaderLoad);
+
+  function onHeaderLoad(){
+    //Checks if the log out button is pressed. 
+    var signoutButton = document.getElementById("logout_button");
+    signoutButton.onclick = function(){
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        window.location = "login.html";
+      }, function(error) {
+        // An error happened.
+        });
+    }
+  }
 
   //Check if a user is logged in.
 	firebase.auth().onAuthStateChanged(function(user) {
@@ -26,16 +39,8 @@ window.onload = function(){
   		}
   	});
 
-    //Checks if the log out button is pressed. 
-  	signoutButton.onclick = function(){
-  		firebase.auth().signOut().then(function() {
-  		// Sign-out successful.
-  		window.location = "login.html";
-		}, function(error) {
-  		// An error happened.
-		});
-  	}
-}
+    
+});
 	
 
 

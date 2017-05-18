@@ -15,7 +15,7 @@ window.onload = function(){
 		if (result) {
 		  // User is signed in.
 		  result.updateProfile({displayName: document.getElementById("name").value});
-
+		  console.log('result display name',result.displayName);
 		  var user_info = {id: result.uid, email: result.email, display_name: result.displayName};
 		  console.log('user_info', user_info);
 		  // Storing user info into database.
@@ -26,9 +26,10 @@ window.onload = function(){
 		      displayName: user_info.display_name,
 		      id: user_info.id,
 		      email: user_info.email
-		   });
-		    
-		  window.location = "index.html"
+		   }).then(function(){
+		   		location.href = "index.html";
+		   });;
+		  
 		} else {
 		  alert("Something went wrong.");
 		}
