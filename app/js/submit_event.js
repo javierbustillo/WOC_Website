@@ -36,17 +36,15 @@ window.onload = function(){
 		});
   	}
 
-  /* SETTING DATABASE - SETTING DATABASE - SETTING DATABASE */
-   
 
   /* FORM - FORM - FORM - FORM - FORM - FORM - FORM - FORM */
- 
-
   var database = firebase.database();
 
   var publish_button = document.getElementById("publish_button");
 
-  publish_button.onclick = function(){
+  publish_button.onclick = postNewEvent;
+
+  function postNewEvent(){
       alert("HERE");
       var title = document.getElementById("title").value;
       var date = document.getElementById("date").value;
