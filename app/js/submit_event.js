@@ -75,19 +75,14 @@ window.onload = function(){
         
         var user_id = firebase.auth().currentUser.uid;
         return database.ref('users/' + user_id).once('value').then(function(snapshot) {
-            return total_event_counter = snapshot.val().total_event_created;
-            console.log('total_event_counter',total_event_created);
-            }).then(function(tec) {
-              console.log("tec",tec);
+            return snapshot.val().total_event_created;
+            }).then(function(counter) {
               //Increase the total_event_counter by one
-              database.ref('users/' + user_id).set({
-                total_event_counter: tec+1
-              });
-              console.log("total_event_counter", tec+1);
-              database.ref('users/'+user_id).update({ total_event_created: tec+1 });   
-            });
+              var counter = counter +1;
+              database.ref('users/'+user_id+'/total_event_created').set(counter);   
+              
               //Push event into firebase database
-              database.ref('events/' + user_id + '/' +  tec+1).set({
+              database.ref('events/' + user_id + '/' +  counter).set({
               title: title,
               date: date,
               hour: hour,
@@ -97,8 +92,9 @@ window.onload = function(){
               contact_email: contact_email,
               contact_phone_number: contact_phone_number,
               imageUrl: imageUrl
-              });              
-            });
+              });
+            });              
+        });
         
 
         
