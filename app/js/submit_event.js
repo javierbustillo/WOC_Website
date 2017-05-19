@@ -2,33 +2,29 @@ window.onload = function(){
 
   $("#header").load("header_organization.html", onHeaderLoad);
 
-  //To be executed after the header is loaded.
+  //Executed after the header is loaded.
   function onHeaderLoad(){
     
-    //Check if the log out button is pressed. 
+    //Check if the log out button is pressed
     var signoutButton = document.getElementById("logout_button");
-
     signoutButton.onclick = function(){
+
+      //Sign-out the user
       firebase.auth().signOut().then(function() {
-        // Sign-out successful.
         window.location = "login.html";
       }, function(error) {
-        // An error happened.
         alert(error);
         });
     }
   }
 
-  var publish_button = document.getElementById("publish_button");
 
-
-  //Check if a user is logged in.
+    //Check if a user is logged in.
     firebase.auth().onAuthStateChanged(function(user) {
-      console.log(user);
+        //Execute if the user is logged in
         if (user) {
           var username = document.getElementById('username');
           var username_obtained;
-          console.log(user);
           //Get the name of the user.
           if (user!=null) {
             username_obtained = user.displayName;
@@ -46,6 +42,7 @@ window.onload = function(){
 
 
   //Check if the publish button is pressed
+  var publish_button = document.getElementById("publish_button");
   publish_button.onclick = postNewEvent();
 
   //Push a new event into the firebase database
@@ -67,21 +64,16 @@ window.onload = function(){
         var contact_phone_number = document.getElementById("contact_phone_number").value;
         var imageUrl = document.getElementById("imageUrl").value;
       
-        //Get user id
-        user_id = user.uid;
-
-        //Get user total_event_counter
-        var userId = firebase.auth().currentUser.uid;
-        
+        //Get user's id
         var user_id = firebase.auth().currentUser.uid;
+        //Get user's total event created counter
         return database.ref('users/' + user_id).once('value').then(function(snapshot) {
             return snapshot.val().total_event_created;
             }).then(function(counter) {
               //Increase the total_event_counter by one
               var counter = counter +1;
               database.ref('users/'+user_id+'/total_event_created').set(counter);   
-              
-              //Push event into firebase database
+              //Post event into firebase database
               database.ref('events/' + user_id + '/' +  counter).set({
               title: title,
               date: date,

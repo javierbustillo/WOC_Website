@@ -14,16 +14,14 @@ window.onload = function(){
 		//Sign in with email and password
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		 	.then(function(){
-		 		//Redirect if there is no errors.
-    			var user = firebase.auth().currentUser;
-				console.log(user);
+		 		var user = firebase.auth().currentUser;
+				//Executed if user is signed in.
 				if (user) {
-		 		// User is signed in.
-		 			//Check if have administrative permissions.
-		 			console.log('user ID', user.uid);
+		 			//Executed if user have administrative permissions.
 		 			if(user.uid=="91hV0DsJ0nV67rbOgzN2uzjN0Xc2"){
 		 				window.location = "submit_event.html";
 		 			}
+		 			//Executed if is a regular user
 		 			else{
 		 				window.location = "index.html";
 		 			}
@@ -32,10 +30,10 @@ window.onload = function(){
 			}
   			})
   	 		.catch(function(error) {
-		 		// Handle Errors here.
+		 		// Handle Errors
 		  		var errorCode = error.code;
 		  		var errorMessage = error.message;
-		  		//Verifies if email and password was typed.
+		  		//Verifies if email and password was typed
 				if(!email || !password) {
 					 errorElement.innerHTML = "Email and password required";
 				} else {
@@ -52,7 +50,7 @@ window.onload = function(){
 		);
 	}
 
-	//Executes when the Create Account link is pressed.
+	//Executed when the Create Account link is pressed
 	createButton.onclick = function(){
 		window.location = "register.html";
 	}
