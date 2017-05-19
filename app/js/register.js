@@ -11,8 +11,9 @@ window.onload = function(){
  	var email = document.getElementById("email").value;
  	//Get password input
   	var password = document.getElementById("password").value;
+
+  	//Creates an account with email and password
   	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(result){ 
-  		console.log('result', result);
   		// Executed when the user is signed in.
 		if (result) {
 		  //Get name input
@@ -30,8 +31,7 @@ window.onload = function(){
 		      email: user_info.email,
 		      total_event_created: 0,
 		      total_event_active: 0
-		   //Executed after the database have been updates,
-		   //redirects to index.html
+		   //Executed after the database have been updated
 		   }).then(function(){
 		   		location.href = "index.html";
 		   });;
