@@ -72,25 +72,37 @@ window.onload = function(){
 
         //Get user total_event_counter
         var userId = firebase.auth().currentUser.uid;
+        
+        var user_id = firebase.auth().currentUser.uid;
         return database.ref('users/' + user_id).once('value').then(function(snapshot) {
-              var total_event_created = snapshot.val().total_event_created;
-              console.log("total_event_counter",total_event_created);
-        });
+            return total_event_counter = snapshot.val().total_event_created;
+            console.log('total_event_counter',total_event_created);
+            }).then(function(tec) {
+              console.log("tec",tec);
+              //Increase the total_event_counter by one
+              database.ref('users/' + user_id).set({
+                total_event_counter: tec+1
+              });
+              console.log("total_event_counter", tec+1);
+              database.ref('users/'+user_id).update({ total_event_created: tec+1 });   
+            });
+              //Push event into firebase database
+              database.ref('events/' + user_id + '/' +  tec+1).set({
+              title: title,
+              date: date,
+              hour: hour,
+              place: place,
+              brief_description: brief_description,
+              detailed_description: detailed_description,
+              contact_email: contact_email,
+              contact_phone_number: contact_phone_number,
+              imageUrl: imageUrl
+              });              
+            });
         
 
-        //Push event into firebase database
-        database.ref('events/' + user_id + '/001').set({
-        title: title,
-        date: date,
-        hour: hour,
-        place: place,
-        brief_description: brief_description,
-        detailed_description: detailed_description,
-        contact_email: contact_email,
-        contact_phone_number: contact_phone_number,
-        imageUrl: imageUrl
-        });
-      });
-  } 
+        
+      }
+  
 }
 

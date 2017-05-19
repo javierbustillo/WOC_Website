@@ -24,7 +24,7 @@ window.onload = function(){
 		  //Declare database
 		  var database = firebase.database();
 		  //Create a user in the firebase data-base
-		  database.ref().child('users/').push({
+		  database.ref().child('users/'+user_info.id+'/').set({
 		      display_name: user_info.display_name,
 		      id: user_info.id,
 		      email: user_info.email,
