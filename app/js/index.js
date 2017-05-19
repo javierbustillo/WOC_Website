@@ -1,19 +1,24 @@
+//MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM
 
 $(document).ready(function() {
-
+  //Load the header and executes onHeaderLoad()
 	$("#header").load("header.html", onHeaderLoad);
+});
 
-  //To be executed after the header is loaded.
-  function onHeaderLoad(){
-    checkSignOutButton();
-    assignUsernameOnHeader();
-    loadAllEvents();
+//FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS
 
-  }
+//To be executed after the header is loaded.
+function onHeaderLoad(){
+  //Check if the log out button is pressed
+  checkSignOutButton();
+  //Assign username on header
+  assignUsernameOnHeader();
+  //Load ALL events
+  loadAllEvents();
+}
 
-
-  //Check if the log out button is pressed.
-  function checkSignOutButton(){
+//Check if the log out button is pressed and sign out the user
+function checkSignOutButton(){
     var signoutButton = document.getElementById("logout_button");
     signoutButton.onclick = function(){
       firebase.auth().signOut().then(function() {
@@ -24,41 +29,34 @@ $(document).ready(function() {
         alert(error);
         });
     }
-  }
+}
 
-  //Assign username on header
-  function assignUsernameOnHeader(){
-    //Check if a user is logged in.
-    firebase.auth().onAuthStateChanged(function(user) {
-      console.log(user);
-        if (user) {
-          var username = document.getElementById('username');
-          var username_obtained;
-          console.log(user);
-          //Get the name of the user.
-          if (user!=null) {
-            username_obtained = user.displayName;
-          } else {
-            alert("Something went wrong.");
-          }
-          //Assign it to the header. 
-          username.innerHTML = username_obtained;
-          //If the user is not logged in, 
-          //returns it to the login page.
-        } else {
-          window.location = "login.html";
-        }
-      });
-  }
+//Assign username on header
+function assignUsernameOnHeader(){
+  //Check if a user is logged in.
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      var username = document.getElementById('username');
+      var username_obtained;
+      //Get the name of the user.
+      if (user!=null) {
+        username_obtained = user.displayName;
+      } else {
+        alert("Something went wrong.");
+      }
+      //Assign it to the header. 
+      username.innerHTML = username_obtained;
+      //If the user is not logged in, 
+      //returns it to the login page.
+    } else {
+      window.location = "login.html";
+    }
+  });
+}
 
+//Load ALL events
+function loadAllEvents(){
 
-  //Load ALL events
-  function loadAllEvents(){
-    
-  }
-
-  
-});
-	
+}
 
 
