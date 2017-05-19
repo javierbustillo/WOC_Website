@@ -5,8 +5,15 @@ $(document).ready(function() {
 
   //To be executed after the header is loaded.
   function onHeaderLoad(){
-   
-    //Check if the log out button is pressed. 
+    checkSignOutButton();
+    assignUsernameOnHeader();
+    loadAllEvents();
+
+  }
+
+
+  //Check if the log out button is pressed.
+  function checkSignOutButton(){
     var signoutButton = document.getElementById("logout_button");
     signoutButton.onclick = function(){
       firebase.auth().signOut().then(function() {
@@ -17,7 +24,10 @@ $(document).ready(function() {
         alert(error);
         });
     }
+  }
 
+  //Assign username on header
+  function assignUsernameOnHeader(){
     //Check if a user is logged in.
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -39,11 +49,15 @@ $(document).ready(function() {
           window.location = "login.html";
         }
       });
-    }
+  }
 
 
-
+  //Load ALL events
+  function loadAllEvents(){
     
+  }
+
+  
 });
 	
 
