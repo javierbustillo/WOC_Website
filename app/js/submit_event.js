@@ -73,11 +73,11 @@ window.onload = function(){
         //Get user total_event_counter
         var userId = firebase.auth().currentUser.uid;
         return database.ref('users/' + user_id).once('value').then(function(snapshot) {
-              var username = snapshot.val().total_event_counter;
-              console.log("total_event_counter",total_event_counter);
-            });
+              var total_event_created = snapshot.val().total_event_created;
+              console.log("total_event_counter",total_event_created);
         });
-      
+        
+
         //Push event into firebase database
         database.ref('events/' + user_id + '/001').set({
         title: title,
@@ -90,8 +90,7 @@ window.onload = function(){
         contact_phone_number: contact_phone_number,
         imageUrl: imageUrl
         });
-      })
-  }
-
+      });
+  } 
 }
 
