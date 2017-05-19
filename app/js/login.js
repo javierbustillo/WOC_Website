@@ -20,7 +20,8 @@ window.onload = function(){
 				if (user) {
 		 		// User is signed in.
 		 			//Check if have administrative permissions.
-		 			if(user.uid=="Zv6j6upaTveRERhNHTaaPoSXiia2"){
+		 			console.log('user ID', user.uid);
+		 			if(user.uid=="XpgpHHPBGdTUIRT0n9t6u7yVoYe2"){
 		 				window.location = "submit_event.html";
 		 			}
 		 			else{

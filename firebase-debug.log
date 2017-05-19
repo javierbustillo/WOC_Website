@@ -3,51 +3,32 @@
 [debug] CLI Version:  3.9.0
 [debug] Platform:     darwin
 [debug] Node Version: v7.10.0
-[debug] Time:         Thu May 18 2017 10:03:03 GMT-0400 (AST)
+[debug] Time:         Thu May 18 2017 21:32:45 GMT-0400 (AST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/w1FLxV4rFIXDdC__c8AdzJ_NjbJfN0tGxwrpJbks6bU',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu May 18 2017 21:32:45 GMT-0400 (AST)
+[debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/whats-on-campus  
- Thu May 18 2017 10:03:03 GMT-0400 (AST)
+ Thu May 18 2017 21:32:46 GMT-0400 (AST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/whats-on-campus/tokens  
- Thu May 18 2017 10:03:04 GMT-0400 (AST)
+ Thu May 18 2017 21:32:47 GMT-0400 (AST)
 [debug] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/mac/Documents/WOC Website Oficial'...
 [info] 
 [debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/whats-on-campus  
- Thu May 18 2017 10:03:04 GMT-0400 (AST)
+ Thu May 18 2017 21:32:48 GMT-0400 (AST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/2443063959/clients/_:getWebAppConfig  
- Thu May 18 2017 10:03:05 GMT-0400 (AST)
-[debug] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: app
-[info] ✔  hosting: Local server: http://localhost:5000
-
-[debug] ----------------------------------------------------------------------
-[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] CLI Version:  3.9.0
-[debug] Platform:     darwin
-[debug] Node Version: v7.10.0
-[debug] Time:         Thu May 18 2017 10:09:11 GMT-0400 (AST)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/whats-on-campus  
- Thu May 18 2017 10:09:11 GMT-0400 (AST)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/whats-on-campus/tokens  
- Thu May 18 2017 10:09:12 GMT-0400 (AST)
-[debug] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from '/Users/mac/Documents/WOC Website Oficial'...
-[info] 
-[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/whats-on-campus  
- Thu May 18 2017 10:09:13 GMT-0400 (AST)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/2443063959/clients/_:getWebAppConfig  
- Thu May 18 2017 10:09:13 GMT-0400 (AST)
+ Thu May 18 2017 21:32:48 GMT-0400 (AST)
 [debug] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: app
 [info] ✔  hosting: Local server: http://localhost:5000

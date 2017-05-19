@@ -4,7 +4,7 @@ window.onload = function(){
   var createButton = document.getElementById("createButton");
   //Create reference to the sign in button
   var signin_button = document.getElementById("signin_button");
-  
+
   //Check if the create button is pressed
   createButton.onclick = function(){
   	//Get email input
@@ -27,7 +27,9 @@ window.onload = function(){
 		  database.ref().child('users/').push({
 		      display_name: user_info.display_name,
 		      id: user_info.id,
-		      email: user_info.email
+		      email: user_info.email,
+		      total_event_created: 0,
+		      total_event_active: 0
 		   //Executed after the database have been updates,
 		   //redirects to index.html
 		   }).then(function(){
