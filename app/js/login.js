@@ -4,6 +4,8 @@ $(document).ready(function() {
   //Executed when the Create Account link is pressed
   //and redirects to register.html
   checkCreateAccountButton();
+  //Executed when the login button is pressed
+  //and executes signInUser()
   checkLogInButton();
 });
 
