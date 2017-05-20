@@ -19,14 +19,16 @@ function onHeaderLoad(){
 
 //Check if the log out button is pressed.
 function checkSignOutButton(){
-  var signoutButton = document.getElementById("logout_button");
-  signoutButton.onclick = function(){
-    firebase.auth().signOut().then(function() {
-     window.location = "login.html";
-    }, function(error) {
-     alert(error);
-    });
-  }
+    var signoutButton = document.getElementById("logout_button");
+    signoutButton.onclick = function(){
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        window.location = "login.html";
+      }, function(error) {
+        // An error happened.
+        alert(error);
+        });
+    }
 }
 
 //Check if the publish button is pressed
@@ -62,17 +64,8 @@ function assignUsernameOnHeader(){
 function postNewEvent(){
   //Check if a user is logged in.
   firebase.auth().onAuthStateChanged(function(user) {
-  //Declare firebase data-base
-    var database = firebase.database();        //Get input from form
-    var title = document.getElementById("title").value;
-    var date = document.getElementById("date").value;
-    var hour = document.getElementById("hour").value;
-    var place = document.getElementById("place").value;
-    var brief_description = document.getElementById("brief_description").value;
-    var detailed_description = document.getElementById("detailed_description").value;
-    var contact_email = document.getElementById("contact_email").value;
-    var contact_phone_number = document.getElementById("contact_phone_number").value;
-    var imageUrl = document.getElementById("imageUrl").value;
+    //Declare firebase data-base
+    var database = firebase.database();      
     //Get user's id
     var user_id = firebase.auth().currentUser.uid;
     //Get user's total event created counter
@@ -81,7 +74,18 @@ function postNewEvent(){
     }).then(function(counter) {
       //Increase the total_event_counter by one
       var counter = counter +1;
-      database.ref('users/'+user_id+'/total_event_created').set(counter);   
+      database.ref('users/'+user_id+'/total_event_created').set(counter);  
+      //Get input from form
+      var title = document.getElementById("title").value;
+      console.log('title =', title);
+      var date = document.getElementById("date").value;
+      var hour = document.getElementById("hour").value;
+      var place = document.getElementById("place").value;
+      var brief_description = document.getElementById("brief_description").value;
+      var detailed_description = document.getElementById("detailed_description").value;
+      var contact_email = document.getElementById("contact_email").value;
+      var contact_phone_number = document.getElementById("contact_phone_number").value;
+      var imageUrl = document.getElementById("imageUrl").value; 
       //Post event into firebase database
       database.ref('events/' + user_id + '/' +  counter).set({
         title: title,
