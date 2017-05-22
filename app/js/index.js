@@ -5,6 +5,7 @@ $(document).ready(function() {
 	$("#header").load("header.html", onHeaderLoad);
 });
 
+
 //FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS
 
 //To be executed after the header is loaded.
@@ -19,16 +20,15 @@ function onHeaderLoad(){
 
 //Check if the log out button is pressed and sign out the user
 function checkSignOutButton(){
-    var signoutButton = document.getElementById("logout_button");
-    signoutButton.onclick = function(){
-      firebase.auth().signOut().then(function() {
+    $( "#logout_button" ).click(function() {
+       firebase.auth().signOut().then(function() {
         // Sign-out successful.
         window.location = "login.html";
       }, function(error) {
         // An error happened.
         alert(error);
-        });
-    }
+      });
+    });
 }
 
 //Assign username on header

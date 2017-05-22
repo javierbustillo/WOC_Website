@@ -3,6 +3,9 @@
 $(document).ready(function() {
   //Load the header and executes onHeaderLoad()
   $("#header").load("header_organization.html", onHeaderLoad);
+
+
+
 });
 
 //FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS
@@ -10,32 +13,86 @@ $(document).ready(function() {
 //Executed after the header is loaded
 function onHeaderLoad(){
   //Check if the log out button is pressed.
-  checkSignOutButton();
   //Assign username on header
   assignUsernameOnHeader();
-  //Check if the publish button is pressed
-  checkPublishButton();
-}
 
-//Check if the log out button is pressed.
-function checkSignOutButton(){
-    var signoutButton = document.getElementById("logout_button");
-    signoutButton.onclick = function(){
-      firebase.auth().signOut().then(function() {
+  var isUserAuthed = false;
+  var user = null;
+  firebase.auth().onAuthStateChanged(function(newUser) {
+    console.log("User have been authed.");
+    isUserAuthed = true;
+    user = newUser;
+  })
+
+  //Check if the publish button is pressed
+  $("#publish_button").click(function() {
+    console.log("Publish button have been pressed.");
+    //Check if a user is logged in.
+    if(isUserAuthed){
+      console.log("User have been identified as authed inside the function.");
+      //Declare firebase data-base
+      var database = firebase.database();
+      console.log("database =", database);
+      console.log("user =", user);
+      console.log("user.uid =", user.uid);
+      var user_id = user.uid;
+      console.log("user_id =", user_id);
+      //Get user's total event created counter
+      return database.ref("users/" + user_id).once('value').then(function(snapshot) {
+        console.log("You got reference to the database link of the user.");
+        return snapshot.val().total_event_created;
+        console.log("You got the value of the user event counter.");
+
+      }).then(function(counter) {
+        //Increase the total_event_counter by one
+        console.log("Data is been changed.");
+        var counter = counter + 1;
+        database.ref('users/' + user_id + '/total_event_created').set(counter);
+        //Get input from form
+        var title = $("#title").val();
+        var date = $("#date").val();
+        var hour = $("#hour").val();
+        var place = $("#place").val();
+        var brief_description = $("#brief_description").val();
+        var detailed_description = $("#detailed_description").val();
+        var contact_email = $("#contact_email").val();
+        var contact_phone_number = $("#contact_phone_number").val();
+        var imageUrl = $("#imageUrl").val();
+        //Post event into firebase database
+        database.ref('events/' + user_id + '/' + counter).set({
+          title: title,
+          date: date,
+          hour: hour,
+          place: place,
+          brief_description: brief_description,
+          detailed_description: detailed_description,
+          contact_email: contact_email,
+          contact_phone_number: contact_phone_number,
+          imageUrl: imageUrl
+        });
+      }).catch(function(error){
+        console.log("error =",error);
+    });
+    }
+    console.log("You are out of the loop.");
+  });
+
+    
+  
+
+  $( "#logout_button" ).click(function() {
+       firebase.auth().signOut().then(function() {
         // Sign-out successful.
         window.location = "login.html";
       }, function(error) {
         // An error happened.
         alert(error);
-        });
-    }
+      });
+    });
+
 }
 
-//Check if the publish button is pressed
-function checkPublishButton(){
-  var publish_button = document.getElementById("publish_button");
-  publish_button.onclick = postNewEvent();
-}
+
 
 //Assign username on header
 function assignUsernameOnHeader(){
@@ -60,44 +117,3 @@ function assignUsernameOnHeader(){
   });
 }
 
-//Post a new event into the firebase database
-function postNewEvent(){
-  //Check if a user is logged in.
-  firebase.auth().onAuthStateChanged(function(user) {
-    //Declare firebase data-base
-    var database = firebase.database();      
-    //Get user's id
-    var user_id = firebase.auth().currentUser.uid;
-    //Get user's total event created counter
-    return database.ref('users/' + user_id).once('value').then(function(snapshot) {
-      return snapshot.val().total_event_created;
-    }).then(function(counter) {
-      //Increase the total_event_counter by one
-      var counter = counter +1;
-      database.ref('users/'+user_id+'/total_event_created').set(counter);  
-      //Get input from form
-      var title = document.getElementById("title").value;
-      console.log('title =', title);
-      var date = document.getElementById("date").value;
-      var hour = document.getElementById("hour").value;
-      var place = document.getElementById("place").value;
-      var brief_description = document.getElementById("brief_description").value;
-      var detailed_description = document.getElementById("detailed_description").value;
-      var contact_email = document.getElementById("contact_email").value;
-      var contact_phone_number = document.getElementById("contact_phone_number").value;
-      var imageUrl = document.getElementById("imageUrl").value; 
-      //Post event into firebase database
-      database.ref('events/' + user_id + '/' +  counter).set({
-        title: title,
-        date: date,
-        hour: hour,
-        place: place,
-        brief_description: brief_description,
-        detailed_description: detailed_description,
-        contact_email: contact_email,
-        contact_phone_number: contact_phone_number,
-        imageUrl: imageUrl
-      });
-    });              
-  });
-}
