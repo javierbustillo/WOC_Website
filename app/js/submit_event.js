@@ -16,13 +16,19 @@ function onHeaderLoad(){
   //Assign username on header
   assignUsernameOnHeader();
 
+  //Check user's auth
   var isUserAuthed = false;
   var user = null;
   firebase.auth().onAuthStateChanged(function(newUser) {
+    if (newUser) {   //newUser is falsy is user is not logged in
     console.log("User have been authed.");
     isUserAuthed = true;
     user = newUser;
-  })
+    } else {
+      console.log("user is not logged in")
+    }
+  });
+
 
   //Check if the publish button is pressed
   $("#publish_button").click(function() {
@@ -33,12 +39,11 @@ function onHeaderLoad(){
       //Declare firebase data-base
       var database = firebase.database();
       console.log("database =", database);
-      console.log("user =", user);
-      console.log("user.uid =", user.uid);
       var user_id = user.uid;
       console.log("user_id =", user_id);
+
       //Get user's total event created counter
-      return database.ref("users/" + user_id).once('value').then(function(snapshot) {
+      database.ref("users/" + user_id).once('value').then(function(snapshot) {
         console.log("You got reference to the database link of the user.");
         return snapshot.val().total_event_created;
         console.log("You got the value of the user event counter.");
@@ -74,7 +79,7 @@ function onHeaderLoad(){
         console.log("error =",error);
     });
     }
-    console.log("You are out of the loop.");
+    console.log("You are out of the if.");
   });
 
     
