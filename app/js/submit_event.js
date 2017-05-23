@@ -25,7 +25,8 @@ function onHeaderLoad(){
     isUserAuthed = true;
     user = newUser;
     } else {
-      console.log("user is not logged in")
+      console.log("user is not logged in");
+      window.location = "login.html";
     }
   });
 
@@ -47,7 +48,6 @@ function onHeaderLoad(){
         console.log("You got reference to the database link of the user.");
         return snapshot.val().total_event_created;
         console.log("You got the value of the user event counter.");
-
       }).then(function(counter) {
         //Increase the total_event_counter by one
         console.log("Data is been changed.");
