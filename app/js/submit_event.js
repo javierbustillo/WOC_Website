@@ -1,8 +1,7 @@
-//MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM
 
 $(document).ready(function() {
+  //Loads header
   $("#header").load("header_organization.html", function(){
-
     console.log("Header loaded.");
 
     // Set up UI elements
@@ -42,12 +41,13 @@ $(document).ready(function() {
       //Get user full data
       user_info = user;
       if(user){
-        console.log("User detected.");
+        console.log("User detected. User =", user_info);
         user_id = user_info.uid;
-        console.log("User id read.");
+        console.log("User id read. User id =", user_id);
         user_display_name = user_info.displayName;
-        console.log("User display name read.");
+        console.log("User display name read. User display name =", user_display_name);
         //Assign username to header
+        console.log(username);
         username.innerHTML = user_display_name;
         database.ref("users/"+user_id).once("value").then(function(snapshot){
           total_counter = snapshot.val().total_event_counter;
