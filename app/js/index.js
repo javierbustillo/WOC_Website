@@ -53,6 +53,7 @@ $(document).ready(function() {
       console.log("Event displayed");
     }
 
+
   });
 });
 
