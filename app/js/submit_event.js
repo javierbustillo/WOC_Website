@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   //Loads header
   $("#header").load("header_organization.html", function(){
@@ -20,7 +19,7 @@ $(document).ready(function() {
     console.log("Inputs referenced.");
 
     //Set user attributes
-    var total_counter, active_counter, user_info, user_id, user_display_name, file_path;
+    var total_counter, active_counter, user_info, user_id, user_display_name;
 
     //Initialize Firebase
     var auth = firebase.auth(),
@@ -54,7 +53,6 @@ $(document).ready(function() {
           console.log("Total event counter read.");
           active_counter = snapshot.val().active_event_counter;
           console.log("Active event counter read.");
-          file_path = snapshot.metadata.fullPath;
         });
       }else{
         window.location = "login.html";
@@ -79,7 +77,6 @@ $(document).ready(function() {
         contact_phone_number: contact_phone_number.value,
         imageUrl: imageUrl.value,
         user_id: user_id,
-        file_path: file_path
       });
       console.log("New event created.");
     });

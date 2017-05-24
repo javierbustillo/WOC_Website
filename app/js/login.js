@@ -1,5 +1,3 @@
-//MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM
-
 $(document).ready(function() {
 
   //Set up UI elements

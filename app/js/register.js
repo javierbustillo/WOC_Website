@@ -1,5 +1,3 @@
-//MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM
-
 $(document).ready(function() {
   //Check if the sign in button is pressed and redirects to login.html
   checkSignInButton();
