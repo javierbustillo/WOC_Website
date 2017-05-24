@@ -20,7 +20,7 @@ $(document).ready(function() {
     console.log("Inputs referenced.");
 
     //Set user attributes
-    var total_counter, active_counter, user_info, user_id, user_display_name;
+    var total_counter, active_counter, user_info, user_id, user_display_name, file_path;
 
     //Initialize Firebase
     var auth = firebase.auth(),
@@ -41,11 +41,11 @@ $(document).ready(function() {
       //Get user full data
       user_info = user;
       if(user){
-        console.log("User detected. User =", user_info);
+        console.log("User detected.");
         user_id = user_info.uid;
-        console.log("User id read. User id =", user_id);
+        console.log("User id read.");
         user_display_name = user_info.displayName;
-        console.log("User display name read. User display name =", user_display_name);
+        console.log("User display name read.");
         //Assign username to header
         console.log(username);
         username.innerHTML = user_display_name;
@@ -54,6 +54,7 @@ $(document).ready(function() {
           console.log("Total event counter read.");
           active_counter = snapshot.val().active_event_counter;
           console.log("Active event counter read.");
+          file_path = snapshot.metadata.fullPath;
         });
       }else{
         window.location = "login.html";
@@ -77,7 +78,8 @@ $(document).ready(function() {
         contact_email: contact_email.value,
         contact_phone_number: contact_phone_number.value,
         imageUrl: imageUrl.value,
-        user_id: user_id
+        user_id: user_id,
+        file_path: file_path
       });
       console.log("New event created.");
     });
