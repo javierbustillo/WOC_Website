@@ -1,124 +1,89 @@
 //MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM -- MAIN PROGRAM
 
 $(document).ready(function() {
-  //Load the header and executes onHeaderLoad()
-  $("#header").load("header_organization.html", onHeaderLoad);
+  $("#header").load("header_organization.html", function(){
+
+    console.log("Header loaded.");
+
+    // Set up UI elements
+    var publish_button = document.querySelector("#publish_button"),
+        logout_button = document.querySelector("#logout_button"),
+        username = document.querySelector("#username"),
+        title = document.querySelector("#title"),
+        date = document.querySelector("#date"),
+        hour = document.querySelector("#hour"),
+        place = document.querySelector("#place"),
+        brief_description = document.querySelector("#brief_description"),
+        detailed_description = document.querySelector("#detailed_description"),
+        contact_email = document.querySelector("#contact_email"),
+        contact_phone_number = document.querySelector("#contact_phone_number"),
+        image_input = document.querySelector("#imageUrl");
+    console.log("Inputs referenced.");
+
+    //Set user attributes
+    var total_counter, active_counter, user_info, user_id, user_display_name;
+
+    //Initialize Firebase
+    var auth = firebase.auth(),
+        storage = firebase.storage(),
+        database = firebase.database();
+    console.log("Firebase inizialized.");
+
+    //Logout 
+    logout_button.addEventListener('click', function(e){
+      auth.signOut();
+      console.log("You have been logged out");
+      window.location = "index.html";
+    });
 
 
-
+    //Check user auth
+    auth.onAuthStateChanged(function(user) {
+      //Get user full data
+      user_info = user;
+      if(user){
+        console.log("User detected.");
+        user_id = user_info.uid;
+        console.log("User id read.");
+        user_display_name = user_info.displayName;
+        console.log("User display name read.");
+        //Assign username to header
+        username.innerHTML = user_display_name;
+        database.ref("users/"+user_id).once("value").then(function(snapshot){
+          total_counter = snapshot.val().total_event_counter;
+          console.log("Total event counter read.");
+          active_counter = snapshot.val().active_event_counter;
+          console.log("Active event counter read.");
+        });
+      }else{
+        window.location = "login.html";
+      }
+    });
+    
+    //Publish event
+    publish_button.addEventListener('click', function(e){
+      console.log("Publish button have been pressed.");
+      database.ref("users/"+user_id).update({total_event_counter: total_counter+1});
+      console.log("Total event counter incremented by 1.");
+      database.ref("users/"+user_id).update({active_event_counter: total_counter+1});
+      console.log("Active event counter incremented by 1.");
+      database.ref("events/").push({
+        title: title.value,
+        date: date.value,
+        hour: hour.value,
+        place: place.value,  
+        brief_description: brief_description.value,
+        detailed_description: detailed_description.value,
+        contact_email: contact_email.value,
+        contact_phone_number: contact_phone_number.value,
+        imageUrl: imageUrl.value,
+        user_id: user_id
+      });
+      console.log("New event created.");
+    });
+  });
 });
 
-//FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS -- FUNCTIONS
-
-//Executed after the header is loaded
-function onHeaderLoad(){
-  //Check if the log out button is pressed.
-  //Assign username on header
-  assignUsernameOnHeader();
-
-  //Check user's auth
-  var isUserAuthed = false;
-  var user = null;
-  firebase.auth().onAuthStateChanged(function(newUser) {
-    if (newUser) {   //newUser is falsy is user is not logged in
-    console.log("User have been authed.");
-    isUserAuthed = true;
-    user = newUser;
-    } else {
-      console.log("user is not logged in");
-      window.location = "login.html";
-    }
-  });
 
 
-  //Check if the publish button is pressed
-  $("#publish_button").click(function() {
-    console.log("Publish button have been pressed.");
-    //Check if a user is logged in.
-    if(isUserAuthed){
-      console.log("User have been identified as authed inside the function.");
-      //Declare firebase data-base
-      var database = firebase.database();
-      console.log("database =", database);
-      var user_id = user.uid;
-      console.log("user_id =", user_id);
-
-      //Get user's total event created counter
-      database.ref("users/" + user_id).once('value').then(function(snapshot) {
-        console.log("You got reference to the database link of the user.");
-        return snapshot.val().total_event_created;
-        console.log("You got the value of the user event counter.");
-      }).then(function(counter) {
-        //Increase the total_event_counter by one
-        console.log("Data is been changed.");
-        var counter = counter + 1;
-        database.ref('users/' + user_id + '/total_event_created').set(counter);
-        //Get input from form
-        var title = $("#title").val();
-        var date = $("#date").val();
-        var hour = $("#hour").val();
-        var place = $("#place").val();
-        var brief_description = $("#brief_description").val();
-        var detailed_description = $("#detailed_description").val();
-        var contact_email = $("#contact_email").val();
-        var contact_phone_number = $("#contact_phone_number").val();
-        var imageUrl = $("#imageUrl").val();
-        //Post event into firebase database
-        database.ref('events/' + user_id + '/' + counter).set({
-          title: title,
-          date: date,
-          hour: hour,
-          place: place,
-          brief_description: brief_description,
-          detailed_description: detailed_description,
-          contact_email: contact_email,
-          contact_phone_number: contact_phone_number,
-          imageUrl: imageUrl
-        });
-      }).catch(function(error){
-        console.log("error =",error);
-    });
-    }
-    console.log("You are out of the if.");
-  });
-
-    
-  
-
-  $( "#logout_button" ).click(function() {
-       firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-        window.location = "login.html";
-      }, function(error) {
-        // An error happened.
-        alert(error);
-      });
-    });
-
-}
-
-
-
-//Assign username on header
-function assignUsernameOnHeader(){
-  //Check if a user is logged in.
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      var username = document.getElementById('username');
-      var username_obtained;
-      //Get the name of the user.
-      if (user!=null) {
-        username_obtained = user.displayName;
-      } else {
-        alert("Something went wrong.");
-      }
-      //Assign it to the header. 
-      username.innerHTML = username_obtained;
-      //If the user is not logged in, 
-      //returns it to the login page.
-    } else {
-      window.location = "login.html";
-    }
-  });
-}
 
