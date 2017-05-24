@@ -20,7 +20,7 @@ $(document).ready(function() {
     console.log("Inputs referenced.");
 
     //Set user attributes
-    var total_counter, active_counter, user_info, user_id, user_display_name, file_name, isUploaded;
+    var total_counter, active_counter, user_info, user_id, user_display_name, file_name, isUploaded, file_path;
 
     //Initialize Firebase
     var auth = firebase.auth(),
@@ -57,12 +57,19 @@ $(document).ready(function() {
     
     //Upload image to storage
     image_input.addEventListener('change', function(e){
+      if(isUploaded==true){
+        storage.ref(file_path).delete();
+        console.log("Image has been deleted.")
+        isUploaded=false;
+      }
+
       //Get image file
       var file = e.target.files[0];
-      file_name = Math.random().toString(36).substring(15);
-
+      file_name = 'image_' + Math.random().toString(36).substr(2, 9);
+      console.log("file_name =", file_name);
+      file_path = "events/"+user_id+"/"+file_name;
       //Upload image to storage
-        var task = storage.ref(user_id+"/"+file_name).put(file);
+        var task = storage.ref(file_path).put(file);
         //Update progress bar
         task.on('state_changed',
           function progress(snapshot){
@@ -79,31 +86,35 @@ $(document).ready(function() {
 
       //Publish event
       publish_button.addEventListener('click', function(e){
-        console.log("Publish button have been pressed.");
-        //Increment counters
-        database.ref("users/"+user_id).update({total_event_counter: total_counter+1});
-        database.ref("users/"+user_id).update({active_event_counter: total_counter+1});
+          if(isUploaded){
+          console.log("Publish button have been pressed.");
+          //Increment counters
+          database.ref("users/"+user_id).update({total_event_counter: total_counter+1});
+          database.ref("users/"+user_id).update({active_event_counter: total_counter+1});
 
-        //Save event info to database and get the unique ID
-        database.ref("events/").push({
-          title: title.value,
-          date: date.value,
-          hour: hour.value,
-          place: place.value,  
-          brief_description: brief_description.value,
-          detailed_description: detailed_description.value,
-          contact_email: contact_email.value,
-          contact_phone_number: contact_phone_number.value,
-          imageUrl: user_id+"/"+file_name,
-          user_id: user_id,
-        })
-        console.log("New event created.");
+          //Save event info to database and get the unique ID
+          database.ref("events/").push({
+            title: title.value,
+            date: date.value,
+            hour: hour.value,
+            place: place.value,  
+            brief_description: brief_description.value,
+            detailed_description: detailed_description.value,
+            contact_email: contact_email.value,
+            contact_phone_number: contact_phone_number.value,
+            imageUrl: file_path,
+            user_id: user_id,
+          })
+          console.log("New event created.");
+        }else{
+          alert("Wait for image to upload");
+        }
       });
 
       //Cancel form submit
       cancel_button.addEventListener('click', function(e){
         if(isUploaded){
-          storage.ref(user_id+"/"+file_name).delete();
+          storage.ref(file_path).delete();
           console.log("Image has been deleted.");
         }
         window.location = "submit_event.html";
