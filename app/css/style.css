@@ -188,11 +188,18 @@ ul li {
   margin: auto;
   width: 400px;
   font-family: "Open Sans", "Bariol", Arial, sans-serif;
-
 }
+
 
 #newsfeed .event {
   padding: 10px;
+}
+
+
+
+#newsfeed img{
+    max-width:100%; /* you can use % */
+    height: auto;
 }
 
 #newsfeed .event .event_title{
@@ -205,13 +212,13 @@ ul li {
 
 #newsfeed .event .event_header #hour{
   text-align: left;
-  display: inline-block;
 
 }
 
 #newsfeed .event .event_header #place{
   text-align: right;
-  display: inline-block;
 
 }
+
+
 

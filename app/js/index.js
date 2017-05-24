@@ -49,11 +49,14 @@ $(document).ready(function() {
     });
 
     function displayEvent(value){
-      $("#newsfeed").append("\<div class=\"event\"\>\<div class=\"event_title\"\>"+value.title+"\<\/div\>\<div class=\"event_image\"\>\<\/div\>\<div class =event_header\>\<div class=\"event_info_header\" id=\"event_hour\"\>"+value.hour+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_date\"\>"+value.date+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_place\"\>"+value.place+"\<\/div\>\<\/div\>\<div class=\"event_brief_description\"\>"+value.brief_description+"\<\/div\>\<\/div\>");
-      console.log("Event displayed");
+      console.log(value.imageUrl);
+      storage.ref(value.imageUrl).getDownloadURL()
+      .then(function(url) {
+        $("#newsfeed").append("\<div class=\"event\"\>\<div class=\"event_title\"\>"+value.title+"\<\/div\>\<img class=\"event_image\" src=\""+url+"\"\/\>\<div class =event_header\>\<div class=\"event_info_header\" id=\"event_hour\"\>"+value.hour+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_date\"\>"+value.date+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_place\"\>"+value.place+"\<\/div\>\<\/div\>\<div class=\"event_brief_description\"\>"+value.brief_description+"\<\/div\>\<\/div\>");
+        console.log("Event displayed");
+      });
     }
-
-
+      
   });
 });
 
