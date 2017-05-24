@@ -10,13 +10,14 @@ header{
   width: 100%;
   min-width: : 650px;
   position: fixed;
-
+  z-index: 2;
 }
 
 body{
   padding: 0 auto;
   margin: 0 auto;
 }
+
 
 .header01 {
   padding: 0;
@@ -194,6 +195,8 @@ ul li {
 
 #newsfeed {
   margin: auto;
+  padding-top: 150px;
+  padding-bottom: 50px;
   width: 400px;
   font-family: "Open Sans", "Bariol", Arial, sans-serif;
 }
@@ -210,28 +213,29 @@ ul li {
     height: auto;
 }
 
-#newsfeed .event .event_title{
+.event_title{
   font-weight: bold;
   font-size: 20px;
 }
 
-#newsfeed .event .event_header{
+.event_header{
   display: table;
+  font-weight: bold;
   min-width: 100%;
   font-size: 16px;
 }
 
-#newsfeed #event_hour{
+#event_hour{
   display: table-cell;
   text-align: left;
 }
 
-#newsfeed #event_place{
+#event_place{
   display: table-cell;
   text-align: right;
 }
 
-#newsfeed #event_date{
+#event_date{
   display: table-cell;
   text-align: center;
 }
