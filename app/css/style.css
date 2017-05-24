@@ -9,6 +9,7 @@ body{
   padding: 0 auto;
   margin: 0 auto;
 }
+
 .header01 {
   padding: 0;
   margin: 0;
@@ -137,11 +138,11 @@ ul li {
   width: 100%;
 }
 
-#hour{
+.form #hour{
   float:left;
 }
 
-#place{
+.form #place{
   float:right;
 }
 
@@ -182,3 +183,35 @@ ul li {
   font-size: 14px;
   color:#696969;
 }
+
+#newsfeed {
+  margin: auto;
+  width: 400px;
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+
+}
+
+#newsfeed .event {
+  padding: 10px;
+}
+
+#newsfeed .event .event_title{
+  font-weight: bold;
+}
+
+#newsfeed .event .event_header{
+  display: inline-block;
+}
+
+#newsfeed .event .event_header #hour{
+  text-align: left;
+  display: inline-block;
+
+}
+
+#newsfeed .event .event_header #place{
+  text-align: right;
+  display: inline-block;
+
+}
+

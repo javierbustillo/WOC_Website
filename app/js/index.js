@@ -42,10 +42,6 @@ $(document).ready(function() {
       displayEvent(snapshot.val());
     });
 
-    //Listen from the latest 10 stories onwads, and display them
-    database.ref("events").on('child_added', function(snapshot){
-      displayEvent(snapshot.val());
-    });
 
     //Listen to whenever a story changes
     database.ref("events").on('child_changed', function(snapshot){
@@ -53,7 +49,7 @@ $(document).ready(function() {
     });
 
     function displayEvent(value){
-      $("#newsfeed").append("\<div class=\"event\"\>\<div class=\"event_title\"\>"+value.title+"\<\/div\>\<div class=\"event_image\"\>\<\/div\>\<div class=\"event_info_header\"\>\<div id=\"event_hour\"\>"+value.hour+"\<\/div\>\<div id=\"event_date\"\>"+value.date+"\<\/div\>\<div id=\"event_place\"\>"+value.place+"\<\/div\>\<\/div\>\<div class=\"event_brief_description\"\>"+value.brief_description+"\<\/div\>\<\/div\>");
+      $("#newsfeed").append("\<div class=\"event\"\>\<div class=\"event_title\"\>"+value.title+"\<\/div\>\<div class=\"event_image\"\>\<\/div\>\<div class =event_header\>\<div class=\"event_info_header\" id=\"event_hour\"\>"+value.hour+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_date\"\>"+value.date+"\<\/div\>|\<div class=\"event_info_header\" id=\"event_place\"\>"+value.place+"\<\/div\>\<\/div\>\<div class=\"event_brief_description\"\>"+value.brief_description+"\<\/div\>\<\/div\>");
       console.log("Event displayed");
     }
 
