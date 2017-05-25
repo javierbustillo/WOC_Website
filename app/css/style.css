@@ -7,6 +7,7 @@
 }
 
 header{
+  top:0;
   width: 100%;
   min-width: : 650px;
   position: fixed;
@@ -107,7 +108,7 @@ ul li {
 
 .form {
   position: relative;
-  top: 70px;
+  top: 150px;
   z-index: 1;
   background: #FFFFFF;
   max-width: 360px;
@@ -115,6 +116,7 @@ ul li {
   padding: 45px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 .form input {
   font-family: "Open Sans", "Bariol", Arial, sans-serif;
   outline: 0;
@@ -145,6 +147,11 @@ ul li {
 
 .normal{
   width: 100%;
+}
+
+.submit_event_form{
+  position: absolute;
+  margin-top: 100px;
 }
 
 .form #hour{
@@ -219,25 +226,16 @@ ul li {
 }
 
 .event_header{
-  display: table;
   font-weight: bold;
   min-width: 100%;
+  display: inline-block;
   font-size: 16px;
 }
 
-#event_hour{
-  display: table-cell;
-  text-align: left;
-}
-
-#event_place{
-  display: table-cell;
-  text-align: right;
-}
-
-#event_date{
-  display: table-cell;
-  text-align: center;
+.event_header #event_hour,
+.event_header #event_place,
+.event_header #event_date{
+  display: inline-block;
 }
 
 

@@ -19,8 +19,8 @@
 	<body>
 		<div id="header"></div>
 		<!-- Submit form -->
-		<div class="form">
-			<form class="event-form">
+		<div class="form" id="submit_event_form">
+			<form class="event_form">
 				<input class="normal" id="title" type="text" placeholder="title"/>
 				<input class="normal" id="date" type="date" placeholder="date"/>
 				<input class="small" id="hour" type="text" placeholder="hour"/>
@@ -29,7 +29,7 @@
 				<textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>
 				<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
 				<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
-				<a class="standard_text">Upload a cover image </a>
+				<a class="standard_text">Upload a cover image </a> <a id="percent"></a>
 				<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
 				<button id="publish_button">publish </button><br>
 				<button id="cancel_button">cancel</button>
