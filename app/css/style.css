@@ -24,11 +24,11 @@ body{
   padding: 0;
   margin: 0;
   height:80px;
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
+  background: #85BF75; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, ##85BF75, #8DC26F);
+  background: -moz-linear-gradient(right, ##85BF75, #8DC26F);
+  background: -o-linear-gradient(right, ##85BF75, #8DC26F);
+  background: linear-gradient(to left, ##85BF75, #8DC26F);
   line-height:0;
 
 
@@ -40,7 +40,8 @@ body{
   top:45px;
   left: 20px;
   font-size: 60px;
-  font-family:'Open Sans', Arial;
+  text-decoration: none;
+  font-family:Bariol, 'Open Sans', Arial;
   color: #FFFFFF;
 
 }
@@ -51,7 +52,7 @@ body{
   right: 20px;
   top: 35px;
   float:right;
-  font-size: 20px;
+  font-size: 16px;
   font-family: Bariol, 'Open Sans', Arial;
   color: #FFF;
   line-height: 20px;
@@ -65,11 +66,11 @@ body{
 
 
 .header02{
-  background: #161616;
+  background: #4A4A4A;
   margin-top: -17px;
   width: auto;
   padding: 0;
-  line-height: 2;
+  line-height: 1.5;
   display: block;
   position: relative;
   z-index: 9999;
@@ -80,6 +81,7 @@ body{
 .header02 ul li a {
   font-family: 'Open Sans', Bariol, Arial;
   font-style: normal;
+  font-size: 13px;
   text-decoration: none;
 }
 
@@ -223,13 +225,19 @@ ul li {
 .event_title{
   font-weight: bold;
   font-size: 20px;
+  color:#4A4A4A;
+}
+
+.event_brief_description{
+  color:#484848;
+  font-size: 13px;
 }
 
 .event_header{
-  font-weight: bold;
+  color:#4A4A4A;
   min-width: 100%;
   display: inline-block;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .event_header #event_hour,

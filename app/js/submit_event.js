@@ -7,7 +7,7 @@ $(document).ready(function() {
     var publish_button = document.querySelector("#publish_button"),
         logout_button = document.querySelector("#logout_button"),
         cancel_button = document.querySelector("#cancel_button"),
-        username = document.querySelector("#username"),
+        username = document.querySelector("#username_organizational"),
         title = document.querySelector("#title"),
         date = document.querySelector("#date"),
         hour = document.querySelector("#hour"),
@@ -45,7 +45,7 @@ $(document).ready(function() {
         user_id = user_info.uid;
         user_display_name = user_info.displayName;
         //Assign username to header
-        username.innerHTML = user_display_name;
+        username_organizational.innerHTML = user_display_name;
         database.ref("users/"+user_id).once("value").then(function(snapshot){
           total_counter = snapshot.val().total_event_counter;
           active_counter = snapshot.val().active_event_counter;
