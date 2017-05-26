@@ -78,6 +78,8 @@ body{
   color: #FFF;
 }
 
+
+
 .header02 ul li a {
   font-family: 'Open Sans', Bariol, Arial;
   font-style: normal;
@@ -97,10 +99,14 @@ body{
 }
 
 .header02 ul li a:active {
-  color: #76b852;
+  color: #85BF75;
 }
 
-ul li {
+.header02 ul {
+  left:-10px;
+}
+
+.header02 ul li {
   display: inline;
 }
 

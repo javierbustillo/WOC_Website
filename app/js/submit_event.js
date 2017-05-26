@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     // Set up UI elements
     var publish_button = document.querySelector("#publish_button"),
-        logout_button = document.querySelector("#logout_button"),
+        logout_button = document.querySelector("#logout_button_organizational"),
         cancel_button = document.querySelector("#cancel_button"),
         username = document.querySelector("#username_organizational"),
         title = document.querySelector("#title"),

@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$("#header").load("header.html", function(){
+  console.log("Header loaded.");
 
     // Set up UI elements
     var newsfeed = document.querySelector("#newsfeed"),
