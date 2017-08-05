@@ -1,10 +1,8 @@
 {
   "hosting": {
-    "public": "app",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "README.md"
-    ]
+    "public": "app"
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

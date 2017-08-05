@@ -49,7 +49,7 @@ h2{
   box-sizing: border-box;
   font-size: 14px;
 }
-.form #createButton, .form #loginButton {
+.form #create_button, .form #loginButton {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -63,7 +63,7 @@ h2{
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form #createButton:hover, .form #loginButton:hover .form #createButton:active, .form #loginButton:active .form #createButton:focus, .form #loginButton:focus  {
+.form #create_button:hover, .form #loginButton:hover .form #create_button:active, .form #loginButton:active .form #create_button:focus, .form #loginButton:focus  {
   background: #43A047;
 }
 .form .message {
