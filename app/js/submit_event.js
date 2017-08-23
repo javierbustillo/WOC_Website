@@ -45,12 +45,12 @@ function uploadEventToDatabase(event_object_user){
     database.ref("users/"+user.uid).update({total_event_created: total_event_created+1});
     database.ref("users/"+user.uid).update({total_event_active: total_event_active+1});
 
-    var event_path = "events/"+user.uid+"/message"+total_event_created;
+    var event_path = "events";
 
     var image_path = "events_images/"+user.uid+"/message"+total_event_created;
     var image_file = $("#imageUrl")[0].files[0];
   
-    database.ref(event_path).set({
+    database.ref(event_path).push({
       title: title,
       date: date,
       hour: hour,
