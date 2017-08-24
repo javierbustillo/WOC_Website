@@ -45,12 +45,7 @@ function uploadEventToDatabase(event_object_user){
     database.ref("users/"+user.uid).update({total_event_created: total_event_created+1});
     database.ref("users/"+user.uid).update({total_event_active: total_event_active+1});
 
-    var event_path = "events";
-
-    var image_path = "events_images/"+user.uid+"/message"+total_event_created;
-    var image_file = $("#imageUrl")[0].files[0];
-  
-    database.ref(event_path).push({
+    var newEvent = database.ref("events").push({
       title: title,
       date: date,
       hour: hour,
@@ -59,11 +54,19 @@ function uploadEventToDatabase(event_object_user){
       detailed_description: detailed_description,
       contact_email: contact_email,
       contact_phone_number: contact_phone_number,
-      imageUrl: image_path,
-      user_id: user.uid,
+      user_id: user.uid
     });
 
-    uploadEventImageToStorage(image_file, image_path);
+    var image_file = $("#imageUrl")[0].files[0];
+    var path = newEvent.key;
+
+    console.log(path);
+
+    database.ref("events/"+path).update({
+      image_url: path
+    });
+
+    uploadEventImageToStorage(image_file, path);
 
   });
 
