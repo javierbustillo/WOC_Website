@@ -28,7 +28,7 @@ function uploadEventToDatabase(event_object_user){
   var title = $("#title").val(),
       date = $("#date").val(),
       hour = $("#hour").val(),
-      timestamp = new Date(date+hour).getTime(),
+      timestamp = getTimestampDateAndTime(new Date(date),new Date(hour)),
       place = $("#place").val(),
       brief_description = $("#brief_description").val(),
       detailed_description = $("#detailed_description").val(),
@@ -108,6 +108,21 @@ function reloadPage(){
 function signOut(){
   auth.signOut();
   window.location.replace("login.html");
+}
+
+function getTimestampDateAndTime(date, time) {
+
+    timeString = time.getHours() + ':' + time.getMinutes() + ':00';
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1; // Jan is 0, dec is 11
+    var day = date.getDate();
+    var dateString = year + '-' + month + '-' + day;
+    console.log(dateString)
+    var combined = new Date(dateString + ' ' + timeString);
+    combined = combined.getTime();
+
+    return combined;
 }
 
 
