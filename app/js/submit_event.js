@@ -28,7 +28,7 @@ function uploadEventToDatabase(event_object_user){
   var title = $("#title").val(),
       date = $("#date").val(),
       hour = $("#hour").val(),
-      timestamp = new Date(date+hour).getTime(),
+      event_date_timestamp_format = new Date(date +" "+ hour).getTime(),
       place = $("#place").val(),
       brief_description = $("#brief_description").val(),
       detailed_description = $("#detailed_description").val(),
@@ -37,8 +37,6 @@ function uploadEventToDatabase(event_object_user){
       cancel_button = $("#cancel_button");
 
 
-  console.log(timestamp);
-      
   cancel_button.disabled = true;
 
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
@@ -53,7 +51,7 @@ function uploadEventToDatabase(event_object_user){
       title: title,
       date: date,
       hour: hour,
-      timestamp_format: timestamp,
+      event_date_timestamp_format: event_date_timestamp_format,
       place: place,  
       brief_description: brief_description,
       detailed_description: detailed_description,
