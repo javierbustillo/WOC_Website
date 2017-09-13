@@ -1,8 +1,7 @@
 //initialize Firebase
 var auth = firebase.auth(),
-  storage = firebase.storage(),
-  database = firebase.database();
-
+storage = firebase.storage(),
+database = firebase.database();
 
 $(document).ready(function() {
 	$("#header").load("header.html", function(){
@@ -26,7 +25,7 @@ $(document).ready(function() {
 function addAdminTabs(user) {
   database.ref("users/"+user.uid).once('value').then(function(user_from_database) {
           if(user_from_database.val().is_admin) {
-            var txt1 = "<li><a a class='desactive' href='submit_event.html'>SUBMIT EVENT</a></li>";
+            var txt1 = "<li><a a class='desactive' href='submit_event.html'>|  ADMIN PANEL</a></li>";
             $("#extra").append(txt1);
           }
     });
