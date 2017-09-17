@@ -144,6 +144,19 @@ body{
   font-size: 14px;
 }
 
+.form select {
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 14px;
+  width: 100%;
+
+}
+
 .form textarea {
   width: 100%;
   font-family: "Open Sans", "Bariol", Arial, sans-serif;
