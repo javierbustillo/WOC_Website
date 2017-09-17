@@ -1,42 +1,17 @@
-<!Doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
-		<script src="js/jquery.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-		<script src="js/init.js"></script>
-		<script src="js/submit_event.js"></script>
-		<script>
-			$(function(){
-				$("#header").load("header_organization.html");
-				$("#footer").load("footer.html");
-			});
-		</script>
-	</head>
-
-	<body>
-		<div id="header"></div>
-		<!-- Submit form -->
-		<div class="form" id="submit_event_form">
-			<form class="event_form">
-				<input class="normal" id="title" type="text" placeholder="title"/>
-				<input class="normal" id="date" type="date" placeholder="date"/>
-				<input class="small" id="hour" type="time" placeholder="hour"/>
-				<input class="small" id="place" type="text" placeholder="place"/>
-				<textarea id="brief_description" placeholder="brief description" rows="2" ></textarea>
-				<textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>
+<div class="form" id="submit_event_form">
+	<form class="event_form">
+		<input class="normal" id="title" type="text" placeholder="title"/>
+		<input class="normal" id="date" type="date" placeholder="date"/>
+		<input class="small" id="hour" type="time" placeholder="hour"/>
+		<input class="small" id="place" type="text" placeholder="place"/>
+		<textarea id="brief_description" placeholder="brief description" rows="2" ></textarea>
+		<textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>
 				
-				<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
-				<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
-				<a class="standard_text">Upload a cover image </a> <a id="percent"></a>
-				<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
-			</form>
-				<button type="button" id="publish_button">publish </button><br>
-				<button type="button" id="cancel_button">cancel</button>
-		</div>
-		<div id="footer"></div>
-
-	</body>
-</html>
+		<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
+		<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
+		<a class="standard_text">Upload a cover image </a> <a id="percent"></a>
+		<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
+	</form>
+	<button id="publish_button">publish </button><br>
+	<button id="cancel_button">cancel</button>
+</div>

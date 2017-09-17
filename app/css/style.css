@@ -83,7 +83,14 @@ body{
 }
 
 .desactive{
-    color: #FFF;
+  border:none;
+  color: #FFF;
+  border:none;
+  background: none;
+  font-family: 'Open Sans', Bariol, Arial;
+  font-style: normal;
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .static{
@@ -107,11 +114,17 @@ body{
 
 .active{
   color: #76b852;
+  border:none;
+  background: none;
+  font-family: 'Open Sans', Bariol, Arial;
+  font-style: normal;
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .form {
   position: relative;
-  top: 150px;
+  top: 0px;
   z-index: 1;
   background: #FFFFFF;
   max-width: 360px;

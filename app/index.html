@@ -4,21 +4,41 @@
 		<meta charset="utf-8">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
-		<script src="js/jquery.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 		<script src="js/init.js"></script>
 		<script src="js/index.js"></script>
-		<script>
-			$(function(){
-				$("#header").load("header.html");
-			});
-		</script>
 	</head>
 
-	<body>
-		<div id="header"></div>
-		<div id="newsfeed"></div>
-		<div id="footer"></div>
+	<header>
+	  <div class="generalHeader">
+	    <div class="header01">
+	      <a href="/index.html" id="wocTitle">WOC</a>
+	      <div class="loggedAs">
+	        Welcome,
+	        <a id="username"></a>!<br>
+	        <button id="logout_button">Log out.</button>
+	      </div>
+	    </div>
+	    <div class="header02">
+	      <ul class="menu" >
+	        <li><button class="active" id="all_tab" href="">ALL</button></li>
+	        <li><a class="static" id="all_tab_divisor" >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="recommended_tab" href="">RECOMMENDED</button></li>
+	        <li><a class="static" id="recommended_tab_divisor">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="saved_tab" href="">SAVED</button></li>
+	        <li><a class="static" id="saved_tab_divisor"> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="popular_tab" href="">POPULAR</button></li>
+	        <li><a class="static" id="popular_tab_divisor">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="categories_tab" href="">CATEGORIES</button></li>
+	        <li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="submit_event_tab" hidden href="">SUBMIT EVENT</button></li>       
+	      </ul>
+	    </div>
+	  </div>
+	</header>
 
+	<body>
+		<div id="newsfeed"></div>
 	</body>
+
 </html>
