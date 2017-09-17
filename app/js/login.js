@@ -22,7 +22,7 @@ function signIn(){
 			database.ref("users/"+user_from_auth.uid).once('value').then(function(user_from_database){
       			var user = user_from_database.val();
 			    if(user.is_admin){
-				  redirectToSubmitEventPage();
+				  redirectToIndexPage();
 			    } else{
 				  redirectToIndexPage();
 			    }
