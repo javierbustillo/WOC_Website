@@ -3,18 +3,46 @@ var auth = firebase.auth(),
     storage = firebase.storage(),
     database = firebase.database();
 
-$(document).ready(function() {
-  $("#loginButton").click(signIn);  	
-  $("#create_account").click(redirectToRegisterPage);
-  $("logout_button").click(signOut);
-});
+//wait for DOM to be ready
+$(function() {
+	$("form[name='login-form']").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 8
+			}
+		},
+		messages: {
+			email: {
+				required: "An email address is required",
+				email: "Please enter a valid email address"
+			},
+			password: {
+				required: "Password is required",
+				minlength: "Your Password must be at least 8 characters long"
+			}
+		},
+		submitHandler: function(form) {
+			form.submit();
+		}
+	});
 
+	$(document).ready(function() {
+	  $("#loginButton").click(signIn);
+	  $("#create_account").click(redirectToRegisterPage);
+	  $("logout_button").click(signOut);
+	});
+});
 
 function signIn(){
 
 	var email_input = $("#email").val();
   	var password_input = $("#password").val();
-  	
+
   	auth.signInWithEmailAndPassword(email_input, password_input)
     .then(function(user_from_auth){
 
@@ -31,29 +59,25 @@ function signIn(){
 			alert("Something went wrong.");
 		}
 
-	}).catch(function(error) {   
+	}).catch(function(error) {
 
 		console.log(error);
 
-        var errorCode = error.code;
+    var errorCode = error.code;
 		var errorMessage = error.message;
-
-		if(!email || !password) {
-			error_element.innerHTML = "Email and password required";
+		var error_element = document.getElementById("error");
+		if (errorCode === 'auth/wrong-password') {
+				error_element.innerHTML = "Invalid email or password";
 		} else {
-			if (errorCode === 'auth/wrong-password') {
-				error_element.innerHTML = "Wrong password";
+			if(errorCode==='auth/invalid-email') {
+			error_element.innerHTML = "Invalid email or password";
 			} else {
-				if(errorCode==='auth/invalid-email') {
-				error_element.innerHTML = "Please enter a valid email address";
-				} else {
-					if(errorCode==='auth/user-not-found') {
-						error_element.innerHTML = "Incorrect credentials";
-					}
+				if(errorCode==='auth/user-not-found') {
+					error_element.innerHTML = "Invalid email or password";
 				}
 			}
 		}
-   });   
+	});
 }
 
 function signOut(){
