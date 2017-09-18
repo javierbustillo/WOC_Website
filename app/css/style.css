@@ -247,6 +247,7 @@ body{
 #newsfeed img{
     max-width:100%; /* you can use % */
     height: auto;
+    display: block;
 }
 
 .event_title{
@@ -272,6 +273,52 @@ body{
 .event_header #event_date{
   display: inline-block;
 }
+
+
+
+.event_image_container {
+  position: relative;
+  width: 100%;
+}
+
+
+
+.event_image_overlay {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  right: 0;
+  background-color: #85BF75;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.event_image_container:hover .event_image_overlay {
+  width: 100%;
+  left: 0;
+}
+
+.event_save_button {
+  border:0;
+  background-color: #85BF75;
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.event_save_button:hover{
+  color:#4A4A4A;
+}
+
+
 
 
 /* Dropdown Button */
@@ -329,5 +376,8 @@ body{
 .dropdown:hover .dropbtn {
     color: #76b852;
 }
+
+
+
 
 

@@ -19,7 +19,7 @@ $(document).ready(function() {
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(loadRecommendedTabContent);
         $("#saved_tab").click(loadSavedTabContent);
-        $("#popular_tab").click(loadPopularTabContent);
+        //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
 
@@ -28,6 +28,9 @@ $(document).ready(function() {
 
         $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#newsfeed").on("click", "#cancel_button", reloadPage);
+
+        $("#newsfeed").on("click", ".event_save_button", this, saveEventToUser);
+
 
       }else{
         redirectToLoginPage();
@@ -111,7 +114,7 @@ function displayCategoriesEvents(category_name){
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event><div class=event_title>"+value.title+"</div><img id='"+value.image_url+"'class=event_image src=''><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  $("#newsfeed").append("<div class=event><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
@@ -157,6 +160,16 @@ function setTabActive(tab_name){
       break;
   }
 }
+
+function saveEventToUser(event){
+
+  console.log(event.target);
+
+  event = event.target.parentNode.parentNode.parentNode;
+  console.log(event);
+  
+}
+
 
 function uploadEventToDatabase(event_object_user){
 
