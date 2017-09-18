@@ -23,6 +23,9 @@ $(document).ready(function() {
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
 
+        $(".category_option_button").click(loadCategoriesTabContent);
+
+
         $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#newsfeed").on("click", "#cancel_button", reloadPage);
 
@@ -68,9 +71,9 @@ function loadPopularTabContent(){
 }
 
 function loadCategoriesTabContent(){
-  setTabActive("categories")
+  setTabActive("categories");
   $("#newsfeed").empty();
-  displayAllEvents();
+  displayCategoriesEvents(this.name);
 }
 
 function loadSubmitEventTabContent(){
@@ -90,6 +93,21 @@ function displayAllEvents(){
     displaySingleEvent(event.val());
   });
 
+}
+
+function displayCategoriesEvents(category_name){
+
+  database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+    if(event.val().category==category_name){
+      displaySingleEvent(event.val());
+    }
+  });
+
+  database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
+    if(event.val().category==category_name){
+      displaySingleEvent(event.val());
+    }
+  });
 }
 
 function displaySingleEvent(value){
