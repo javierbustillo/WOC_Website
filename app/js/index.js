@@ -22,13 +22,11 @@ $(document).ready(function() {
         //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
-
         $(".category_option_button").click(loadCategoriesTabContent);
 
 
         $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#newsfeed").on("click", "#cancel_button", reloadPage);
-
         $("#newsfeed").on("click", ".event_save_button", user, updateUserSavedEvents);
 
 
@@ -109,16 +107,18 @@ function displayCategoriesEvents(category_name){
 function displaySavedEvents(user){
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
     var saved_events = user_reference.child("saved_events").val();
-    database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
-      if(saved_events.includes(event.val().image_url)){
-        displaySingleEvent(event.val());
-      }
-    });
-    database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
-      if(saved_events.includes(event.val().image_url)){
-        displaySingleEvent(event.val());
-      }
-    });
+    if(saved_events!=null){
+      database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+        if(saved_events.includes(event.val().image_url)){
+          displaySingleEvent(event.val());
+        }
+      });
+      database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
+        if(saved_events.includes(event.val().image_url)){
+          displaySingleEvent(event.val());
+        }
+      });
+    }
   });
 }
 
@@ -179,17 +179,14 @@ function updateUserSavedEvents(user){
       var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
       if(current_saved_events_counter==null){
         database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
-        console.log("HERE 1");
       }else{
         var saved_events = user_reference.child("saved_events").val();
         for(var i=0; i<=current_saved_events_counter; i++){
           if(saved_events[i]==event_name&&i<current_saved_events_counter){
-            console.log("HERE 2");
             saved_events.splice(i, 1);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter-1});
             break;
           } else if(i==current_saved_events_counter){
-            console.log("HERE 3");
             saved_events.push(event_name);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
             break;
