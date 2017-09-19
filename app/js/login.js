@@ -66,10 +66,6 @@ function signIn(){
 		}
 
 	}).catch(function(error) {
-
-		console.log(error);
-
-
     var errorCode = error.code;
 		var errorMessage = error.message;
 		var error_element = document.getElementById("error");
