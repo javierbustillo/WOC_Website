@@ -18,13 +18,17 @@ $(document).ready(function() {
 
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(loadRecommendedTabContent);
-        $("#saved_tab").click(loadSavedTabContent);
-        $("#popular_tab").click(loadPopularTabContent);
+        $("#saved_tab").click(user, loadSavedTabContent);
+        //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
+        $(".category_option_button").click(loadCategoriesTabContent);
+
 
         $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#newsfeed").on("click", "#cancel_button", reloadPage);
+        $("#newsfeed").on("click", ".event_save_button", user, updateUserSavedEvents);
+
 
       }else{
         redirectToLoginPage();
@@ -55,10 +59,10 @@ function loadRecommendedTabContent(){
   displayAllEvents();
 }
 
-function loadSavedTabContent(){
+function loadSavedTabContent(user){
   setTabActive("saved")
   $("#newsfeed").empty();
-  displayAllEvents();
+  displaySavedEvents(user.data);
 }
 
 function loadPopularTabContent(){
@@ -68,9 +72,9 @@ function loadPopularTabContent(){
 }
 
 function loadCategoriesTabContent(){
-  setTabActive("categories")
+  setTabActive("categories");
   $("#newsfeed").empty();
-  displayAllEvents();
+  displayCategoriesEvents(this.name);
 }
 
 function loadSubmitEventTabContent(){
@@ -79,21 +83,47 @@ function loadSubmitEventTabContent(){
 }
 
 function displayAllEvents(){
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
-    //console.log(event.val().date);
     displaySingleEvent(event.val());
   });
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
-    //console.log(event.val().date);
     displaySingleEvent(event.val());
   });
+}
 
+function displayCategoriesEvents(category_name){
+  database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+    if(event.val().category==category_name){
+      displaySingleEvent(event.val());
+    }
+  });
+  database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
+    if(event.val().category==category_name){
+      displaySingleEvent(event.val());
+    }
+  });
+}
+
+function displaySavedEvents(user){
+  database.ref("users/"+user.uid).once("value").then(function(user_reference){
+    var saved_events = user_reference.child("saved_events").val();
+    if(saved_events!=null){
+      database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+        if(saved_events.includes(event.val().image_url)){
+          displaySingleEvent(event.val());
+        }
+      });
+      database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
+        if(saved_events.includes(event.val().image_url)){
+          displaySingleEvent(event.val());
+        }
+      });
+    }
+  });
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event><div class=event_title>"+value.title+"</div><img id='"+value.image_url+"'class=event_image src=''><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
@@ -140,6 +170,35 @@ function setTabActive(tab_name){
   }
 }
 
+function updateUserSavedEvents(user){
+
+  event_name = this.parentNode.parentNode.parentNode.title;
+  user = user.data;
+
+  database.ref("users/"+user.uid).once("value").then(function(user_reference){
+      var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
+      if(current_saved_events_counter==null||current_saved_events_counter==0){
+        database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
+      }else{
+        var saved_events = user_reference.child("saved_events").val();
+        for(var i=0; i<=current_saved_events_counter; i++){
+          if(saved_events[i]==event_name&&i<current_saved_events_counter){
+            saved_events.splice(i, 1);
+            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter-1});
+            break;
+          } else if(i==current_saved_events_counter){
+            saved_events.push(event_name);
+            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
+            break;
+          }
+        }
+        database.ref("users/"+user.uid).update({saved_events:saved_events});
+      }
+  });
+
+}
+
+
 function uploadEventToDatabase(event_object_user){
 
   user=event_object_user.data;
@@ -149,6 +208,7 @@ function uploadEventToDatabase(event_object_user){
       hour = $("#hour").val(),
       event_date_timestamp_format = new Date(date +" "+ hour).getTime(),
       place = $("#place").val(),
+      category = $("#category").val(),
       brief_description = $("#brief_description").val(),
       detailed_description = $("#detailed_description").val(),
       contact_email = $("#contact_email").val(),
@@ -170,6 +230,7 @@ function uploadEventToDatabase(event_object_user){
       title: title,
       date: date,
       hour: hour,
+      category: category,
       event_date_timestamp_format: event_date_timestamp_format,
       place: place,  
       brief_description: brief_description,

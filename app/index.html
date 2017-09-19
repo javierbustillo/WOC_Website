@@ -22,17 +22,34 @@
 	    </div>
 	    <div class="header02">
 	      <ul class="menu" >
-	        <li><button class="active" id="all_tab" href="">ALL</button></li>
+	        <li><button class="active" id="all_tab">ALL</button></li>
 	        <li><a class="static" id="all_tab_divisor" >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="recommended_tab" href="">RECOMMENDED</button></li>
+	        <li><button class="desactive" id="recommended_tab">RECOMMENDED</button></li>
 	        <li><a class="static" id="recommended_tab_divisor">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="saved_tab" href="">SAVED</button></li>
+	        <li><button class="desactive" id="saved_tab">SAVED</button></li>
 	        <li><a class="static" id="saved_tab_divisor"> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="popular_tab" href="">POPULAR</button></li>
-	        <li><a class="static" id="popular_tab_divisor">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="categories_tab" href="">CATEGORIES</button></li>
+	        <li><button class="desactive" id="popular_tab" hidden>POPULAR</button></li>
+	        <li><a class="static" id="popular_tab_divisor" hidden>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</a></li>
+	        <li class="dropdown_menu">
+
+	        <!--<button class="desactive" id="categories_tab" href="">CATEGORIES</button>-->
+			<div class="dropdown">
+			<button id="categories_tab" class="dropbtn">CATEGORIES</button>
+				  <div class="dropdown-content">
+				    <button class="category_option_button" name="Engineering">Engineering</button>
+				    <button class="category_option_button" name="Science">Science</button>
+				    <button class="category_option_button" name="Arts">Arts</button>
+				    <button class="category_option_button" name="Humanistics">Humanistics</button>
+				    <button class="category_option_button" name="Sports">Sports</button>
+				    <button class="category_option_button" name="Social Activities">Social Activities</button>
+				    <button class="category_option_button" name="Business Administration">Business Administration</button>
+				    <button class="category_option_button" name="Health">Health</button>
+				  </div>
+			</div>
+
+	        </li>
 	        <li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="submit_event_tab" hidden href="">SUBMIT EVENT</button></li>
+	        <li><button class="desactive" id="submit_event_tab" hidden >SUBMIT EVENT</button></li> 
 	      </ul>
 	    </div>
 	  </div>
