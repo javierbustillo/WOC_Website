@@ -5,6 +5,7 @@ var auth = firebase.auth(),
 
 //wait for DOM to be ready
 $(function() {
+	$("#error").fadeIn(100).fadeOut(100).fadeIn(100);
 	$("form[name='login-form']").validate({
 		rules: {
 			email: {
@@ -30,18 +31,21 @@ $(function() {
 			form.submit();
 		}
 	});
-
-	$(document).ready(function() {
-	  $("#loginButton").click(signIn);
-	  $("#create_account").click(redirectToRegisterPage);
-	  $("logout_button").click(signOut);
+	$("form[name='login-form']").children().keyup(function(event){
+    if(event.keyCode == 13){
+        $("#loginButton").click();
+    }
 	});
+
+  $("#loginButton").click(signIn);
+  $("#create_account").click(redirectToRegisterPage);
+  $("logout_button").click(signOut);
 });
 
 function signIn(){
 
 	var email_input = $("#email").val();
-  	var password_input = $("#password").val();
+  var password_input = $("#password").val();
 
   	auth.signInWithEmailAndPassword(email_input, password_input)
     .then(function(user_from_auth){
@@ -63,19 +67,14 @@ function signIn(){
 
 		console.log(error);
 
+
     var errorCode = error.code;
 		var errorMessage = error.message;
 		var error_element = document.getElementById("error");
-		if (errorCode === 'auth/wrong-password') {
+
+		if (errorCode === 'auth/wrong-password' || errorCode === 'auth/invalid-email' || errorCode === 'auth/user-not-found') {
+				$("form[name='login-form']").valid();
 				error_element.innerHTML = "Invalid email or password";
-		} else {
-			if(errorCode==='auth/invalid-email') {
-			error_element.innerHTML = "Invalid email or password";
-			} else {
-				if(errorCode==='auth/user-not-found') {
-					error_element.innerHTML = "Invalid email or password";
-				}
-			}
 		}
 	});
 }
@@ -83,8 +82,8 @@ function signIn(){
 function signOut(){
 	auth.signOut();
 	location.replace("login.html");
-
 }
+
 function redirectToRegisterPage(){
 	location.replace("register.html");
 }
@@ -96,5 +95,3 @@ function redirectToSubmitEventPage(){
 function redirectToIndexPage(){
 	window.location.replace("index.html");
 }
-
-
