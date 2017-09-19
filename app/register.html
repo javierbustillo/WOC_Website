@@ -5,7 +5,9 @@
 		<meta charset="utf-8">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/login.css"/>
-		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 		<script src="js/init.js" type="text/javascript" language="javascript"></script>
 		<script src="js/register.js" type="text/javascript" language="javascript"></script>
 	</head>
@@ -13,14 +15,22 @@
 	<div id="header">
 		<h1>WOC<h1>
 		<h2>What's on Campus?</h2>
-	</div>	
+	</div>
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form">
-				<input type="text" id="name" placeholder="name"/>
-				<input type="text" id="email" placeholder="email address"/>
-				<input type="password" id="password" placeholder="password"/>
-				<input type="button" value="create" id="create_button"/>
+			<div id="error"></div>
+			<form class="login-form" name="register">
+				<label for="fullname">Full Name</label>
+				<input type="text" id="name" name="fullname" placeholder="Full Name"/>
+
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" placeholder="Email"/>
+
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" placeholder="Password"/>
+
+				<input type="button" value="create" id="create_button" />
+
 				<p class="message">Already registered? <a id="signin_button" href="/login.html">Sign In</a></p>
 			</form>
 		</div>
