@@ -6,6 +6,7 @@ var auth = firebase.auth(),
 //wait for DOM to be ready
 $(function() {
 	$("#error").fadeIn(100).fadeOut(100).fadeIn(100);
+
 	$("form[name='login-form']").validate({
 		rules: {
 			email: {
@@ -31,6 +32,7 @@ $(function() {
 			form.submit();
 		}
 	});
+
 	$("form[name='login-form']").children().keyup(function(event){
     if(event.keyCode == 13){
         $("#loginButton").click();
