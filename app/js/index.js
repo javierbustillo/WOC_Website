@@ -177,7 +177,7 @@ function updateUserSavedEvents(user){
 
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
       var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
-      if(current_saved_events_counter==null){
+      if(current_saved_events_counter==null||current_saved_events_counter==0){
         database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
       }else{
         var saved_events = user_reference.child("saved_events").val();
