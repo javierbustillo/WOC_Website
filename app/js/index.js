@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(loadRecommendedTabContent);
-        $("#saved_tab").click(loadSavedTabContent);
+        $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
@@ -29,7 +29,7 @@ $(document).ready(function() {
         $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#newsfeed").on("click", "#cancel_button", reloadPage);
 
-        $("#newsfeed").on("click", ".event_save_button", this, saveEventToUser);
+        $("#newsfeed").on("click", ".event_save_button", user, updateUserSavedEvents);
 
 
       }else{
@@ -61,10 +61,10 @@ function loadRecommendedTabContent(){
   displayAllEvents();
 }
 
-function loadSavedTabContent(){
+function loadSavedTabContent(user){
   setTabActive("saved")
   $("#newsfeed").empty();
-  displayAllEvents();
+  displaySavedEvents(user.data);
 }
 
 function loadPopularTabContent(){
@@ -85,36 +85,45 @@ function loadSubmitEventTabContent(){
 }
 
 function displayAllEvents(){
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
-    //console.log(event.val().date);
     displaySingleEvent(event.val());
   });
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
-    //console.log(event.val().date);
     displaySingleEvent(event.val());
   });
-
 }
 
 function displayCategoriesEvents(category_name){
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
     if(event.val().category==category_name){
       displaySingleEvent(event.val());
     }
   });
-
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
     if(event.val().category==category_name){
       displaySingleEvent(event.val());
     }
+  });
+}
+
+function displaySavedEvents(user){
+  database.ref("users/"+user.uid).once("value").then(function(user_reference){
+    var saved_events = user_reference.child("saved_events").val();
+    database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+      if(saved_events.includes(event.val().image_url)){
+        displaySingleEvent(event.val());
+      }
+    });
+    database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
+      if(saved_events.includes(event.val().image_url)){
+        displaySingleEvent(event.val());
+      }
+    });
   });
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
@@ -161,13 +170,35 @@ function setTabActive(tab_name){
   }
 }
 
-function saveEventToUser(event){
+function updateUserSavedEvents(user){
 
-  console.log(event.target);
+  event_name = this.parentNode.parentNode.parentNode.title;
+  user = user.data;
 
-  event = event.target.parentNode.parentNode.parentNode;
-  console.log(event);
-  
+  database.ref("users/"+user.uid).once("value").then(function(user_reference){
+      var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
+      if(current_saved_events_counter==null){
+        database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
+        console.log("HERE 1");
+      }else{
+        var saved_events = user_reference.child("saved_events").val();
+        for(var i=0; i<=current_saved_events_counter; i++){
+          if(saved_events[i]==event_name&&i<current_saved_events_counter){
+            console.log("HERE 2");
+            saved_events.splice(i, 1);
+            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter-1});
+            break;
+          } else if(i==current_saved_events_counter){
+            console.log("HERE 3");
+            saved_events.push(event_name);
+            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
+            break;
+          }
+        }
+        database.ref("users/"+user.uid).update({saved_events:saved_events});
+      }
+  });
+
 }
 
 

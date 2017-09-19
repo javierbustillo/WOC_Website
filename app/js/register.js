@@ -28,6 +28,7 @@ function createNewAccount(){
 		email: user.email,
 		total_event_created: 0,
 		total_event_active: 0,
+		current_saved_events_counter: 0,
 		is_admin: false
 	  }).then(redirectToIndex);
 	} else {
