@@ -28,7 +28,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     HomeComponent,
     ErrorComponent,
     LoginComponent,
-    TemplateComponent
+    TemplateComponent,
   ],
   imports: [
     BrowserModule,
