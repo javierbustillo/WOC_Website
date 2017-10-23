@@ -40,9 +40,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 		AngularFireDatabaseModule,
 		AngularFireAuthModule
   ],
-  providers: [
-  	AuthService,
-  ],
+  providers: [AuthService],
   bootstrap: [TemplateComponent]
 })
 
