@@ -6,34 +6,35 @@
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 		<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 		<script src="js/index.js"></script>
 	</head>
 
 	<header>
-	  <div class="generalHeader">
-	    <div class="header01">
-	      <a href="/index.html" id="wocTitle">WOC</a>
+	    <div class="upperHeader">
 	      <div class="loggedAs">
 	        Welcome,
 	        <a id="username"></a>!<br>
 	        <button id="logout_button">Log out.</button>
 	      </div>
+	      <div href="/index.html" id="wocTitle">What's on Campus?</div>
+	      
 	    </div>
-	    <div class="header02">
+	    <div class="lowerHeader">
 	      <ul class="menu" >
-	        <li><button class="active" id="all_tab">ALL</button></li>
-	        <li><a class="static" id="all_tab_divisor" >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="recommended_tab">RECOMMENDED</button></li>
-	        <li><a class="static" id="recommended_tab_divisor">&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="saved_tab">SAVED</button></li>
-	        <li><a class="static" id="saved_tab_divisor"> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="popular_tab" hidden>POPULAR</button></li>
-	        <li><a class="static" id="popular_tab_divisor" hidden>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="active" id="all_tab">All</button></li>
+	        <li><a class="static" id="all_tab_divisor" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="recommended_tab">Recommended</button></li>
+	        <li><a class="static" id="recommended_tab_divisor">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="saved_tab">Saved</button></li>
+	        <li><a class="static" id="saved_tab_divisor"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="popular_tab" hidden>Popular</button></li>
+	        <li><a class="static" id="popular_tab_divisor" hidden>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
 	        <li class="dropdown_menu">
 
 	        <!--<button class="desactive" id="categories_tab" href="">CATEGORIES</button>-->
 			<div class="dropdown">
-			<button id="categories_tab" class="dropbtn">CATEGORIES</button>
+			<button id="categories_tab" class="dropbtn">Categories</button>
 				  <div class="dropdown-content">
 				    <button class="category_option_button" name="Engineering">Engineering</button>
 				    <button class="category_option_button" name="Science">Science</button>
@@ -47,11 +48,10 @@
 			</div>
 
 	        </li>
-	        <li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="submit_event_tab" hidden >SUBMIT EVENT</button></li> 
+	        <li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+	        <li><button class="desactive" id="submit_event_tab" hidden >Submit Event</button></li> 
 	      </ul>
 	    </div>
-	  </div>
 	</header>
 
 	<body>

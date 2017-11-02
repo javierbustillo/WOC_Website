@@ -2,55 +2,48 @@
 
 
 header{
-  top:0;
   width: 100%;
-  min-width: : 650px;
-  position: fixed;
-  z-index: 2;
+  min-width: 650px;
+  display: block;
+  border-style: solid;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
 }
 
 body{
-  padding: 0 auto;
-  margin: 0 auto;
+  align-items: center;
+  align-content: center;
 }
 
-
-.header01 {
+.upperHeader {
+  width: 100%;
   padding: 0;
-  margin: 0;
-  height:80px;
-  background: #85BF75; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, ##85BF75, #8DC26F);
-  background: -moz-linear-gradient(right, ##85BF75, #8DC26F);
-  background: -o-linear-gradient(right, ##85BF75, #8DC26F);
-  background: linear-gradient(to left, ##85BF75, #8DC26F);
-  line-height:0;
-
-
+  background: white; 
+  position: relative;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
 }
 
 #wocTitle{
-  position: relative;
-  float: left;
-  top:45px;
-  left: 20px;
-  font-size: 60px;
+  text-align: center;
+  font-size: 40px;
   text-decoration: none;
-  font-family:Bariol, 'Open Sans', Arial;
-  color: #FFFFFF;
-
+  font-family: 'Open Sans';
+  color: #85BF75;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 300;
+  margin-bottom: 5px;
 }
 
-
 .loggedAs {
-  position: relative;
+  position: absolute;
+  font-size: 14px;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  color: gray;
   right: 20px;
-  top: 35px;
-  float:right;
-  font-size: 16px;
-  font-family: Bariol, 'Open Sans', Arial;
-  color: #FFF;
-  line-height: 20px;
+  top: 20px;
 
 }
 
@@ -60,31 +53,30 @@ body{
 }
 
 
-.header02{
-  background: #4A4A4A;
-  margin-top: -17px;
+.lowerHeader{
+  background: white;
+  margin: 0;
   width: auto;
   padding: 0;
-  line-height: 1.5;
-  display: block;
-  position: relative;
-  z-index: 9999;
   text-align: center;
-  color: #FFF;
+  color: gray;
 }
 
 
-
-.header02 ul li a {
+.lowerHeader ul li a {
   font-family: 'Open Sans', Bariol, Arial;
   font-style: normal;
   font-size: 13px;
   text-decoration: none;
 }
 
+ul, menu, dir{
+  margin: 5px;
+}
+
 .desactive{
   border:none;
-  color: #FFF;
+  color: gray;
   border:none;
   background: none;
   font-family: 'Open Sans', Bariol, Arial;
@@ -94,21 +86,26 @@ body{
 }
 
 .static{
-    color:#FFF;
+    color:gray;
 }
 .desactive:hover {
   color: #76b852;
 }
 
-.header02 ul li a:active {
-  color: #85BF75;
+button:focus {
+  outline:0;
 }
 
-.header02 ul {
+.lowerHeader ul li a:active {
+  color: #85BF75;
+  border: none;
+}
+
+.lowerHeader ul {
   left:-10px;
 }
 
-.header02 ul li {
+.lowerHeader ul li {
   display: inline;
 }
 
@@ -230,29 +227,38 @@ body{
 }
 
 #newsfeed {
-  margin: auto;
-  padding-top: 150px;
+
+  position: relative;
+  margin: auto 30px;
+  padding-top: 10px;
   padding-bottom: 50px;
-  width: 400px;
-  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  width: auto;
+  height: auto;
+  font-family: "Open Sans";
+    align-content: center;
+
 }
 
 
 #newsfeed .event {
-  padding: 10px;
-}
+  position: relative;
+  padding: 20px;
+  width: 300px;
+  display: inline-block;
+ }
 
 
 
 #newsfeed img{
-    max-width:100%; /* you can use % */
-    height: auto;
     display: block;
+    object-fit: cover;
+    width:300px;
+    height:300px;
 }
 
 .event_title{
-  font-weight: bold;
-  font-size: 20px;
+  font-weight: 350;
+  font-size: 18px;
   color:#4A4A4A;
 }
 
@@ -376,8 +382,4 @@ body{
 .dropdown:hover .dropbtn {
     color: #76b852;
 }
-
-
-
-
 
