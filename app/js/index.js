@@ -1,5 +1,15 @@
+//Setup Firebase 
+  var config = {
+     apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
+     authDomain: "whats-on-campus.firebaseapp.com",
+     databaseURL: "https://whats-on-campus.firebaseio.com",
+     projectId: "whats-on-campus",
+     storageBucket: "whats-on-campus.appspot.com",
+     messagingSenderId: "2443063959"
+  };
+  firebase.initializeApp(config);
 
-//Initialize Firebase
+//Initialize Firebase Instances
 var auth = firebase.auth(),
   storage = firebase.storage(),
   database = firebase.database();
@@ -48,38 +58,44 @@ function addAdminTabs(user) {
 }
 
 function loadAllTabContent(){
-  setTabActive("all")
+  setTabActive("all");
+  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadRecommendedTabContent(){
   setTabActive("recommended")
+  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadSavedTabContent(user){
-  setTabActive("saved")
+  setTabActive("saved");
+  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displaySavedEvents(user.data);
 }
 
 function loadPopularTabContent(){
   setTabActive("popular")
+  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadCategoriesTabContent(){
   setTabActive("categories");
+  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayCategoriesEvents(this.name);
 }
 
 function loadSubmitEventTabContent(){
-  $("#newsfeed").load("submit_event.html");
   setTabActive("submit_event");
+  $("#newsfeed").empty();
+  $("#submit_event_form").prop("hidden", false);
 }
 
 function displayAllEvents(){

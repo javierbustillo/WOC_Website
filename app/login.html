@@ -7,29 +7,46 @@
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-		<script src="js/init.js" type="text/javascript" language="javascript"></script>
 		<script src="js/login.js" type="text/javascript" language="javascript"></script>
 	</head>
-
 	<body id="bodylogin">
 	<div id="header">
 		<h1>WOC<h1>
 		<h2>What's on Campus?</h2>
 	</div>
-
-	<div class="login-page" type="post">
+	<div class="login-page" id="login_page" type="post">
 		<div class="form">
 			<div id="error"></div>
 			<form class="login-form" name='login-form'>
-				<label for="email">Email</label>
-				<input type="text" name="email" placeholder="Email" id="email" />
+				<label for="email"></label>
+				<input type="text" name="email_login_form" placeholder="Email" id="email_login_form" />
 
-				<label for="password">Password</label>
-				<input type="password" name="password" placeholder="Password" id="password" />
+				<label for="password"></label>
+				<input type="password" name="password_login_form" placeholder="Password" id="password_login_form" />
 
 				<input type="button" value="login" name="loginButton" id="loginButton"/>
 
-				<p class="message">Not registered? <a id="create_account" href="/register.html">Create an account</a></p>
+				<p class="message">Not registered? <a id="create_account">Create an account</a></p>
+			</form>
+		</div>
+	</div>
+
+	<div class="login-page" id="register_page" hidden>
+		<div class="form">
+			<div id="error"></div>
+			<form class="login-form" name="register">
+				<label for="name_register_form"></label>
+				<input type="text" id="name_register_form" name="name_register_form" placeholder="Name"/>
+
+				<label for="email_register"></label>
+				<input type="text" id="email_register_form" name="email_register_form" placeholder="Email"/>
+
+				<label for="password"></label>
+				<input type="password" id="password_register_form" name="password_register_form" placeholder="Password"/>
+
+				<input type="button" value="create" id="create_button" />
+
+				<p class="message">Already registered? <a id="signin_button">Sign In</a></p>
 			</form>
 		</div>
 	</div>
