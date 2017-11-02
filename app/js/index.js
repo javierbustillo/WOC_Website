@@ -139,11 +139,25 @@ function displaySavedEvents(user){
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class=event_title>"+value.title+"</div><div class = event_header><div class=event_info_header id=event_hour>"+convert24HourToAmPm(value.hour)+"</div><div class=event_info_header id=event_date>"+"   |   "+convertDateToWords(value.date+" 02:00:00")+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
   });
+}
+
+function convertDateToWords(date){
+  var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
+  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  date = new Date(date);
+  var day = date.getDate();
+  var month = monthNames[date.getMonth()];
+  var year = date.getFullYear();
+  return month + ' '+day + ', ' +year;
+}
+
+function convert24HourToAmPm(hour) {
+    return moment(hour, 'HH:mm:ss').format('h:mm a');
 }
 
 
