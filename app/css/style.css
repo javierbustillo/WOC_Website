@@ -119,6 +119,30 @@ button:focus {
   text-decoration: none;
 }
 
+#banner{
+  display: inline-block;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
+}
+
+#banner_header{
+  padding-left: 40px;
+  padding-top: 30px;
+  color:gray;
+  font-family: "Open Sans";
+  font-size: 30px;
+  width: 30%;
+  float: left;
+}
+
+#banner_image{
+  height: auto;
+  width: 60%;
+  float: right;
+  padding-right: 40px;
+  padding-top: 10px;
+}
+
 .form {
   position: relative;
   top: 0px;
