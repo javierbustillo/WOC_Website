@@ -21,7 +21,7 @@
 	        <button id="logout_button">Log out.</button>
 	      </div>
 	      <div href="/index.html" id="wocTitle">What's on Campus?</div>
-	      
+
 	    </div>
 	    <div class="lowerHeader">
 	      <ul class="menu" >
@@ -52,7 +52,8 @@
 
 	        </li>
 	        <li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
-	        <li><button class="desactive" id="submit_event_tab" hidden >Submit Event</button></li> 
+	        <li><button class="desactive" id="admin_tab" hidden >Admin Panel</button></li>
+	        <li><button class="desactive" id="submit_event_tab" hidden >Submit Event</button></li>
 	      </ul>
 	    </div>
 	</header>
@@ -87,7 +88,7 @@
 				  	<option value="Business Administration">Business Administration</option>
 				  	<option value="Health">Health</option>
 				</select>
-						
+
 				<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
 				<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
 				<a class="standard_text">Upload a cover image </a> <a id="percent"></a>
@@ -95,6 +96,15 @@
 			</form>
 			<button id="publish_button">publish </button><br>
 			<button id="cancel_button">cancel</button>
+		</div>
+
+		<div id="admin_panel" hidden>
+			Admin Panel
+			Settings
+			Manage Users
+			Manage Events
+			Manage Associations
+
 		</div>
 	</body>
 

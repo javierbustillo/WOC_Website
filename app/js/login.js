@@ -1,4 +1,4 @@
-//Setup Firebase 
+//Setup Firebase
   var config = {
      apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
      authDomain: "whats-on-campus.firebaseapp.com",
@@ -41,7 +41,7 @@ $(function() {
 			form.submit();
 		}
 	});
-	
+
 	$("form[name='register']").validate({
 			rules: {
 				fullname_register_form: {
@@ -73,7 +73,7 @@ $(function() {
 				form.submit();
 			}
 	});
-	
+
 	$("form[name='register']").children().keyup(function(event){
     if(event.keyCode == 13){
         $("#create_button").click();

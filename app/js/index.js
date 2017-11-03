@@ -1,4 +1,4 @@
-//Setup Firebase 
+//Setup Firebase
   var config = {
      apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
      authDomain: "whats-on-campus.firebaseapp.com",
@@ -11,8 +11,8 @@
 
 //Initialize Firebase Instances
 var auth = firebase.auth(),
-  storage = firebase.storage(),
-  database = firebase.database();
+    storage = firebase.storage(),
+    database = firebase.database();
 
 
 $(document).ready(function() {
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
         assignUsernameToHeader(user.displayName);
         addAdminTabs(user);
-        
+
         loadAllTabContent();
 
         $("#logout_button").click(signOut);
@@ -32,6 +32,7 @@ $(document).ready(function() {
         //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
+        $("#admin_tab").click(loadAdminTabContent);
         $(".category_option_button").click(loadCategoriesTabContent);
 
 
@@ -53,6 +54,7 @@ function addAdminTabs(user) {
           if(user_from_database.val().is_admin) {
             $("#categories_tab_divisor").removeAttr("hidden");
             $("#submit_event_tab").removeAttr("hidden");
+            $("#admin_tab").removeAttr("hidden");
           }
   });
 }
@@ -108,6 +110,15 @@ function loadSubmitEventTabContent(){
   $('#banner_image').attr("src","images/medium_art_front_page.png");
   $("#newsfeed").empty();
   $("#submit_event_form").prop("hidden", false);
+}
+
+function loadAdminTabContent(){
+  setTabActive("admin");
+  $('#banner_header').html("Admin Panel.");
+  $('#banner_image').attr("src","images/medium_art_front_page.png");
+  $("#newsfeed").empty();
+  $("#submit_event_form").prop("hidden", true);
+  $("#admin_panel").prop("hidden", false);
 }
 
 function displayAllEvents(){
@@ -180,33 +191,38 @@ function setTabActive(tab_name){
   $("#popular_tab").attr("class", "desactive");
   $("#categories_tab").attr("class", "desactive");
   $("#submit_event_tab").attr("class", "desactive");
+  $("#admin_tab").attr("class", "desactive");
 
   switch (tab_name) {
-    case "all": 
+    case "all":
       $("#all_tab").attr("class", "active");
       break;
 
-    case "recommended": 
+    case "recommended":
       $("#recommended_tab").attr("class", "active");
       break;
 
-    case "saved": 
+    case "saved":
       $("#saved_tab").attr("class", "active");
       break;
 
-    case "popular": 
+    case "popular":
       $("#popular_tab").attr("class", "active");
       break;
 
-    case "categories": 
+    case "categories":
       $("#categories_tab").attr("class", "active");
       break;
 
-    case "submit_event": 
+    case "submit_event":
       $("#submit_event_tab").attr("class", "active");
       break;
 
-    default: 
+    case "admin":
+      $("#admin_tab").attr("class", "active");
+      break;
+
+    default:
       $("#all_tab").attr("class", "active");
       break;
   }
@@ -274,7 +290,7 @@ function uploadEventToDatabase(event_object_user){
       hour: hour,
       category: category,
       event_date_timestamp_format: event_date_timestamp_format,
-      place: place,  
+      place: place,
       brief_description: brief_description,
       detailed_description: detailed_description,
       contact_email: contact_email,
@@ -300,7 +316,7 @@ function uploadEventToDatabase(event_object_user){
 function uploadEventImageToStorage(image_file, image_path){
 
   var upload_status = storage.ref(image_path).put(image_file);
-  
+
   //Update progress bar
   upload_status.on('state_changed',
     function progress(snapshot){
@@ -313,7 +329,7 @@ function uploadEventImageToStorage(image_file, image_path){
       console.log("Image has been uploaded.");
       reloadPage();
     }
-  );  
+  );
 }
 
 function assignUsernameToHeader(user_name){
