@@ -117,6 +117,7 @@ function loadAdminTabContent(){
   $('#banner_header').html("Admin Panel.");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
   $("#newsfeed").empty();
+  $("#admin_panel").prop("hidden", false);
 }
 
 function displayAllEvents(){
