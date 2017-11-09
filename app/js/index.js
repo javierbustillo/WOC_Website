@@ -45,6 +45,8 @@ $(document).ready(function() {
         redirectToLoginPage();
       }
 
+      hideAllTabContent();
+
     });
 });
 
@@ -59,11 +61,14 @@ function addAdminTabs(user) {
   });
 }
 
+function hideAllTabContent() {
+  $("#submit_event_form").prop("hidden", true);
+  $("#admin_panel").prop("hidden", true);
+}
 function loadAllTabContent(){
   setTabActive("all");
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
@@ -72,7 +77,6 @@ function loadRecommendedTabContent(){
   setTabActive("recommended");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/catching_things.jpg");
-  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
@@ -81,7 +85,6 @@ function loadSavedTabContent(user){
   setTabActive("saved");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/fox.jpg");
-  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displaySavedEvents(user.data);
 }
@@ -90,7 +93,6 @@ function loadPopularTabContent(){
   setTabActive("popular");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/bus.png");
-  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayAllEvents();
 }
@@ -99,7 +101,6 @@ function loadCategoriesTabContent(){
   setTabActive("categories");
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
   $('#banner_image').attr("src","images/bus.png");
-  $("#submit_event_form").prop("hidden", true);
   $("#newsfeed").empty();
   displayCategoriesEvents(this.name);
 }
@@ -109,7 +110,6 @@ function loadSubmitEventTabContent(){
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
   $("#newsfeed").empty();
-  $("#submit_event_form").prop("hidden", false);
 }
 
 function loadAdminTabContent(){
@@ -117,8 +117,6 @@ function loadAdminTabContent(){
   $('#banner_header').html("Admin Panel.");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
   $("#newsfeed").empty();
-  $("#submit_event_form").prop("hidden", true);
-  $("#admin_panel").prop("hidden", false);
 }
 
 function displayAllEvents(){
