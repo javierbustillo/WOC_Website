@@ -1,8 +1,18 @@
+//Setup Firebase
+  var config = {
+     apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
+     authDomain: "whats-on-campus.firebaseapp.com",
+     databaseURL: "https://whats-on-campus.firebaseio.com",
+     projectId: "whats-on-campus",
+     storageBucket: "whats-on-campus.appspot.com",
+     messagingSenderId: "2443063959"
+  };
+  firebase.initializeApp(config);
 
-//Initialize Firebase
+//Initialize Firebase Instances
 var auth = firebase.auth(),
-  storage = firebase.storage(),
-  database = firebase.database();
+    storage = firebase.storage(),
+    database = firebase.database();
 
 
 $(document).ready(function() {
@@ -11,7 +21,7 @@ $(document).ready(function() {
 
         assignUsernameToHeader(user.displayName);
         addAdminTabs(user);
-        
+
         loadAllTabContent();
 
         $("#logout_button").click(signOut);
@@ -22,6 +32,7 @@ $(document).ready(function() {
         //$("#popular_tab").click(loadPopularTabContent);
         $("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
+        $("#admin_tab").click(loadAdminTabContent);
         $(".category_option_button").click(loadCategoriesTabContent);
 
 
@@ -34,6 +45,8 @@ $(document).ready(function() {
         redirectToLoginPage();
       }
 
+      hideAllTabContent();
+
     });
 });
 
@@ -43,43 +56,68 @@ function addAdminTabs(user) {
           if(user_from_database.val().is_admin) {
             $("#categories_tab_divisor").removeAttr("hidden");
             $("#submit_event_tab").removeAttr("hidden");
+            $("#admin_tab").removeAttr("hidden");
           }
   });
 }
 
+function hideAllTabContent() {
+  $("#submit_event_form").prop("hidden", true);
+  $("#admin_panel").prop("hidden", true);
+}
 function loadAllTabContent(){
-  setTabActive("all")
+  setTabActive("all");
+  $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
+  $('#banner_image').attr("src","images/medium_art_front_page.png");
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadRecommendedTabContent(){
-  setTabActive("recommended")
+  setTabActive("recommended");
+  $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
+  $('#banner_image').attr("src","images/catching_things.jpg");
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadSavedTabContent(user){
-  setTabActive("saved")
+  setTabActive("saved");
+  $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
+  $('#banner_image').attr("src","images/fox.jpg");
   $("#newsfeed").empty();
   displaySavedEvents(user.data);
 }
 
 function loadPopularTabContent(){
-  setTabActive("popular")
+  setTabActive("popular");
+  $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
+  $('#banner_image').attr("src","images/bus.png");
   $("#newsfeed").empty();
   displayAllEvents();
 }
 
 function loadCategoriesTabContent(){
   setTabActive("categories");
+  $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
+  $('#banner_image').attr("src","images/bus.png");
   $("#newsfeed").empty();
   displayCategoriesEvents(this.name);
 }
 
 function loadSubmitEventTabContent(){
-  $("#newsfeed").load("submit_event.html");
   setTabActive("submit_event");
+  $('#banner_header').html("Let the campus know about the next big event.");
+  $('#banner_image').attr("src","images/medium_art_front_page.png");
+  $("#newsfeed").empty();
+}
+
+function loadAdminTabContent(){
+  setTabActive("admin");
+  $('#banner_header').html("Admin Panel.");
+  $('#banner_image').attr("src","images/medium_art_front_page.png");
+  $("#newsfeed").empty();
+  $("#admin_panel").prop("hidden", false);
 }
 
 function displayAllEvents(){
@@ -123,11 +161,25 @@ function displaySavedEvents(user){
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_title>"+value.title+"</div><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class = event_header><div class=event_info_header id=event_hour>"+value.hour+"</div><div class=event_info_header id=event_date>"+"   |   "+value.date+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class=event_title>"+value.title+"</div><div class = event_header><div class=event_info_header id=event_hour>"+convert24HourToAmPm(value.hour)+"</div><div class=event_info_header id=event_date>"+"   |   "+convertDateToWords(value.date+" 02:00:00")+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
   });
+}
+
+function convertDateToWords(date){
+  var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
+  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  date = new Date(date);
+  var day = date.getDate();
+  var month = monthNames[date.getMonth()];
+  var year = date.getFullYear();
+  return month + ' '+day + ', ' +year;
+}
+
+function convert24HourToAmPm(hour) {
+    return moment(hour, 'HH:mm:ss').format('h:mm a');
 }
 
 
@@ -138,33 +190,38 @@ function setTabActive(tab_name){
   $("#popular_tab").attr("class", "desactive");
   $("#categories_tab").attr("class", "desactive");
   $("#submit_event_tab").attr("class", "desactive");
+  $("#admin_tab").attr("class", "desactive");
 
   switch (tab_name) {
-    case "all": 
+    case "all":
       $("#all_tab").attr("class", "active");
       break;
 
-    case "recommended": 
+    case "recommended":
       $("#recommended_tab").attr("class", "active");
       break;
 
-    case "saved": 
+    case "saved":
       $("#saved_tab").attr("class", "active");
       break;
 
-    case "popular": 
+    case "popular":
       $("#popular_tab").attr("class", "active");
       break;
 
-    case "categories": 
+    case "categories":
       $("#categories_tab").attr("class", "active");
       break;
 
-    case "submit_event": 
+    case "submit_event":
       $("#submit_event_tab").attr("class", "active");
       break;
 
-    default: 
+    case "admin":
+      $("#admin_tab").attr("class", "active");
+      break;
+
+    default:
       $("#all_tab").attr("class", "active");
       break;
   }
@@ -232,7 +289,7 @@ function uploadEventToDatabase(event_object_user){
       hour: hour,
       category: category,
       event_date_timestamp_format: event_date_timestamp_format,
-      place: place,  
+      place: place,
       brief_description: brief_description,
       detailed_description: detailed_description,
       contact_email: contact_email,
@@ -258,7 +315,7 @@ function uploadEventToDatabase(event_object_user){
 function uploadEventImageToStorage(image_file, image_path){
 
   var upload_status = storage.ref(image_path).put(image_file);
-  
+
   //Update progress bar
   upload_status.on('state_changed',
     function progress(snapshot){
@@ -271,7 +328,7 @@ function uploadEventImageToStorage(image_file, image_path){
       console.log("Image has been uploaded.");
       reloadPage();
     }
-  );  
+  );
 }
 
 function assignUsernameToHeader(user_name){
