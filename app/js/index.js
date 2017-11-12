@@ -36,9 +36,9 @@ $(document).ready(function() {
         $(".category_option_button").click(loadCategoriesTabContent);
 
 
-        $("#newsfeed").on("click", "#publish_button",user, uploadEventToDatabase);
-        $("#newsfeed").on("click", "#cancel_button", reloadPage);
-        $("#newsfeed").on("click", ".event_save_button", user, updateUserSavedEvents);
+        $("#eventsFeed").on("click", "#publish_button",user, uploadEventToDatabase);
+        $("#eventsFeed").on("click", "#cancel_button", reloadPage);
+        $("#eventsFeed").on("click", ".event_save_button", user, updateUserSavedEvents);
 
 
       }else{
@@ -69,7 +69,7 @@ function loadAllTabContent(){
   setTabActive("all");
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   displayAllEvents();
 }
 
@@ -77,7 +77,7 @@ function loadRecommendedTabContent(){
   setTabActive("recommended");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/catching_things.jpg");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   displayAllEvents();
 }
 
@@ -85,7 +85,7 @@ function loadSavedTabContent(user){
   setTabActive("saved");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/fox.jpg");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   displaySavedEvents(user.data);
 }
 
@@ -93,7 +93,7 @@ function loadPopularTabContent(){
   setTabActive("popular");
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","images/bus.png");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   displayAllEvents();
 }
 
@@ -101,7 +101,7 @@ function loadCategoriesTabContent(){
   setTabActive("categories");
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
   $('#banner_image').attr("src","images/bus.png");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   displayCategoriesEvents(this.name);
 }
 
@@ -109,14 +109,14 @@ function loadSubmitEventTabContent(){
   setTabActive("submit_event");
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
 }
 
 function loadAdminTabContent(){
   setTabActive("admin");
   $('#banner_header').html("Admin Panel.");
   $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#newsfeed").empty();
+  $("#eventsFeed").empty();
   $("#admin_panel").prop("hidden", false);
 }
 
@@ -161,11 +161,26 @@ function displaySavedEvents(user){
 }
 
 function displaySingleEvent(value){
-  $("#newsfeed").append("<div class=event title="+value.image_url+"><div class=event_image_container><img id='"+value.image_url+"'class=event_image src=''><div class=event_image_overlay><button class=event_save_button>Save Event</button></div></div><div class=event_title>"+value.title+"</div><div class = event_header><div class=event_info_header id=event_hour>"+convert24HourToAmPm(value.hour)+"</div><div class=event_info_header id=event_date>"+"   |   "+convertDateToWords(value.date+" 02:00:00")+"   |   "+"</div><div class=event_info_header id=event_place>"+value.place+"</div></div><div class=event_brief_description>"+value.brief_description+"</div></div>");
+  var source = $("#event-template").html();
+
+  var template = Handlebars.compile(source);
+
+  var data = {title: value.title,
+              imageUrl: value.image_url,
+              date: convertDateToWords(value.date),
+              hour: convert24HourToAmPm(value.hour),
+              place: value.place,
+              briefDescription: value.brief_description,
+            };
+
+  $("#eventsFeed").append(template(data));
+
   var image_id = "#"+value.image_url;
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
   });
+
+
 }
 
 function convertDateToWords(date){
@@ -228,7 +243,6 @@ function setTabActive(tab_name){
 }
 
 function updateUserSavedEvents(user){
-
   event_name = this.parentNode.parentNode.parentNode.title;
   user = user.data;
 
