@@ -1,0 +1,42 @@
+<div class="main-content">
+    <div class="all-events page">
+      <div class=".events-list">
+        <script id="event-template" type="x-handlebars-template">
+          {{#each this}}
+            <div class='event' title='{{value.image_url}}'>
+              <div class='event_image_container'>
+                <img id='{{value.image_url}}' class='event_image' src=''>
+                <div class='event_image_overlay'>
+                  <button class='event_save_button'>Save Event</button>
+                </div>
+              </div>
+              <div class='event_title'>{{value.title}}</div>
+              <div class = 'event_header'>
+                <div class='event_info_header' id='event_hour'>{{convert24HourToAmPm(value.hour)}}</div>
+                <div class='event_info_header' id='event_date'>
+                  {{   |   {{convertDateToWords(value.date 02:00:00)}}   |
+                </div>
+                <div class='event_info_header' id='event_place'>{{value.place}}</div>
+              </div>
+              <div class='event_brief_description'>{{value.brief_description}}</div>
+            </div>
+          {{/each}}
+        </script>
+      </div>
+    </div>
+
+    <div class="single-event page">
+      <div class="overlay"></div>
+        <div class="preview-large">
+            <h3>Single event view</h3>
+            <img src=""/>
+            <p></p>
+
+            <span class="close">&times;</span>
+        </div>
+    </div>
+
+    <div class="error page">
+        <h3>Sorry, something went wrong :(</h3>
+    </div>
+</div>
