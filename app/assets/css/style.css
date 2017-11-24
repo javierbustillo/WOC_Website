@@ -267,25 +267,24 @@ button:focus {
 }
 
 #eventsFeed {
-
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
   position: relative;
   margin: auto 30px;
-  padding-top: 10px;
+  padding-top: 40px;
   padding-bottom: 50px;
   width: auto;
   height: auto;
   font-family: "Open Sans";
-    align-content: center;
-
 }
 
 
 #eventsFeed .event {
-  position: relative;
   padding: 0;
   margin: 20px;
   width: 300px;
-  display: inline-block;
+  height: 500px;
   border: thin solid #f2f2f2;
  }
 
@@ -296,24 +295,37 @@ button:focus {
     object-fit: cover;
     width:300px;
     height:300px;
+    border-bottom: thin solid #f2f2f2;
 }
 
 .event_title{
-  font-weight: bold;
+  font-family: "Open Sans";
+  font-weight: 300;
   font-size: 18px;
-  color:#4A4A4A;
+  color:black;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .event_brief_description{
   color:#484848;
   font-size: 13px;
+  font-weight: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
 }
 
-.event_header{
-  color:#4A4A4A;
+.event_info_header{
+  color:#484848;
   min-width: 100%;
   display: inline-block;
-  font-size: 15px;
+  font-size: 13px;
+  font-weight: 200;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .event_header #event_hour,
@@ -321,7 +333,6 @@ button:focus {
 .event_header #event_date{
   display: inline-block;
 }
-
 
 
 .event_image_container {
@@ -437,6 +448,8 @@ table td{
 .delete_event_button{
   background-color: red;
 }
+
+
 
 /* Dropdown Button */
 .dropbtn {
