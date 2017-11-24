@@ -30,16 +30,24 @@ $(document).ready(function() {
         $("#recommended_tab").click(loadRecommendedTabContent);
         $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
-        $("#categories_tab").click(loadCategoriesTabContent);
+        //$("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
-        $("#admin_tab").click(loadAdminTabContent);
+        //$("#admin_tab").click(loadAdminTabContent);
         $(".category_option_button").click(loadCategoriesTabContent);
+        $(".admin_option_button").click(loadAdminTabContent);
 
-
-        $("#eventsFeed").on("click", "#publish_button",user, uploadEventToDatabase);
-        $("#eventsFeed").on("click", "#cancel_button", reloadPage);
         $("#eventsFeed").on("click", ".event_save_button", user, updateUserSavedEvents);
 
+        $("#submit_event_form").on("click", "#publish_button",user, uploadEventToDatabase);
+        $("#submit_event_form").on("click", "#cancel_button", reloadPage);
+
+        $("#admin_panel_users_table").on("click", ".status_user_button", setUserAccountStatus);
+        $("#admin_panel_users_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
+        $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
+        $("#admin_panel_events_table").on("click", ".delete_event_button", deleteEventFromAdminPanelTable);
+
+
+  
 
       }else{
         redirectToLoginPage();
@@ -49,6 +57,7 @@ $(document).ready(function() {
 
     });
 });
+
 
 
 function addAdminTabs(user) {
@@ -63,68 +72,69 @@ function addAdminTabs(user) {
 
 function hideAllTabContent() {
   $("#submit_event_form").prop("hidden", true);
-  $("#admin_panel").prop("hidden", true);
+  $(".admin_table").prop("hidden", true);
+  $("#eventsFeed").empty();
+  $("td").remove();
 }
+
 function loadAllTabContent(){
   setTabActive("all");
+  hideAllTabContent();
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
-  $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   displayAllEvents();
 }
 
 function loadRecommendedTabContent(){
   setTabActive("recommended");
+  hideAllTabContent();
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
-  $('#banner_image').attr("src","images/catching_things.jpg");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/catching_things.jpg");
   displayAllEvents();
 }
 
 function loadSavedTabContent(user){
   setTabActive("saved");
+  hideAllTabContent();
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
-  $('#banner_image').attr("src","images/fox.jpg");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/fox.jpg");
   displaySavedEvents(user.data);
 }
 
 function loadPopularTabContent(){
   setTabActive("popular");
+  hideAllTabContent();
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
-  $('#banner_image').attr("src","images/bus.png");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/bus.png");
   displayAllEvents();
 }
 
 function loadCategoriesTabContent(){
   setTabActive("categories");
+  hideAllTabContent();
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
-  $('#banner_image').attr("src","images/bus.png");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/bus.png");
   displayCategoriesEvents(this.name);
 }
 
 function loadSubmitEventTabContent(){
   setTabActive("submit_event");
+  hideAllTabContent();
   $('#banner_header').html("Let the campus know about the next big event.");
-  $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#eventsFeed").empty();
+  $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
+  $("#submit_event_form").prop("hidden", false);
 }
 
 function loadAdminTabContent(){
   setTabActive("admin");
+  hideAllTabContent();
   $('#banner_header').html("Admin Panel.");
-  $('#banner_image').attr("src","images/medium_art_front_page.png");
-  $("#eventsFeed").empty();
-  $("#admin_panel").prop("hidden", false);
+  $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
+  displayAdminTable(this.name);
 }
 
 function displayAllEvents(){
   database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
-    displaySingleEvent(event.val());
-  });
-  database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
     displaySingleEvent(event.val());
   });
 }
@@ -135,11 +145,72 @@ function displayCategoriesEvents(category_name){
       displaySingleEvent(event.val());
     }
   });
-  database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
-    if(event.val().category==category_name){
-      displaySingleEvent(event.val());
+}
+
+function displayAdminTable(tab_name){
+  switch (tab_name){
+
+    case "Manage Users":
+      $("#admin_panel_users_table").prop("hidden", false);
+      displayUsersInTable();
+      break;
+
+    case "Manage Events":
+      $("#admin_panel_events_table").prop("hidden", false);
+      displayEventsInTable();
+      break;
+
+    case "Manage Associations":
+      $("#admin_panel_associations_table").prop("hidden", false);
+      displayAssociationsInTable();
+      break;
+  }
+}
+
+
+function displayUsersInTable(){
+  database.ref("users").on('child_added', function(user){
+    var value = user.val();
+    var source = $("#user-table-cell-template").html();
+    var template = Handlebars.compile(source);
+    var data = {display_name: value.display_name,
+                email: value.email,
+                current_saved_events_counter: value.current_saved_events_counter,
+                user_id: value.id,
+                account_status: value.account_status
+              };
+    $("#admin_panel_users_table").append(template(data));
+  });      
+}
+
+function displayAssociationsInTable(){
+  database.ref("users").on('child_added', function(user){
+    var value = user.val();
+    var source = $("#associations-table-cell-template").html();
+    var template = Handlebars.compile(source);
+    if(value.is_admin==true){
+      var data = {display_name: value.display_name,
+                  email: value.email,
+                  total_event_active: value.total_event_active,
+                  total_event_created: value.total_event_created
+                };
+      $("#admin_panel_associations_table").append(template(data));
     }
-  });
+  });      
+}
+
+function displayEventsInTable(){
+  database.ref("events").on('child_added', function(event){
+    var value = event.val();
+    var source = $("#events-table-cell-template").html();
+    var template = Handlebars.compile(source);
+    var data = {title: value.title,
+                user_id: value.user_id,
+                date: convertDateToWords(value.date),
+                event_id: value.image_url
+              };
+    $("#admin_panel_events_table").append(template(data));
+  });      
 }
 
 function displaySavedEvents(user){
@@ -151,20 +222,14 @@ function displaySavedEvents(user){
           displaySingleEvent(event.val());
         }
       });
-      database.ref("events").orderByChild("event_date_timestamp_format").on('child_changed', function(event){
-        if(saved_events.includes(event.val().image_url)){
-          displaySingleEvent(event.val());
-        }
-      });
     }
   });
 }
 
 function displaySingleEvent(value){
+
   var source = $("#event-template").html();
-
   var template = Handlebars.compile(source);
-
   var data = {title: value.title,
               imageUrl: value.image_url,
               date: convertDateToWords(value.date),
@@ -179,7 +244,6 @@ function displaySingleEvent(value){
   storage.ref(value.image_url).getDownloadURL().then(function(url) {
       $(image_id).attr("src", url);
   });
-
 
 }
 
@@ -344,6 +408,34 @@ function uploadEventImageToStorage(image_file, image_path){
     }
   );
 }
+
+function deleteUserAccountFromAdminPanelTable(){
+  var user_id= this.name;
+  alert("Option not available.");
+}
+
+function setUserAccountStatus(){
+  var selected_status = this.title;
+  var user_id = this.name;
+  var account_status_cell_id = "#account_status"+user_id;
+  $(account_status_cell_id).html(selected_status);
+  database.ref("users/"+user_id).update({account_status: selected_status}); 
+}
+
+function setEventStatus(){
+  var selected_status = this.title;
+  var event_id = this.name;
+  var event_status_cell_id = "#event_status"+event_id;
+  $(event_status_cell_id).html(selected_status);
+  database.ref("events/"+event_id).update({event_status: selected_status});
+}
+
+function deleteEventFromAdminPanelTable(){
+  var event_id= this.name;
+  alert("Option not available.");
+}
+
+
 
 function assignUsernameToHeader(user_name){
   username.innerHTML = user_name;

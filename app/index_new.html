@@ -40,3 +40,17 @@
         <h3>Sorry, something went wrong :(</h3>
     </div>
 </div>
+
+<script id="user-table-cell-template" type="x-handlebars-template">
+          {{#each this}}
+          <div>
+            <tr>
+              <td>{{value.display_name}}</td>
+              <td>{{value.email}}</td>
+              <td>{{value.current_saved_events_counter}}</td>
+              <td>No info available</td>
+              <td>Active</td>
+            </tr>
+           </div>
+          {{/each}}
+</script>

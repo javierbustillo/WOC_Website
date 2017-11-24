@@ -51,10 +51,19 @@
 			</div>
 					</li>
 					<li><a class="static" id="categories_tab_divisor" hidden >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
-					<li><button class="desactive" id="admin_tab" hidden >Admin Panel</button></li>
+			<div class="dropdown">
+			<button id="admin_tab" class="dropbtn" hidden>Admin Panel</button>
+					<div class="dropdown-content">
+						<button class="admin_option_button" name="Manage Users">Manage Users</button>
+						<button class="admin_option_button" name="Manage Events">Manage Events</button>
+						<button class="admin_option_button" name="Manage Associations">Manage Associations</button>
+					</div>
+			</div>
+					<li><a class="static" id="admin_tab_divisor" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
 					<li><button class="desactive" id="submit_event_tab" hidden >Submit Event</button></li>
 				</ul>
 			</div>
+
 	</header>
 
 	<div id="banner">
@@ -81,6 +90,49 @@
 					<div class='event_brief_description'>{{briefDescription}}</div>
 			</div>
 		</script>
+
+		<script id="user-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{display_name}}</td>
+              <td>{{email}}</td>
+              <td>{{current_saved_events_counter}}</td>
+              <td>No info available</td>
+              <td id=account_status{{user_id}}>{{account_status}}</td>
+              <td>
+              	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
+              	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
+              	<button class="status_user_button block_button options_admin_panel_table" name={{user_id}} title="blocked">Block</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button></td>
+            </tr>
+		</script>
+
+		<script id="events-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{title}}</td>
+              <td>{{user_id}}</td>
+              <td>{{date}}</td>
+              <td>No info available</td>
+              <td id=event_status{{event_id}}>active</td>
+              <td>
+              	<button class="status_event_button activate_button options_admin_panel_table" name={{event_id}} title="active">Activate</button>
+              	<button class="status_event_button deactivate_button options_admin_panel_table" name={{event_id}} title="disabled">Disable</button>
+              	<button class="delete_event_button options_admin_panel_table" name={{event_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
+
+		<script id="associations-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{display_name}}</td>
+              <td>{{email}}</td>
+              <td>{{total_event_active}}</td>
+              <td>No info available</td>
+              <td>{{total_event_created}}</td>
+              <td>Active</td>
+            </tr>
+		</script>
+
+
 
 		<div id="eventsFeed"></div>
 
@@ -116,11 +168,46 @@
 			<button id="cancel_button">cancel</button>
 		</div>
 
-		<div id="admin_panel" hidden>
-			Manage Users <br />
-			Manage Events <br />
-			Manage Associations <br />
+		<div id="table_container">
+			<table id="admin_panel_users_table" class="admin_table" hidden>
+			  <tr>
+			    <th>User Name</th>
+			    <th>Email</th>
+			    <th># Saved Events</th>
+			    <th>Date Created</th>
+			    <th>Status</th>
+			    <th>Options</th>
+			   </tr>
+			</table>
+
+			<table id="admin_panel_events_table" class="admin_table" hidden>
+			  <tr>
+			    <th>Event Name</th>
+			    <th>Association</th>
+			    <th>Date Created</th>
+			    <th>Event Date</th>
+			    <th>Status</th>
+			    <th>Options</th>
+			   </tr>
+			</table>
+
+			<table id="admin_panel_associations_table" class="admin_table" hidden>
+			  <tr>
+			    <th>User Name</th>
+			    <th>Email</th>
+			    <th># Events Active</th>
+			    <th># Events Created</th>
+			    <th>Date Created</th>
+			    <th>Status</th>
+			   </tr>
+			</table>
+
+		
 		</div>
+	
+
+
+
 	</body>
 	<footer>
 		Copyright @2017 | A product by HackSquad from IEEE Computer Society.
