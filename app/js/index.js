@@ -63,7 +63,11 @@ function addAdminTabs(user) {
           if(user_from_database.val().is_admin) {
             $("#categories_tab_divisor").removeAttr("hidden");
             $("#submit_event_tab").removeAttr("hidden");
+            $("#admin_tab_divisor").removeAttr("hidden");
             $("#admin_tab").removeAttr("hidden");
+          } else if(user_from_database.val().is_association) {
+            $("#categories_tab_divisor").removeAttr("hidden");
+            $("#submit_event_tab").removeAttr("hidden");
           }
   });
 }
@@ -234,51 +238,52 @@ function displaySingleEvent(value){
   var user = firebase.auth().currentUser;
   var bookmark_icon="";
 
-  //Get Current Saved Event Status
-  if (user) {
-    database.ref("users/"+user.uid).once("value").then(function(user_reference){
-      var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
-      if(current_saved_events_counter==null||current_saved_events_counter==0){
-        bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
-        console.log(bookmark_icon);
-      }else{
-        var saved_events = user_reference.child("saved_events").val();
-        for(var i=0; i<=current_saved_events_counter; i++){
-          if(saved_events[i]==event_name&&i<current_saved_events_counter){
-            saved_events.splice(i, 1);
-            bookmark_icon="assets/images/bookmark_icon_for_saved_events_red.png";
-            break;
-          } else if(i==current_saved_events_counter){
-            bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
-            break;
+  if(value.event_status=="active"){
+    //Get Current Saved Event Status
+    if (user) {
+      database.ref("users/"+user.uid).once("value").then(function(user_reference){
+        var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
+        if(current_saved_events_counter==null||current_saved_events_counter==0){
+          bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
+          console.log(bookmark_icon);
+        }else{
+          var saved_events = user_reference.child("saved_events").val();
+          for(var i=0; i<=current_saved_events_counter; i++){
+            if(saved_events[i]==event_name&&i<current_saved_events_counter){
+              saved_events.splice(i, 1);
+              bookmark_icon="assets/images/bookmark_icon_for_saved_events_red.png";
+              break;
+            } else if(i==current_saved_events_counter){
+              bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
+              break;
+            }
           }
         }
-      }
 
-      //Display Event
-      var data = {title: value.title,
-                  imageUrl: value.image_url,
-                  date: convertDateToWords(value.date),
-                  start_time_hour: convert24HourToAmPm(value.start_time_hour),
-                  place: value.place,
-                  briefDescription: value.brief_description,
-                  bookmark_icon: bookmark_icon
-                };
+        //Display Event
+        var data = {title: value.title,
+                    imageUrl: value.image_url,
+                    date: convertDateToWords(value.date),
+                    start_time_hour: convert24HourToAmPm(value.start_time_hour),
+                    place: value.place,
+                    briefDescription: value.brief_description,
+                    bookmark_icon: bookmark_icon
+                  };
 
-      $("#eventsFeed").append(template(data));
+        $("#eventsFeed").append(template(data));
 
-      var image_id = "#"+value.image_url;
-      storage.ref(value.image_url).getDownloadURL().then(function(url) {
-          $(image_id).attr("src", url);
+        var image_id = "#"+value.image_url;
+        storage.ref(value.image_url).getDownloadURL().then(function(url) {
+            $(image_id).attr("src", url);
+        });
+
       });
 
-    });
-
-  } else {
-    // No user is signed in.
-    window.location.replace("login.html"); 
+    } else {
+      // No user is signed in.
+      window.location.replace("login.html"); 
+    }
   }
-
 
 }
 
@@ -415,7 +420,8 @@ function uploadEventToDatabase(event_object_user){
       detailed_description: detailed_description,
       contact_email: contact_email,
       contact_phone_number: contact_phone_number,
-      user_id: user.uid
+      user_id: user.uid,
+      event_status: "active"
     });
 
     var image_file = $("#imageUrl")[0].files[0];
