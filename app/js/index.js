@@ -36,7 +36,7 @@ $(document).ready(function() {
         $(".category_option_button").click(loadCategoriesTabContent);
         $(".admin_option_button").click(loadAdminTabContent);
 
-        $("#eventsFeed").on("click", ".event_save_button", user, updateUserSavedEvents);
+        $("#eventsFeed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
 
         $("#submit_event_form").on("click", "#publish_button",user, uploadEventToDatabase);
         $("#submit_event_form").on("click", "#cancel_button", reloadPage);
@@ -46,8 +46,6 @@ $(document).ready(function() {
         $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
         $("#admin_panel_events_table").on("click", ".delete_event_button", deleteEventFromAdminPanelTable);
 
-
-  
 
       }else{
         redirectToLoginPage();
@@ -218,7 +216,7 @@ function displaySavedEvents(user){
     var saved_events = user_reference.child("saved_events").val();
     if(saved_events!=null){
       database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
-        if(saved_events.includes(event.val().image_url)){
+        if(saved_events.includes("event"+event.val().image_url)){
           displaySingleEvent(event.val());
         }
       });
@@ -230,20 +228,57 @@ function displaySingleEvent(value){
 
   var source = $("#event-template").html();
   var template = Handlebars.compile(source);
-  var data = {title: value.title,
-              imageUrl: value.image_url,
-              date: convertDateToWords(value.date),
-              hour: convert24HourToAmPm(value.hour),
-              place: value.place,
-              briefDescription: value.brief_description,
-            };
+  var event_name = "event"+value.image_url;
 
-  $("#eventsFeed").append(template(data));
 
-  var image_id = "#"+value.image_url;
-  storage.ref(value.image_url).getDownloadURL().then(function(url) {
-      $(image_id).attr("src", url);
-  });
+  var user = firebase.auth().currentUser;
+  var bookmark_icon="";
+
+  //Get Current Saved Event Status
+  if (user) {
+    database.ref("users/"+user.uid).once("value").then(function(user_reference){
+      var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
+      if(current_saved_events_counter==null||current_saved_events_counter==0){
+        bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
+        console.log(bookmark_icon);
+      }else{
+        var saved_events = user_reference.child("saved_events").val();
+        for(var i=0; i<=current_saved_events_counter; i++){
+          if(saved_events[i]==event_name&&i<current_saved_events_counter){
+            saved_events.splice(i, 1);
+            bookmark_icon="assets/images/bookmark_icon_for_saved_events_red.png";
+            break;
+          } else if(i==current_saved_events_counter){
+            bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
+            break;
+          }
+        }
+      }
+
+      //Display Event
+      var data = {title: value.title,
+                  imageUrl: value.image_url,
+                  date: convertDateToWords(value.date),
+                  start_time_hour: convert24HourToAmPm(value.start_time_hour),
+                  place: value.place,
+                  briefDescription: value.brief_description,
+                  bookmark_icon: bookmark_icon
+                };
+
+      $("#eventsFeed").append(template(data));
+
+      var image_id = "#"+value.image_url;
+      storage.ref(value.image_url).getDownloadURL().then(function(url) {
+          $(image_id).attr("src", url);
+      });
+
+    });
+
+  } else {
+    // No user is signed in.
+    window.location.replace("login.html"); 
+  }
+
 
 }
 
@@ -307,30 +342,34 @@ function setTabActive(tab_name){
 }
 
 function updateUserSavedEvents(user){
-  event_name = this.parentNode.parentNode.parentNode.title;
+  event_name = this.parentNode.id;
+  bookmark_icon = this;
+
   user = user.data;
 
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
       var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
       if(current_saved_events_counter==null||current_saved_events_counter==0){
         database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
+        bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_red.png";
       }else{
         var saved_events = user_reference.child("saved_events").val();
         for(var i=0; i<=current_saved_events_counter; i++){
           if(saved_events[i]==event_name&&i<current_saved_events_counter){
             saved_events.splice(i, 1);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter-1});
+            bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_gray.png";
             break;
           } else if(i==current_saved_events_counter){
             saved_events.push(event_name);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
+            bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_red.png";
             break;
           }
         }
         database.ref("users/"+user.uid).update({saved_events:saved_events});
       }
   });
-
 }
 
 
@@ -340,8 +379,10 @@ function uploadEventToDatabase(event_object_user){
 
   var title = $("#title").val(),
       date = $("#date").val(),
-      hour = $("#hour").val(),
-      event_date_timestamp_format = new Date(date +" "+ hour).getTime(),
+      start_time_hour = $("#start_time_hour").val(),
+      end_time_hour = $("#end_time_hour").val(),
+      event_date_start_time_timestamp_format = new Date(date +" "+ start_time_hour).getTime(),
+      event_date_end_time_timestamp_format = new Date(date +" "+ end_time_hour).getTime(),
       place = $("#place").val(),
       category = $("#category").val(),
       brief_description = $("#brief_description").val(),
@@ -364,9 +405,11 @@ function uploadEventToDatabase(event_object_user){
     var newEvent = database.ref("events").push({
       title: title,
       date: date,
-      hour: hour,
+      start_time_hour: start_time_hour,
+      end_time_hour: end_time_hour,
       category: category,
-      event_date_timestamp_format: event_date_timestamp_format,
+      event_date_start_time_timestamp_format: event_date_start_time_timestamp_format,
+      event_date_end_time_timestamp_format: event_date_end_time_timestamp_format,
       place: place,
       brief_description: brief_description,
       detailed_description: detailed_description,

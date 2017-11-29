@@ -73,21 +73,18 @@
 
 	<body>
 		<script id='event-template' type="text/x-handlebars-template">
-			<div class='event' title='{{title}}'>
-					<div class='event_image_container'><img id='{{imageUrl}}' class='event_image' src=''>
-							<div class='event_image_overlay'>
-									<button class='event_save_button'>Save Event</button>
-							</div>
-					</div>
+			<div class='event' title='{{title}}' id='event{{imageUrl}}'>
+					<div class='event_image_container'><img id='{{imageUrl}}' class='event_image' src=''></div>
 					<div class='event_title'>{{title}}</div>
 					<div class='e' vent_header>
 							<div class='event_info_header'>
-								<span id='event_hour'>{{hour}}</span>
+								<span id='event_hour'>{{start_time_hour}}</span>
 								<span id='event_date'>|{{date}}|</span>
 								<span id='event_place'>{{place}}</span>
 							</div>
 					</div>
 					<div class='event_brief_description'>{{briefDescription}}</div>
+					<img class="saved_event_bookmark_icon" src={{bookmark_icon}}>
 			</div>
 		</script>
 
@@ -140,7 +137,8 @@
 			<form class="event_form">
 				<input class="normal" id="title" type="text" placeholder="title"/>
 				<input class="normal" id="date" type="date" placeholder="date"/>
-				<input class="small" id="hour" type="time" placeholder="hour"/>
+				<input class="small" id="start_time_hour" type="time" placeholder="start time"/>
+				<input class="small" id="end_time_hour" type="time" placeholder="end time"/>
 				<input class="small" id="place" type="text" placeholder="place"/>
 				<textarea id="brief_description" placeholder="brief description" rows="2" ></textarea>
 				<textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>

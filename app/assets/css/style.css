@@ -284,13 +284,13 @@ button:focus {
   padding: 0;
   margin: 20px;
   width: 300px;
-  height: 500px;
+  height: 490px;
   border: thin solid #f2f2f2;
  }
 
 
 
-#eventsFeed img{
+#eventsFeed .event_image{
     display: block;
     object-fit: cover;
     width:300px;
@@ -341,46 +341,13 @@ button:focus {
 }
 
 
-
-.event_image_overlay {
-  position: absolute;
-  bottom: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #85BF75;
-  overflow: hidden;
-  width: 100%;
-  height: 0;
-  transition: .5s ease;
+#eventsFeed .saved_event_bookmark_icon{
+  height: 50px;
+  width: 50px;
+  float: right;
+  padding: 15px;
 }
 
-.event_image_container:hover .event_image_overlay {
-  height: 10%;
-  top: 0;
-}
-
-.event_save_button {
-  border:0;
-  background-color: #85BF75;
-  white-space: nowrap;
-  color: white;
-  font-size: 14px;
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-}
-
-.event_save_button:hover{
-  color:#4A4A4A;
-}
-
-.event_save_button:active{
-  color:#f2f2f2;
-}
 
 /*Tables */
 
