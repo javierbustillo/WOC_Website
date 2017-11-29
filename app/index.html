@@ -96,11 +96,11 @@
               <td>{{current_saved_events_counter}}</td>
               <td>No info available</td>
               <td id=account_status{{user_id}}>{{account_status}}</td>
-              <td>
+              <td class="table_options">
               	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
               	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
-              	<button class="status_user_button block_button options_admin_panel_table" name={{user_id}} title="blocked">Block</button>
-              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button></td>
+              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button>
+              </td>
             </tr>
 		</script>
 
@@ -110,8 +110,8 @@
               <td>{{user_id}}</td>
               <td>{{date}}</td>
               <td>No info available</td>
-              <td id=event_status{{event_id}}>active</td>
-              <td>
+              <td id=event_status{{event_id}}>{{event_status}}</td>
+              <td class="table_options">
               	<button class="status_event_button activate_button options_admin_panel_table" name={{event_id}} title="active">Activate</button>
               	<button class="status_event_button deactivate_button options_admin_panel_table" name={{event_id}} title="disabled">Disable</button>
               	<button class="delete_event_button options_admin_panel_table" name={{event_id}} title="delete">Delete</button>
@@ -124,9 +124,14 @@
               <td>{{display_name}}</td>
               <td>{{email}}</td>
               <td>{{total_event_active}}</td>
-              <td>No info available</td>
               <td>{{total_event_created}}</td>
-              <td>Active</td>
+              <td>No info available</td>
+              <td>{{account_status}}</td>
+              <td class="table_options">
+              	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
+              	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button>
+              </td>
             </tr>
 		</script>
 
@@ -184,8 +189,8 @@
 			  <tr>
 			    <th>Event Name</th>
 			    <th>Association</th>
-			    <th>Date Created</th>
 			    <th>Event Date</th>
+			    <th>Date Created</th>
 			    <th>Status</th>
 			    <th>Options</th>
 			   </tr>
@@ -199,6 +204,7 @@
 			    <th># Events Created</th>
 			    <th>Date Created</th>
 			    <th>Status</th>
+			    <th>Options</th>
 			   </tr>
 			</table>
 

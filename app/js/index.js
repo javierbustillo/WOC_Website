@@ -130,7 +130,7 @@ function loadSubmitEventTabContent(){
 function loadAdminTabContent(){
   setTabActive("admin");
   hideAllTabContent();
-  $('#banner_header').html("Admin Panel.");
+  $('#banner_header').html("Admin Panel. Control users, associations and events right here. Be careful, you are accesing important data.");
   $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   displayAdminTable(this.name);
 }
@@ -190,11 +190,13 @@ function displayAssociationsInTable(){
     var value = user.val();
     var source = $("#associations-table-cell-template").html();
     var template = Handlebars.compile(source);
-    if(value.is_admin==true){
+    if(value.is_association==true){
       var data = {display_name: value.display_name,
                   email: value.email,
                   total_event_active: value.total_event_active,
-                  total_event_created: value.total_event_created
+                  total_event_created: value.total_event_created,
+                  account_status: value.account_status,
+                  date_created: value.date_created
                 };
       $("#admin_panel_associations_table").append(template(data));
     }
@@ -209,7 +211,8 @@ function displayEventsInTable(){
     var data = {title: value.title,
                 user_id: value.user_id,
                 date: convertDateToWords(value.date),
-                event_id: value.image_url
+                event_id: value.image_url,
+                event_status: value.event_status
               };
     $("#admin_panel_events_table").append(template(data));
   });      
