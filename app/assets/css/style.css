@@ -237,13 +237,19 @@ button:focus {
   margin-top: 100px;
 }
 
-.form #hour{
+.form .start_time_hour{
   float:left;
 }
 
-.form #place{
+.form .end_time_hour{
   float:right;
 }
+
+#hours_container{
+  display: inline-block;
+  width: 100%;
+}
+
 
 .form button {
   font-family: "Roboto", sans-serif;
@@ -265,7 +271,13 @@ button:focus {
 }
 
 #publish_button{
-   background: #4CAF50;
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
+#percent{
+  float: right;
 }
 
 #cancel_button:hover, #cancel_button:active, #cancel_button:focus {
@@ -273,7 +285,8 @@ button:focus {
 }
 
 #publish_button:hover, #publish_button:active, #publish_button:focus {
-  background: #008000;
+  background: #85BF75;
+  color: white;
 }
 
 .standard_text{

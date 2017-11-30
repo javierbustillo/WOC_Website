@@ -457,8 +457,6 @@ function uploadEventToDatabase(event_object_user){
     var image_file = $("#imageUrl")[0].files[0];
     var path = newEvent.key;
 
-    console.log(path);
-
     database.ref("events/"+path).update({
       image_url: path
     });
@@ -476,13 +474,13 @@ function uploadEventImageToStorage(image_file, image_path){
   //Update progress bar
   upload_status.on('state_changed',
     function progress(snapshot){
-      var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      console.log(percentage);
+      var percentage = Math.ceil((snapshot.bytesTransferred/snapshot.totalBytes)*100);
+      $("#percent").html("Image uploaded "+percentage+" %.");
     },
     function error(err){
     },
     function complete(){
-      console.log("Image has been uploaded.");
+      $("#percent").html("Image uploaded succesfully.");
       reloadPage();
     }
   );
