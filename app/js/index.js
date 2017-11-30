@@ -35,6 +35,7 @@ $(document).ready(function() {
         //$("#admin_tab").click(loadAdminTabContent);
         $(".category_option_button").click(loadCategoriesTabContent);
         $(".admin_option_button").click(loadAdminTabContent);
+        $("#edit_events_tab").click(loadEditEventsTabContent);
 
         $("#eventsFeed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
 
@@ -68,6 +69,8 @@ function addAdminTabs(user) {
           } else if(user_from_database.val().is_association) {
             $("#categories_tab_divisor").removeAttr("hidden");
             $("#submit_event_tab").removeAttr("hidden");
+            $("#submit_event_tab_divisor").removeAttr("hidden");
+            $("#edit_events_tab").removeAttr("hidden");
           }
   });
 }
@@ -98,7 +101,7 @@ function loadRecommendedTabContent(){
 function loadSavedTabContent(user){
   setTabActive("saved");
   hideAllTabContent();
-  $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
+  $('#banner_header').html("Don't forget the things you love. Keep track of all the events you want to attend.");
   $('#banner_image').attr("src","assets/images/fox.jpg");
   displaySavedEvents(user.data);
 }
@@ -135,14 +138,22 @@ function loadAdminTabContent(){
   displayAdminTable(this.name);
 }
 
+function loadEditEventsTabContent(){
+  setTabActive("edit_events");
+  hideAllTabContent();
+  $('#banner_header').html("Edit Events. Control users, associations and events right here. Be careful, you are accesing important data.");
+  $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
+  displayEditEventsTable();
+}
+
 function displayAllEvents(){
-  database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+  database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
     displaySingleEvent(event.val());
   });
 }
 
 function displayCategoriesEvents(category_name){
-  database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+  database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
     if(event.val().category==category_name){
       displaySingleEvent(event.val());
     }
@@ -169,6 +180,11 @@ function displayAdminTable(tab_name){
   }
 }
 
+function displayEditEventsTable(){
+  $("#edit_events_table").prop("hidden", false);
+  displayAssociationEventsInTable();
+}
+
 
 function displayUsersInTable(){
   database.ref("users").on('child_added', function(user){
@@ -186,21 +202,11 @@ function displayUsersInTable(){
 }
 
 function displayAssociationsInTable(){
-  database.ref("users").on('child_added', function(user){
-    var value = user.val();
-    var source = $("#associations-table-cell-template").html();
-    var template = Handlebars.compile(source);
-    if(value.is_association==true){
-      var data = {display_name: value.display_name,
-                  email: value.email,
-                  total_event_active: value.total_event_active,
-                  total_event_created: value.total_event_created,
-                  account_status: value.account_status,
-                  date_created: value.date_created
-                };
-      $("#admin_panel_associations_table").append(template(data));
-    }
-  });      
+      
+}
+
+function displayAssociationEventsInTable(){
+
 }
 
 function displayEventsInTable(){
@@ -222,7 +228,7 @@ function displaySavedEvents(user){
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
     var saved_events = user_reference.child("saved_events").val();
     if(saved_events!=null){
-      database.ref("events").orderByChild("event_date_timestamp_format").on('child_added', function(event){
+      database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
         if(saved_events.includes("event"+event.val().image_url)){
           displaySingleEvent(event.val());
         }
@@ -273,7 +279,7 @@ function displaySingleEvent(value){
                     bookmark_icon: bookmark_icon
                   };
 
-        $("#eventsFeed").append(template(data));
+        $("#eventsFeed").prepend(template(data));
 
         var image_id = "#"+value.image_url;
         storage.ref(value.image_url).getDownloadURL().then(function(url) {
@@ -294,7 +300,7 @@ function convertDateToWords(date){
   var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
   date = new Date(date);
-  var day = date.getDate();
+  var day = date.getDate()+1; //revisar esto luego
   var month = monthNames[date.getMonth()];
   var year = date.getFullYear();
   return month + ' '+day + ', ' +year;
@@ -312,6 +318,7 @@ function setTabActive(tab_name){
   $("#popular_tab").attr("class", "desactive");
   $("#categories_tab").attr("class", "desactive");
   $("#submit_event_tab").attr("class", "desactive");
+  $("#edit_events_tab").attr("class", "desactive");
   $("#admin_tab").attr("class", "desactive");
 
   switch (tab_name) {
@@ -342,6 +349,10 @@ function setTabActive(tab_name){
     case "admin":
       $("#admin_tab").attr("class", "active");
       break;
+
+    case "edit_events":
+    $("#edit_events_tab").attr("class", "active");
+    break;
 
     default:
       $("#all_tab").attr("class", "active");
