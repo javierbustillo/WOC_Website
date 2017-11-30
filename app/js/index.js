@@ -254,13 +254,12 @@ function displaySingleEvent(value){
         var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
         if(current_saved_events_counter==null||current_saved_events_counter==0){
           bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
-          console.log(bookmark_icon);
         }else{
           var saved_events = user_reference.child("saved_events").val();
           for(var i=0; i<=current_saved_events_counter; i++){
             if(saved_events[i]==event_name&&i<current_saved_events_counter){
               saved_events.splice(i, 1);
-              bookmark_icon="assets/images/bookmark_icon_for_saved_events_red.png";
+              bookmark_icon="assets/images/bookmark_icon_for_saved_events_green.png";
               break;
             } else if(i==current_saved_events_counter){
               bookmark_icon="assets/images/bookmark_icon_for_saved_events_gray.png";
@@ -370,7 +369,7 @@ function updateUserSavedEvents(user){
       var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
       if(current_saved_events_counter==null||current_saved_events_counter==0){
         database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
-        bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_red.png";
+        bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
       }else{
         var saved_events = user_reference.child("saved_events").val();
         for(var i=0; i<=current_saved_events_counter; i++){
@@ -382,7 +381,7 @@ function updateUserSavedEvents(user){
           } else if(i==current_saved_events_counter){
             saved_events.push(event_name);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
-            bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_red.png";
+            bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
             break;
           }
         }
