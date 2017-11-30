@@ -2,8 +2,9 @@
 
 
 header{
-  width: 100%;
+  width: 90%;
   min-width: 650px;
+  margin: 0 auto;
   display: block;
   border-style: solid;
   border: none;
@@ -14,6 +15,8 @@ body{
   align-items: center;
   align-content: center;
   min-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 footer{
@@ -148,27 +151,29 @@ button:focus {
 }
 
 #banner{
-  display: inline-block;
+  display: block;
   border: none;
   border-bottom: thin solid #f2f2f2;
   overflow: hidden;
+  margin: 0 auto;
+  width: 90%;
 }
 
 #banner_header{
-  padding-left: 40px;
   padding-top: 30px;
   color:gray;
   font-family: "Open Sans";
   font-size: 30px;
   width: 30%;
   float: left;
+
 }
 
 #banner_image{
   height: 350px;
   width: auto;
   float: right;
-  padding-right: 40px;
+  padding-right: 0px;
   padding-top: 10px;
 }
 
