@@ -40,15 +40,16 @@ footer{
   text-align: center;
   font-size: 40px;
   text-decoration: none;
-  font-family: 'Open Sans';
+  font-family:'Open Sans';
   color: #85BF75;
   font-style: normal;
   font-variant: normal;
-  font-weight: 300;
+  font-weight: 200;
   margin-bottom: 5px;
 }
 
 .loggedAs {
+  display: inline-flex;
   position: absolute;
   font-size: 14px;
   font-family: 'Open Sans';
@@ -57,11 +58,22 @@ footer{
   right: 20px;
   top: 20px;
 
+
 }
 
-#logOut{
+#logout_button{
   float:right;
+  border: thin solid #85BF75;
+  color: #85BF75;
+  font-family: "Open Sans";
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
 
+#logout_button:hover{
+  border-color: gray;
+  color: gray;
 }
 
 
@@ -408,11 +420,11 @@ table td{
 }
 
 .activate_button{
-  background-color: #85BF75;
+  background-color: #85bf75;
 }
 
 .deactivate_button{
-  background-color: #fdca96;
+  background-color: #fcb164;
 }
 
 .block_button{
@@ -420,11 +432,11 @@ table td{
 }
 
 .delete_user_button{
-  background-color: #fd9696;
+  background-color: #fc5c5c;
 }
 
 .delete_event_button{
-  background-color: #fd9696;
+  background-color: #fc5c5c;
 }
 
 
