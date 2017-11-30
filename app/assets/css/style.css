@@ -408,11 +408,11 @@ table td{
 }
 
 .activate_button{
-  background-color: green;
+  background-color: #85BF75;
 }
 
 .deactivate_button{
-  background-color: orange;
+  background-color: #fdca96;
 }
 
 .block_button{
@@ -420,11 +420,11 @@ table td{
 }
 
 .delete_user_button{
-  background-color: red;
+  background-color: #fd9696;
 }
 
 .delete_event_button{
-  background-color: red;
+  background-color: #fd9696;
 }
 
 
