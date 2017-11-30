@@ -46,6 +46,8 @@ $(document).ready(function() {
         $("#admin_panel_users_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
         $("#admin_panel_events_table").on("click", ".delete_event_button", deleteEventFromAdminPanelTable);
+        $("#admin_panel_associations_table").on("click", ".status_user_button", setUserAccountStatus);
+        $("#admin_panel_associations_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
 
 
       }else{
@@ -202,8 +204,23 @@ function displayUsersInTable(){
 }
 
 function displayAssociationsInTable(){
-      
-}
+  database.ref("users").on('child_added', function(user){
+     var value = user.val();
+     var source = $("#associations-table-cell-template").html();
+     var template = Handlebars.compile(source);
+     if(value.is_association==true){
+       var data = {display_name: value.display_name,
+                   email: value.email,
+                   user_id: value.id,
+                   total_event_active: value.total_event_active,
+                   total_event_created: value.total_event_created,
+                   account_status: value.account_status
+                 };
+       $("#admin_panel_associations_table").append(template(data));
+    }
+  });
+}   
+
 
 function displayAssociationEventsInTable(){
 

@@ -129,7 +129,7 @@
               <td>{{total_event_active}}</td>
               <td>{{total_event_created}}</td>
               <td>No info available</td>
-              <td>{{account_status}}</td>
+              <td id=account_status{{user_id}}>{{account_status}}</td>
               <td class="table_options">
               	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
               	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
@@ -220,7 +220,6 @@
 			    <th>Place</th>
 			    <th>Date Created</th>
 			    <th>Category</th>
-			    <th>Place</th>
 			    <th>Options</th>
 			   </tr>
 			</table>
