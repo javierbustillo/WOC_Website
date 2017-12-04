@@ -276,15 +276,26 @@ button:focus {
    color: #85BF75;
 }
 
+#edit_button{
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
 #percent{
   float: right;
 }
 
-#cancel_button:hover, #cancel_button:active, #cancel_button:focus {
+#cancel_button:hover{
   background: #DC143C;
 }
 
-#publish_button:hover, #publish_button:active, #publish_button:focus {
+#publish_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+#edit_button:hover{
   background: #85BF75;
   color: white;
 }
@@ -415,9 +426,12 @@ table td{
   font-size: 12px;
 }
 
-.table_options{
+table td .table_options{
   display: flex;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-width: 130px;  
 }
 
 .options_admin_panel_table{
@@ -455,6 +469,17 @@ table td{
 
 .delete_event_button{
   background-color: #fc5c5c;
+}
+
+.edit_event_button{
+  background: none;
+  border: thin solid #85BF75;
+  color: #85BF75;
+}
+
+.edit_event_button:hover{
+  border: thin solid gray;
+  color: gray;
 }
 
 

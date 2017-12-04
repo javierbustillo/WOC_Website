@@ -138,6 +138,23 @@
             </tr>
 		</script>
 
+		<script id="associations-edit-events-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{event_title}}</td>
+              <td>{{event_date}}</td>
+              <td>{{event_start_time}}</td>
+              <td>{{event_place}}</td>
+              <td>No info available</td>
+              <td id=event_times_saved{{event_id}}>No info available</td>
+              <td>{{event_category}}</td>
+              <td class="table_options">
+              	<button class="edit_event_button options_admin_panel_table" name={{event_id}} title="edit">Edit</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{event_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
+
+
 
 
 		<div id="eventsFeed"></div>
@@ -172,10 +189,11 @@
 
 				<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
 				<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
-				<a class="standard_text">Upload a cover image </a> <a id="percent" class="standard_text"></a>
+				<a id="upload_image_label" class="standard_text">Upload a cover image </a> <a id="percent" class="standard_text"></a>
 				<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
 			</form>
 			<button id="publish_button">publish </button><br>
+			<button id="edit_button" hidden>publish changes </button><br>
 			<button id="cancel_button">cancel</button>
 		</div>
 
@@ -216,14 +234,15 @@
 
 			<table id="edit_events_table" class="admin_table" hidden>
 			  <tr>
-			    <th>Event Name</th>
-			    <th>Date Created</th>
+              	<th>Event Name</th>
 			    <th>Event Date</th>
 			    <th>Start Time</th>
 			    <th>Place</th>
 			    <th>Date Created</th>
+			    <th>Times Saved</th>
 			    <th>Category</th>
 			    <th>Options</th>
+
 			   </tr>
 			</table>
 

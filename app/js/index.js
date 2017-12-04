@@ -40,6 +40,7 @@ $(document).ready(function() {
         $("#eventsFeed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
 
         $("#submit_event_form").on("click", "#publish_button",user, uploadEventToDatabase);
+        $("#submit_event_form").on("click", "#edit_button", uploadEditedEventToDatabase);
         $("#submit_event_form").on("click", "#cancel_button", reloadPage);
 
         $("#admin_panel_users_table").on("click", ".status_user_button", setUserAccountStatus);
@@ -48,6 +49,13 @@ $(document).ready(function() {
         $("#admin_panel_events_table").on("click", ".delete_event_button", deleteEventFromAdminPanelTable);
         $("#admin_panel_associations_table").on("click", ".status_user_button", setUserAccountStatus);
         $("#admin_panel_associations_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
+
+        $("#edit_events_table").on("click",".edit_event_button", editEvent);
+        $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
+
+
+
+
 
 
       }else{
@@ -66,6 +74,8 @@ function addAdminTabs(user) {
           if(user_from_database.val().is_admin) {
             $("#categories_tab_divisor").removeAttr("hidden");
             $("#submit_event_tab").removeAttr("hidden");
+            $("#submit_event_tab_divisor").removeAttr("hidden");
+            $("#edit_events_tab").removeAttr("hidden");
             $("#admin_tab_divisor").removeAttr("hidden");
             $("#admin_tab").removeAttr("hidden");
           } else if(user_from_database.val().is_association) {
@@ -184,7 +194,28 @@ function displayAdminTable(tab_name){
 
 function displayEditEventsTable(){
   $("#edit_events_table").prop("hidden", false);
-  displayAssociationEventsInTable();
+  var user = firebase.auth().currentUser;
+  if(user){
+    database.ref("events").on('child_added', function(event){
+      var value = event.val();
+      if(value.user_id==user.uid){
+        var source = $("#associations-edit-events-table-cell-template").html();
+        var template = Handlebars.compile(source);
+        var data = {user_id: value.user_id,
+                    event_id: value.image_url,
+                    event_title: value.title,
+                    event_date: convertDateToWords(value.date),
+                    event_start_time: convert24HourToAmPm(value.start_time_hour),
+                    event_place: value.place,
+                    event_category: value.category
+                  };
+        $("#edit_events_table").append(template(data));
+      }
+    });   
+  }else{
+    // No user is signed in.
+    window.location.replace("login.html"); 
+  }
 }
 
 
@@ -222,9 +253,6 @@ function displayAssociationsInTable(){
 }   
 
 
-function displayAssociationEventsInTable(){
-
-}
 
 function displayEventsInTable(){
   database.ref("events").on('child_added', function(event){
@@ -311,6 +339,8 @@ function displaySingleEvent(value){
   }
 
 }
+
+
 
 function convertDateToWords(date){
   var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
@@ -409,6 +439,7 @@ function updateUserSavedEvents(user){
 
 
 function uploadEventToDatabase(event_object_user){
+  //Remember that changes here must be done in uploadEditedEventToDatabase function too.
 
   user=event_object_user.data;
 
@@ -486,6 +517,76 @@ function uploadEventImageToStorage(image_file, image_path){
   );
 }
 
+function editEvent(){
+  var event_id = this.name;
+  hideAllTabContent();
+  $("#submit_event_form").prop("hidden", false);
+
+  database.ref("events/"+event_id).once("value").then(function(event){
+    event = event.val();
+
+    $("#title").val(event.title);
+    $("#date").val(event.date);
+    $("#start_time_hour").val(event.start_time_hour);
+    $("#end_time_hour").val(event.end_time_hour);
+    $("#place").val(event.place);
+    $("#brief_description").val(event.brief_description);
+    $("#detailed_description").val(event.detailed_description);
+    $("#contact_email").val(event.contact_email);
+    $("#contact_phone_number").val(event.contact_phone_number);
+    $("#upload_image_label").val("If you wish, upload a new event image...");
+    $("#publish_button").prop("hidden", true);
+    $("#edit_button").prop("hidden", false);
+    $("#edit_button").attr("name", event.image_url);
+
+
+  });
+
+}
+
+function uploadEditedEventToDatabase(){
+  var event_id = this.name;
+  var title = $("#title").val(),
+      date = $("#date").val(),
+      start_time_hour = $("#start_time_hour").val(),
+      end_time_hour = $("#end_time_hour").val(),
+      event_date_start_time_timestamp_format = new Date(date +" "+ start_time_hour).getTime(),
+      event_date_end_time_timestamp_format = new Date(date +" "+ end_time_hour).getTime(),
+      place = $("#place").val(),
+      category = $("#category").val(),
+      brief_description = $("#brief_description").val(),
+      detailed_description = $("#detailed_description").val(),
+      contact_email = $("#contact_email").val(),
+      contact_phone_number = $("#contact_phone_number").val(),
+      cancel_button = $("#cancel_button");
+
+  database.ref("events/"+event_id).update({
+      title: title,
+      date: date,
+      start_time_hour: start_time_hour,
+      end_time_hour: end_time_hour,
+      category: category,
+      event_date_start_time_timestamp_format: event_date_start_time_timestamp_format,
+      event_date_end_time_timestamp_format: event_date_end_time_timestamp_format,
+      place: place,
+      brief_description: brief_description,
+      detailed_description: detailed_description,
+      contact_email: contact_email,
+      contact_phone_number: contact_phone_number,
+      last_update: new Date().getTime()
+  });
+
+    
+    
+    var image_file = $("#imageUrl")[0].files[0];
+
+    if(!(image_file == null)){
+      uploadEventImageToStorage(image_file, event_id);
+    }
+    
+}
+
+
 function deleteUserAccountFromAdminPanelTable(){
   var user_id= this.name;
   alert("Option not available.");
@@ -511,7 +612,6 @@ function deleteEventFromAdminPanelTable(){
   var event_id= this.name;
   alert("Option not available.");
 }
-
 
 
 function assignUsernameToHeader(user_name){
