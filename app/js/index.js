@@ -54,9 +54,67 @@ $(document).ready(function() {
         $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
 
 
-
-
-
+        $("#submit_event_form").validate({
+          rules: {
+            title: "required",
+            date: "required",
+            start_time_hour: "required",
+            end_time_hour: "required",
+            place: {
+              required: true,
+              maxlength: 16, 
+            },
+            brief_description:{
+              required: true,
+              minlength: 16, 
+              maxlength: 128,
+            },
+            detailed_description:{
+              required: true,
+              minlength: 16
+            },
+            category: "required",
+            contact_email:{
+              required: true,
+              email: true
+            },
+            contact_phone_number:{
+              required: true,
+              phoneUS: true
+            }
+          },
+          messages: {
+            title: "The title is required.",
+            date: "The date is required.",
+            start_time_hour: "The start time hour is required.",
+            end_time_hour: "The end time hour is required.",
+            place: {
+              required: "The place name is required.",
+              maxlength: "The place name must not exceed 16 characters.", 
+            },
+            brief_description:{
+              required: "The brief description is required.",
+              minlength: "The brief descript must have at least 16 characters.", 
+              maxlength: "The brief description must not exceed 128 characters.",
+            },
+            detailed_description:{
+              required: "The detailed description is required.",
+              minlength: "The detailed description must have at least 16 characters."
+            },
+            category: "The category is required.",
+            contact_email:{
+              required: "The contact email is required.",
+              email: "The contact email entered is not a valid email."
+            },
+            contact_phone_number:{
+              required: "The contact phone number is required.",
+              phoneUS: "The phone number entered is not a valid US phone number"
+            }
+          },
+          submitHandler: function(form) {
+            form.submit();
+          }
+        });
 
       }else{
         redirectToLoginPage();
@@ -583,7 +641,7 @@ function uploadEditedEventToDatabase(){
     if(!(image_file == null)){
       uploadEventImageToStorage(image_file, event_id);
     }
-    
+
 }
 
 
@@ -630,4 +688,6 @@ function reloadPage(){
 function redirectToLoginPage(){
   window.location.replace("login.html");
 }
+
+
 

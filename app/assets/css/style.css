@@ -538,3 +538,10 @@ table td .table_options{
     color: #76b852;
 }
 
+label.error { 
+   float: none; color: red; 
+   padding-left: .5em;
+   vertical-align: top; 
+   display: block;
+}​
+
