@@ -105,10 +105,11 @@ function signIn(){
 		if (user_from_auth) {
 			database.ref("users/"+user_from_auth.uid).once('value').then(function(user_from_database){
       			var user = user_from_database.val();
-			    if(user.is_admin){
+			    if(user.account_status=="active"){
 				  redirectToIndexPage();
 			    } else{
-				  redirectToIndexPage();
+			      alert("Account have been disabled.");
+				  signOut();
 			    }
 			});
 		}else {
@@ -150,7 +151,10 @@ function createNewAccount(){
 		total_event_created: 0,
 		total_event_active: 0,
 		current_saved_events_counter: 0,
-		is_admin: false
+		is_admin: false,
+		is_association: false,
+		date_created: new Date().getTime(),
+		account_status: "active"
 	  }).then(redirectToIndexPage);
 	} else {
 	  alert("Something went wrong.");

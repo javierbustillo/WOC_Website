@@ -1,0 +1,547 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+
+
+header{
+  width: 90%;
+  min-width: 650px;
+  margin: 0 auto;
+  display: block;
+  border-style: solid;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
+}
+
+body{
+  align-items: center;
+  align-content: center;
+  min-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+footer{
+  font-family: "Open Sans";
+  font-size: 12px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border: none;
+  border-top: thin solid #f2f2f2;
+}
+
+
+.upperHeader {
+  width: 100%;
+  padding: 0;
+  background: white;
+  position: relative;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
+}
+
+#wocTitle{
+  text-align: center;
+  font-size: 40px;
+  text-decoration: none;
+  font-family:'Open Sans';
+  color: #85BF75;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+
+.loggedAs {
+  display: inline-flex;
+  position: absolute;
+  font-size: 14px;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  color: gray;
+  right: 20px;
+  top: 20px;
+
+
+}
+
+#logout_button{
+  float:right;
+  border: thin solid #85BF75;
+  color: #85BF75;
+  font-family: "Open Sans";
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+
+#logout_button:hover{
+  border-color: gray;
+  color: gray;
+}
+
+
+.lowerHeader{
+  background: white;
+  margin: 0;
+  width: auto;
+  padding: 0;
+  text-align: center;
+  color: gray;
+}
+
+
+.lowerHeader ul li a {
+  font-family: 'Open Sans', Bariol, Arial;
+  font-style: normal;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.adminMenu{
+  border-top: thin solid #f2f2f2;
+}
+
+ul, menu, dir{
+  margin: 5px;
+}
+
+.desactive{
+  border:none;
+  color: gray;
+  border:none;
+  background: none;
+  font-family: 'Open Sans', Bariol, Arial;
+  font-style: normal;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.static{
+    color:gray;
+}
+.desactive:hover {
+  color: #76b852;
+}
+
+button:focus {
+  outline:0;
+}
+
+.lowerHeader ul li a:active {
+  color: #85BF75;
+  border: none;
+}
+
+.lowerHeader ul {
+  left:-10px;
+}
+
+.lowerHeader ul li {
+  display: inline;
+}
+
+.active{
+  color: #76b852;
+  border:none;
+  background: none;
+  font-family: 'Open Sans', Bariol, Arial;
+  font-style: normal;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+#banner{
+  display: block;
+  border: none;
+  border-bottom: thin solid #f2f2f2;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#banner_header{
+  padding-top: 30px;
+  color:gray;
+  font-family: "Open Sans";
+  font-size: 30px;
+  width: 30%;
+  float: left;
+
+}
+
+#banner_image{
+  height: 350px;
+  width: auto;
+  float: right;
+  padding-right: 0px;
+  padding-top: 10px;
+}
+
+.form {
+  position: relative;
+  top: 0px;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form input {
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form select {
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 14px;
+  width: 100%;
+
+}
+
+.form textarea {
+  width: 100%;
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  resize: none;
+}
+
+.small{
+  width: 48%;
+}
+
+.normal{
+  width: 100%;
+}
+
+.submit_event_form{
+  position: absolute;
+  margin-top: 100px;
+}
+
+.form .start_time_hour{
+  float:left;
+}
+
+.form .end_time_hour{
+  float:right;
+}
+
+#hours_container{
+  display: inline-block;
+  width: 100%;
+}
+
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  margin-bottom: 10px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+#cancel_button{
+  background: #C0C0C0;
+}
+
+#publish_button{
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
+#edit_button{
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
+#percent{
+  float: right;
+}
+
+#cancel_button:hover{
+  background: #DC143C;
+}
+
+#publish_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+#edit_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+.standard_text{
+  font-family: "Open Sans", Bariol, Arial;
+  text-align: left;
+  font-size: 14px;
+  color:#696969;
+}
+
+#eventsFeed {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  margin: auto 30px;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  width: auto;
+  height: auto;
+  font-family: "Open Sans";
+}
+
+
+#eventsFeed .event {
+  padding: 0;
+  margin: 20px;
+  width: 300px;
+  height: 490px;
+  border: thin solid #f2f2f2;
+ }
+
+
+
+#eventsFeed .event_image{
+    display: block;
+    object-fit: cover;
+    width:300px;
+    height:300px;
+    border-bottom: thin solid #f2f2f2;
+}
+
+.event_title{
+  font-family: "Open Sans";
+  font-weight: 400;
+  font-size: 18px;
+  color:black;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.event_brief_description{
+  color:#484848;
+  font-size: 13px;
+  font-weight: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  font-style: italic;
+}
+
+.event_info_header{
+  color:#484848;
+  min-width: 100%;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 200;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.event_header #event_hour,
+.event_header #event_place,
+.event_header #event_date{
+  display: inline-block;
+}
+
+
+.event_image_container {
+  position: relative;
+  width: 100%;
+}
+
+
+#eventsFeed .saved_event_bookmark_icon{
+  height: 50px;
+  width: 50px;
+  float: right;
+  padding: 15px;
+}
+
+
+/*Tables */
+
+table {
+    font-family: "Open Sans", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #85BF75;
+    color: white;
+    font-weight: normal;
+    font-size: 13px;
+    margin: auto 0;
+}
+
+
+table td{
+  font-size: 12px;
+}
+
+table td .table_options{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-width: 130px;  
+}
+
+.options_admin_panel_table{
+  border: 0;
+  color: white;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.options_admin_panel_table:hover{
+  color:gray;
+}
+
+.user_options_admin_panel_table:active{
+  color:black;
+}
+
+.activate_button{
+  background-color: #85bf75;
+}
+
+.deactivate_button{
+  background-color: #fcb164;
+}
+
+.block_button{
+  background-color: blue;
+}
+
+.delete_user_button{
+  background-color: #fc5c5c;
+}
+
+.delete_event_button{
+  background-color: #fc5c5c;
+}
+
+.edit_event_button{
+  background: none;
+  border: thin solid #85BF75;
+  color: #85BF75;
+}
+
+.edit_event_button:hover{
+  border: thin solid gray;
+  color: gray;
+}
+
+
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #4A4A4A;
+    color: white;
+    padding: 8px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 13px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content button {
+    border: 0;
+    background: 0;
+    color: black;
+    text-align: left;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    font-family: "Open Sans", "Bariol", Arial, sans-serif;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content button:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    color: #76b852;
+}
+
+label.error { 
+   float: none; color: red; 
+   padding-left: .5em;
+   vertical-align: top; 
+   display: block;
+}​
+
