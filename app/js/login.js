@@ -75,15 +75,15 @@ $(function() {
 	});
 
 	$("form[name='register']").children().keyup(function(event){
-    if(event.keyCode == 13){
-        $("#create_button").click();
-    }
+	    if(event.keyCode == 13){
+	        $("#create_button").click();
+	    }
 	});
 
 	$("form[name='login-form']").children().keyup(function(event){
-    if(event.keyCode == 13){
-        $("#loginButton").click();
-    }
+	    if(event.keyCode == 13){
+	        $("#loginButton").click();
+	    }
 	});
 
   $("#loginButton").click(signIn);

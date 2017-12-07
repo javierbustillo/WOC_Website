@@ -14,7 +14,6 @@ var auth = firebase.auth(),
     storage = firebase.storage(),
     database = firebase.database();
 
-
 $(document).ready(function() {
     auth.onAuthStateChanged(function(user) {
       if(user){
@@ -39,10 +38,6 @@ $(document).ready(function() {
 
         $("#eventsFeed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
 
-        $("#submit_event_form").on("click", "#publish_button",user, uploadEventToDatabase);
-        $("#submit_event_form").on("click", "#edit_button", uploadEditedEventToDatabase);
-        $("#submit_event_form").on("click", "#cancel_button", reloadPage);
-
         $("#admin_panel_users_table").on("click", ".status_user_button", setUserAccountStatus);
         $("#admin_panel_users_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
@@ -54,65 +49,86 @@ $(document).ready(function() {
         $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
 
 
-        $("#submit_event_form").validate({
+        $("#event_form").validate({
           rules: {
-            title: "required",
-            date: "required",
-            start_time_hour: "required",
-            end_time_hour: "required",
+            title: {
+              required:true
+            },
+            date: {
+              required:true
+            },
+            start_time_hour: {
+              required:true
+            },
+            end_time_hour: {
+              required:true
+            },
             place: {
               required: true,
-              maxlength: 16, 
+              maxlength: 16
             },
             brief_description:{
               required: true,
               minlength: 16, 
-              maxlength: 128,
+              maxlength: 128
             },
             detailed_description:{
               required: true,
               minlength: 16
             },
-            category: "required",
+            category: {required: true},
             contact_email:{
               required: true,
               email: true
             },
             contact_phone_number:{
-              required: true,
-              phoneUS: true
-            }
+              required: true            }
           },
           messages: {
-            title: "The title is required.",
-            date: "The date is required.",
-            start_time_hour: "The start time hour is required.",
-            end_time_hour: "The end time hour is required.",
+            title: {
+              required:"The title is required."
+            },
+            date: {
+              required:"The date is required."
+            },
+            start_time_hour: {
+              required:"The start time hour is required."
+            },
+            end_time_hour: {
+              required:"The end time hour is required."
+            },
             place: {
               required: "The place name is required.",
-              maxlength: "The place name must not exceed 16 characters.", 
+              maxlength: "The place name must not exceed 16 characters."
             },
             brief_description:{
               required: "The brief description is required.",
               minlength: "The brief descript must have at least 16 characters.", 
-              maxlength: "The brief description must not exceed 128 characters.",
+              maxlength: "The brief description must not exceed 128 characters."
             },
             detailed_description:{
               required: "The detailed description is required.",
               minlength: "The detailed description must have at least 16 characters."
             },
-            category: "The category is required.",
+            category: {
+              required:"The category is required."
+            },
             contact_email:{
               required: "The contact email is required.",
               email: "The contact email entered is not a valid email."
             },
             contact_phone_number:{
-              required: "The contact phone number is required.",
-              phoneUS: "The phone number entered is not a valid US phone number"
+              required: "The contact phone number is required."
             }
-          },
-          submitHandler: function(form) {
-            form.submit();
+          }, submitHandler: function(form,event){
+              event.preventDefault();
+              var user = firebase.auth().currentUser;
+              
+              if(this.submitButton.id=="edit_button"){
+                uploadEditedEventToDatabase();
+              }else{
+                uploadEventToDatabase(user);
+              }
           }
         });
 
@@ -126,6 +142,8 @@ $(document).ready(function() {
 });
 
 
+function testValidator(){
+}
 
 function addAdminTabs(user) {
   database.ref("users/"+user.uid).once('value').then(function(user_from_database) {
@@ -198,6 +216,7 @@ function loadSubmitEventTabContent(){
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   $("#submit_event_form").prop("hidden", false);
+  $(".event_form").trigger("reset");
 }
 
 function loadAdminTabContent(){
@@ -496,10 +515,8 @@ function updateUserSavedEvents(user){
 }
 
 
-function uploadEventToDatabase(event_object_user){
+function uploadEventToDatabase(user){
   //Remember that changes here must be done in uploadEditedEventToDatabase function too.
-
-  user=event_object_user.data;
 
   var title = $("#title").val(),
       date = $("#date").val(),
@@ -579,6 +596,7 @@ function editEvent(){
   var event_id = this.name;
   hideAllTabContent();
   $("#submit_event_form").prop("hidden", false);
+  $(".event_form").trigger("reset");
 
   database.ref("events/"+event_id).once("value").then(function(event){
     event = event.val();
@@ -597,13 +615,13 @@ function editEvent(){
     $("#edit_button").prop("hidden", false);
     $("#edit_button").attr("name", event.image_url);
 
-
   });
 
 }
 
 function uploadEditedEventToDatabase(){
-  var event_id = this.name;
+  var event_id = $("#edit_button").attr("name");
+  
   var title = $("#title").val(),
       date = $("#date").val(),
       start_time_hour = $("#start_time_hour").val(),
@@ -633,14 +651,14 @@ function uploadEditedEventToDatabase(){
       contact_phone_number: contact_phone_number,
       last_update: new Date().getTime()
   });
-
-    
-    
+     
     var image_file = $("#imageUrl")[0].files[0];
 
     if(!(image_file == null)){
       uploadEventImageToStorage(image_file, event_id);
     }
+
+    reloadPage();
 
 }
 

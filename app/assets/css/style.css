@@ -192,7 +192,7 @@ button:focus {
   outline: 0;
   background: #f2f2f2;
   border: 0;
-  margin: 0 0 15px;
+  margin: 15px 0 0 0;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
@@ -203,7 +203,7 @@ button:focus {
   outline: 0;
   background: #f2f2f2;
   border: 0;
-  margin: 0 0 15px;
+  margin: 15px 0 0 0;
   padding: 30px;
   box-sizing: border-box;
   font-size: 14px;
@@ -217,7 +217,7 @@ button:focus {
   outline: 0;
   background: #f2f2f2;
   border: 0;
-  margin: 0 0 15px;
+  margin: 15px 0 0 0;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
@@ -239,19 +239,30 @@ button:focus {
 
 .form .start_time_hour{
   float:left;
+  width: 170px;
 }
 
 .form .end_time_hour{
   float:right;
+  width: 170px;
+  margin-left: auto;
+  text-align: right;
 }
 
 #hours_container{
-  display: inline-block;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
   width: 100%;
 }
 
+.time_hour_encapsulation{
+  display: flex;
+  flex-flow: column;
+}
 
-.form button {
+
+.form_button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -271,6 +282,7 @@ button:focus {
 }
 
 #publish_button{
+   margin-top: 15px;
    background: white;
    border: thin solid #85BF75;
    color: #85BF75;
@@ -305,6 +317,8 @@ button:focus {
   text-align: left;
   font-size: 14px;
   color:#696969;
+  padding-top: 15px;
+  display: block;
 }
 
 #eventsFeed {
@@ -539,9 +553,21 @@ table td .table_options{
 }
 
 label.error { 
-   float: none; color: red; 
+   float: none; 
+   color: red; 
+   font-family: "Open Sans";
    padding-left: .5em;
    vertical-align: top; 
    display: block;
+   font-size: 10px;
+   padding: 0;
+   margin: 0;
 }​
+
+div.error{
+  border: thin solid red;
+}
+
+
+
 

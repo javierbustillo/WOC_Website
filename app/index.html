@@ -160,21 +160,26 @@
 		<div id="eventsFeed"></div>
 
 		<div class="form" id="submit_event_form" hidden>
-			<form class="event_form">
-				<input class="normal" id="title" type="text" placeholder="title"/>
-				<input class="normal" id="date" type="date" placeholder="date"/>
+			<form class="event_form" id="event_form" name="event_form">
+				<ul id="errors"></ul>
+				<input class="normal" id="title" name="title" type="text" placeholder="title"/>
+				<input class="normal" name="date" id="date" type="date" placeholder="date"/>
 				<a class="standard_text start_time_hour">Start Time </a><a class="standard_text end_time_hour">End Time </a><br>
 				<div id="hours_container">
-				<input class="small start_time_hour" id="start_time_hour" type="time" placeholder="start time" label="start time"/>
-				<input class="small end_time_hour" id="end_time_hour" type="time" placeholder="end time"/>
+					<div class="time_hour_encapsulation">
+						<input class="small start_time_hour" name="start_time_hour" id="start_time_hour" type="time" placeholder="start time" label="start time"/>
+					</div>
+					<div class="time_hour_encapsulation time_hour_encapsulation_rite">
+						<input class="small end_time_hour" id="end_time_hour" type="time" name="end_time_hour" placeholder="end time"/>
+					</div>
 				</div>
-				<input class="normal" id="place" type="text" placeholder="place"/>
-				<textarea id="brief_description" placeholder="brief description" rows="2" ></textarea>
-				<textarea id="detailed_description" placeholder="detailed description" rows="6" ></textarea>
+				<input class="normal" id="place" type="text" placeholder="place" name="place"/>
+				<textarea id="brief_description" name="brief_description" placeholder="brief description" rows="2" ></textarea>
+				<textarea id="detailed_description" placeholder="detailed description" name="detailed_description" rows="6" ></textarea>
 
 				<a class="standard_text">Select a category </a>
 
-				<select id="category">
+				<select id="category" name="category">
 					<option value="" disabled selected>Select your option</option>
 					<option value="Engineering">Engineering</option>
 						<option value="Science">Science</option>
@@ -187,14 +192,15 @@
 						<option value="Sales">Sales</option>
 				</select>
 
-				<input class="normal" id="contact_email" type="text" placeholder="contact email"/>
-				<input class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
+				<input name="contact_email" class="normal" id="contact_email" type="text" placeholder="contact email"/>
+				<input name="contact_phone_number" class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
 				<a id="upload_image_label" class="standard_text">Upload a cover image </a> <a id="percent" class="standard_text"></a>
 				<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
+
+				<input id="publish_button" class="form_button" type="submit" value="publish"/> <br>
+				<input id="edit_button" class="form_button" type="submit" value="publish changes" hidden/> <br>
+				<button id="cancel_button" class="form_button">cancel</button>
 			</form>
-			<button id="publish_button">publish </button><br>
-			<button id="edit_button" hidden>publish changes </button><br>
-			<button id="cancel_button">cancel</button>
 		</div>
 
 		<div id="table_container">
