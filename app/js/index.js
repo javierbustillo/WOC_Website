@@ -507,33 +507,39 @@ function setTabActive(tab_name){
 function updateUserSavedEvents(user){
   event_name = this.parentNode.title;
   bookmark_icon = this;
-
   user = user.data;
-
+  //Hablar con Javier para eliminar el counter
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
       var current_saved_events_counter = user_reference.child("current_saved_events_counter").val();
-      if(current_saved_events_counter==null||current_saved_events_counter==0){
-        database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
+      var user = user_reference.val();
+      var saved_events = user.saved_events;
+      if(saved_events==null||saved_events.length==0){
+        console.log("HERE");
+        saved_events = [event_name];
+        database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter+1});
         bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
         updateUserRecommendedCategories(event_name, user);
       }else{
-        var saved_events = user_reference.child("saved_events").val();
-        for(var i=0; i<=current_saved_events_counter; i++){
-          if(saved_events[i]==event_name&&i<current_saved_events_counter){
+        console.log("HERE 2");
+        for(i=0; i<saved_events.length; i++){
+          console.log("LOOP x"+i);
+          if(saved_events[i]==event_name){
+            console.log("HERE 3");
             saved_events.splice(i, 1);
-            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter-1});
+            database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter-1});
             bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_gray.png";
             break;
-          } else if(i==current_saved_events_counter){
+          }else if(i==saved_events.length-1){
+            console.log("HERE 4");
             saved_events.push(event_name);
-            database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
+            database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter+1});
             bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
             updateUserRecommendedCategories(event_name, user);
             break;
           }
         }
-        database.ref("users/"+user.uid).update({saved_events:saved_events});
       }
+      database.ref("users/"+user.id).update({saved_events:saved_events});
   });
 }
 
@@ -587,7 +593,8 @@ function uploadEventToDatabase(user){
     var path = newEvent.key;
 
     database.ref("events/"+path).update({
-      image_url: path
+      image_url: path,
+      event_id: path
     });
 
     uploadEventImageToStorage(image_file, path);
@@ -618,7 +625,7 @@ function uploadEventImageToStorage(image_file, image_path){
 function updateUserRecommendedCategories(last_saved_event_id, user){
   database.ref("events/"+last_saved_event_id).once("value").then(function(event_reference){
     var category_name=event_reference.val().category;
-    database.ref("users/"+user.uid).once("value").then(function(user_reference){
+    database.ref("users/"+user.id).once("value").then(function(user_reference){
       user = user_reference.val();
       recommendedCategories = user.recommendedCategories;
       
