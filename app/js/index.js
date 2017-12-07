@@ -51,7 +51,8 @@ $(document).ready(function() {
         $("#event_form").validate({
           rules: {
             title: {
-              required:true
+              required:true,
+              maxlength: 20
             },
             date: {
               required:true
@@ -85,7 +86,8 @@ $(document).ready(function() {
           },
           messages: {
             title: {
-              required:"The title is required."
+              required:"The title is required.",
+              maxlength: "The title must not exceed 20 characters."
             },
             date: {
               required:"The date is required."
@@ -384,9 +386,7 @@ function displaySingleEvent(value){
 
   var source = $("#event-template").html();
   var template = Handlebars.compile(source);
-  var event_name = value.image_url;
-
-
+  var event_name = value.event_id;
   var user = firebase.auth().currentUser;
   var bookmark_icon="";
 
@@ -411,21 +411,29 @@ function displaySingleEvent(value){
           }
         }
 
-        //Display Event
-        var data = {title: value.title,
-                    imageUrl: value.image_url,
-                    date: convertDateToWords(value.date),
-                    start_time_hour: convert24HourToAmPm(value.start_time_hour),
-                    place: value.place,
-                    briefDescription: value.brief_description,
-                    bookmark_icon: bookmark_icon
-                  };
+        database.ref("users/"+value.user_id).on("value", function(association_reference){
+          association = association_reference.val();
+          association_name = association.display_name;
+          association_id = association.id;
+          //Display Event
+          var data = {title: value.title,
+                      imageUrl: value.image_url,
+                      date: convertDateToWords(value.date),
+                      start_time_hour: convert24HourToAmPm(value.start_time_hour),
+                      place: value.place,
+                      briefDescription: value.brief_description,
+                      bookmark_icon: bookmark_icon,
+                      association_name: association_name,
+                      association_id: association_id
+                    };
 
-        $("#eventsFeed").prepend(template(data));
+          $("#eventsFeed").prepend(template(data));
 
-        var image_id = "#"+value.image_url;
-        storage.ref(value.image_url).getDownloadURL().then(function(url) {
-            $(image_id).attr("src", url);
+          var image_id = "#"+value.image_url;
+          storage.ref(value.image_url).getDownloadURL().then(function(url) {
+              $(image_id).attr("src", url);
+          });
+
         });
 
       });
