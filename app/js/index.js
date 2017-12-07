@@ -330,7 +330,6 @@ function displayAssociationsInTable(){
 }   
 
 
-
 function displayEventsInTable(){
   database.ref("events").on('child_added', function(event){
     var value = event.val();
