@@ -27,7 +27,7 @@ $(document).ready(function() {
         $("#logout_button").click(signOut);
 
         $("#all_tab").click(loadAllTabContent);
-        $("#recommended_tab").click(loadRecommendedTabContent);
+        $("#recommended_tab").click(user, loadRecommendedTabContent);
         $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
@@ -185,12 +185,12 @@ function loadAllTabContent(){
   displayAllEvents();
 }
 
-function loadRecommendedTabContent(){
+function loadRecommendedTabContent(user){
   setTabActive("recommended");
   hideAllTabContent();
   $('#banner_header').html("We got some recomendations for you. There is nothing better than being part of something great.");
   $('#banner_image').attr("src","assets/images/catching_things.jpg");
-  displayAllEvents();
+  displayRecommendedEvents(user.data);
 }
 
 function loadSavedTabContent(user){
@@ -358,7 +358,21 @@ function displaySavedEvents(user){
     var saved_events = user_reference.child("saved_events").val();
     if(saved_events!=null){
       database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
-        if(saved_events.includes("event"+event.val().image_url)){
+        if(saved_events.includes(event.val().image_url)){
+          displaySingleEvent(event.val());
+        }
+      });
+    }
+  });
+}
+
+function displayRecommendedEvents(user){
+  database.ref("users/"+user.uid).once("value").then(function(user_reference){
+    var recommendedCategories = user_reference.val().recommendedCategories;
+    console.log(recommendedCategories);
+    if(recommendedCategories!=null){
+      database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
+        if(recommendedCategories.includes(event.val().category)){
           displaySingleEvent(event.val());
         }
       });
@@ -370,7 +384,7 @@ function displaySingleEvent(value){
 
   var source = $("#event-template").html();
   var template = Handlebars.compile(source);
-  var event_name = "event"+value.image_url;
+  var event_name = value.image_url;
 
 
   var user = firebase.auth().currentUser;
@@ -491,7 +505,7 @@ function setTabActive(tab_name){
 }
 
 function updateUserSavedEvents(user){
-  event_name = this.parentNode.id;
+  event_name = this.parentNode.title;
   bookmark_icon = this;
 
   user = user.data;
@@ -501,6 +515,7 @@ function updateUserSavedEvents(user){
       if(current_saved_events_counter==null||current_saved_events_counter==0){
         database.ref("users/"+user.uid).update({current_saved_events_counter:1, saved_events:[event_name]});
         bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
+        updateUserRecommendedCategories(event_name, user);
       }else{
         var saved_events = user_reference.child("saved_events").val();
         for(var i=0; i<=current_saved_events_counter; i++){
@@ -513,6 +528,7 @@ function updateUserSavedEvents(user){
             saved_events.push(event_name);
             database.ref("users/"+user.uid).update({current_saved_events_counter:current_saved_events_counter+1});
             bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
+            updateUserRecommendedCategories(event_name, user);
             break;
           }
         }
@@ -597,6 +613,41 @@ function uploadEventImageToStorage(image_file, image_path){
       reloadPage();
     }
   );
+}
+
+function updateUserRecommendedCategories(last_saved_event_id, user){
+  database.ref("events/"+last_saved_event_id).once("value").then(function(event_reference){
+    var category_name=event_reference.val().category;
+    database.ref("users/"+user.uid).once("value").then(function(user_reference){
+      user = user_reference.val();
+      if(user.recommendedCategories==null){
+        database.ref("users/"+user.id).update({
+          recommendedCategoriesCounter: 1,
+          recommendedCategories:[category_name]
+        });
+      }else if(user.recommendedCategoriesCounter<3){
+        if(!user.recommendedCategories.includes(category_name)){
+          var counter_value = user.recommendedCategoriesCounter+1;
+          var recommendedCategories = user.recommendedCategories;
+          recommendedCategories.push(category_name);
+          database.ref("users/"+user.id).update({
+            recommendedCategoriesCounter: counter_value,
+            recommendedCategories: recommendedCategories
+          });
+        }
+      }else{
+        if(!user.recommendedCategories.includes(category_name)){
+          var recommendedCategories = user.recommendedCategories;
+          recommendedCategories[0] = recommendedCategories[1];
+          recommendedCategories[1] = recommendedCategories[2];
+          recommendedCategories[2] = category_name;
+          database.ref("users/"+user.id).update({
+            recommendedCategories: recommendedCategories
+          });
+        }
+      }
+    });
+  });
 }
 
 function editEvent(){
