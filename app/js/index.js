@@ -620,31 +620,41 @@ function updateUserRecommendedCategories(last_saved_event_id, user){
     var category_name=event_reference.val().category;
     database.ref("users/"+user.uid).once("value").then(function(user_reference){
       user = user_reference.val();
-      if(user.recommendedCategories==null){
+      recommendedCategories = user.recommendedCategories;
+      if(recommendedCategories==null||recommendedCategories.length==0){
         database.ref("users/"+user.id).update({
-          recommendedCategoriesCounter: 1,
           recommendedCategories:[category_name]
         });
-      }else if(user.recommendedCategoriesCounter<3){
-        if(!user.recommendedCategories.includes(category_name)){
-          var counter_value = user.recommendedCategoriesCounter+1;
-          var recommendedCategories = user.recommendedCategories;
-          recommendedCategories.push(category_name);
-          database.ref("users/"+user.id).update({
-            recommendedCategoriesCounter: counter_value,
-            recommendedCategories: recommendedCategories
-          });
-        }
       }else{
-        if(!user.recommendedCategories.includes(category_name)){
-          var recommendedCategories = user.recommendedCategories;
-          recommendedCategories[0] = recommendedCategories[1];
-          recommendedCategories[1] = recommendedCategories[2];
-          recommendedCategories[2] = category_name;
-          database.ref("users/"+user.id).update({
-            recommendedCategories: recommendedCategories
-          });
+        if(recommendedCategories.length<3){
+          if(!recommendedCategories.includes(category_name)){
+           recommendedCategories.push(category_name);
+          }else{
+            for(i = 0; i<recommendedCategories.length-1; i++){
+              if(recommendedCategories[i]==category_name){
+                var categoryToChangePosition= recommendedCategories.splice(i,1);
+                recommendedCategories.push(categoryToChangePosition[0]);
+                break;
+              }
+            }
+          }
+        }else{
+          if(!recommendedCategories.includes(category_name)){
+            recommendedCategories.splice(0,1);
+            recommendedCategories.push(category_name);
+          }else{
+            for(i = 0; i<recommendedCategories.length-1; i++){
+              if(recommendedCategories[i]==category_name){
+                var categoryToChangePosition= recommendedCategories.splice(i,1);
+                recommendedCategories.push(categoryToChangePosition[0]);
+                break;
+              }
+            }
+          }
         }
+        database.ref("users/"+user.id).update({
+          recommendedCategories: recommendedCategories
+        });
       }
     });
   });
