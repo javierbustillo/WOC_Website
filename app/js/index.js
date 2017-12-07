@@ -369,7 +369,7 @@ function displaySingleEvent(value){
   var user = firebase.auth().currentUser;
   var bookmark_icon="";
 
-  if(value.event_status=="active"){
+  if((value.event_status=="active") && (value.event_date_start_time_timestamp_format>new Date())){
     //Get Current Saved Event Status
     if (user) {
       database.ref("users/"+user.uid).once("value").then(function(user_reference){
