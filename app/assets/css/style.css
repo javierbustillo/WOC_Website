@@ -440,13 +440,6 @@ table td{
   font-size: 12px;
 }
 
-table td .table_options{
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  min-width: 130px;  
-}
 
 .options_admin_panel_table{
   border: 0;
@@ -455,6 +448,10 @@ table td .table_options{
   padding-left: 5px;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.table_options {
+  min-width: 200px;
 }
 
 .options_admin_panel_table:hover{
