@@ -19,6 +19,7 @@ $(document).ready(function() {
       if(user){
 
         assignUsernameToHeader(user.displayName);
+        addCategoriesToCategoriesTab();
         addAdminTabs(user);
 
         loadAllTabContent();
@@ -29,10 +30,8 @@ $(document).ready(function() {
         $("#recommended_tab").click(loadRecommendedTabContent);
         $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
-        //$("#categories_tab").click(loadCategoriesTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
-        //$("#admin_tab").click(loadAdminTabContent);
-        $(".category_option_button").click(loadCategoriesTabContent);
+        $(".lowerHeader").on("click", ".category_option_button", loadCategoriesTabContent);
         $(".admin_option_button").click(loadAdminTabContent);
         $("#edit_events_tab").click(loadEditEventsTabContent);
 
@@ -160,6 +159,12 @@ function addAdminTabs(user) {
             $("#submit_event_tab_divisor").removeAttr("hidden");
             $("#edit_events_tab").removeAttr("hidden");
           }
+  });
+}
+
+function addCategoriesToCategoriesTab(){
+  database.ref("assets/categories").on('child_added', function(category){
+    $("#categories_tab_container").append("<button class=category_option_button name="+category.val()+">"+category.val()+"</button>");
   });
 }
 
