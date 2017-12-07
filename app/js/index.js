@@ -140,10 +140,6 @@ $(document).ready(function() {
     });
 });
 
-
-function testValidator(){
-}
-
 function addAdminTabs(user) {
   database.ref("users/"+user.uid).once('value').then(function(user_from_database) {
           if(user_from_database.val().is_admin) {
@@ -165,6 +161,12 @@ function addAdminTabs(user) {
 function addCategoriesToCategoriesTab(){
   database.ref("assets/categories").on('child_added', function(category){
     $("#categories_tab_container").append("<button class=category_option_button name="+category.val()+">"+category.val()+"</button>");
+  });
+}
+
+function addCategoriesOptionsToForm(){
+  database.ref("assets/categories").on('child_added', function(category){
+    $("#category").append("<option value="+category.val()+">"+category.val()+"</option>");
   });
 }
 
@@ -221,6 +223,7 @@ function loadSubmitEventTabContent(){
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   $("#submit_event_form").prop("hidden", false);
+  addCategoriesOptionsToForm();
   $(".event_form").trigger("reset");
 }
 
@@ -600,6 +603,7 @@ function editEvent(){
   var event_id = this.name;
   hideAllTabContent();
   $("#submit_event_form").prop("hidden", false);
+  addCategoriesOptionsToForm();
   $(".event_form").trigger("reset");
 
   database.ref("events/"+event_id).once("value").then(function(event){
