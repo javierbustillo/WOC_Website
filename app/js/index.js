@@ -566,11 +566,12 @@ function uploadEventToDatabase(user){
 
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
 
+    var user = user_reference.val();
     var total_event_created = user_reference.child("total_event_created").val();
     var total_event_active = user_reference.child("active_event_active").val();
 
-    database.ref("users/"+user.uid).update({total_event_created: total_event_created+1});
-    database.ref("users/"+user.uid).update({total_event_active: total_event_active+1});
+    database.ref("users/"+user.id).update({total_event_created: total_event_created+1});
+    database.ref("users/"+user.id).update({total_event_active: total_event_active+1});
 
     var newEvent = database.ref("events").push({
       title: title,
@@ -585,7 +586,8 @@ function uploadEventToDatabase(user){
       detailed_description: detailed_description,
       contact_email: contact_email,
       contact_phone_number: contact_phone_number,
-      user_id: user.uid,
+      user_id: user.id,
+      user_name: user.display_name,
       event_status: "active"
     });
 
