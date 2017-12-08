@@ -21,7 +21,7 @@ $(document).ready(function() {
         assignUsernameToHeader(user.displayName);
         addCategoriesToCategoriesTab();
         addAdminTabs(user);
-
+        checkForVerifyEmailWarning(user.emailVerified);
         loadAllTabContent();
 
         $("#logout_button").click(signOut);
@@ -46,6 +46,11 @@ $(document).ready(function() {
 
         $("#edit_events_table").on("click",".edit_event_button", editEvent);
         $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
+
+        $("html").on("click", "#verify_account_icon", displayVerifyAccountModalBox);
+        $(".verify_account_modal_box").on("click", ".verify_account_modal_x_close_icon", hideVerifyAccountModalBox);
+        $(".verify_account_modal_box").on("click", "#verify_account_modal_button", sendEmailVerification);
+
 
 
         $("#event_form").validate({
@@ -305,6 +310,41 @@ function displayEditEventsTable(){
   }
 }
 
+function displayVerifyAccountModalBox(){
+  $(".verify_account_modal_box").prop("hidden", false);
+}
+
+function hideVerifyAccountModalBox(){
+  $(".verify_account_modal_box").prop("hidden", true);
+}
+
+function sendEmailVerification(){
+  var user = firebase.auth().currentUser;
+  user.sendEmailVerification();
+  hideVerifyAccountModalBox();
+}
+
+function checkForVerifyEmailWarning(isVerified){
+  if(!isVerified){
+    $("#verify_account_icon_container").prop("hidden", false);
+  }else if(isVerified){
+    var user = firebase.auth().currentUser;
+    database.ref("users/"+user.uid).on('value', function(user_reference){
+      user = user_reference.val();
+      if(user.emailVerified==false||user.emailVerified==null){
+        database.ref("users/"+user.id).update({emailVerified:true});
+        database.ref("associations/Universidad de Puerto Rico - Mayaguez").on('value', function(associations_reference){
+          associations = associations_reference.val();
+          //if it is a valid verified association, gives association access to the account
+          if(associations.includes(user.email)){
+            database.ref("users/"+user.id).update({is_association:true});
+            reloadPage();
+          }
+        });
+      }
+    });
+  }
+}
 
 function displayUsersInTable(){
   database.ref("users").on('child_added', function(user){

@@ -14,15 +14,26 @@
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><!-- Avoid html cache -->
 	</head>
 
+	<div class="verify_account_modal_box" hidden>
+		<div class="verify_account_modal_content">
+			<img class="verify_account_modal_x_close_icon" src="assets/images/x_close_icon.png">
+			<a class="verify_account_modal_header standard_text modal_text_line_1"> Your account is not verified.</a>
+			<a class="verify_account_modal_header standard_text modal_text_line_2">Do it now and start enjoying new features right now. </a>
+			<button id="verify_account_modal_button" class="form_button">Verify Account</button>
+		</div>
+	</div>
+
 	<header>
 			<div class="upperHeader">
+				<div id="verify_account_icon_container" hidden>
+					<img id="verify_account_icon" src="assets/images/exclamation_icon.png" hidden>
+				</div>
 				<div class="loggedAs">
 					Welcome,&nbsp 
 					<a id="username"></a>!<br>
 					<button id="logout_button">Log out.</button>
 				</div>
 				<div href="/index.html" id="wocTitle">What's on Campus?</div>
-
 			</div>
 			<div class="lowerHeader">
 				<ul class="menu" >
