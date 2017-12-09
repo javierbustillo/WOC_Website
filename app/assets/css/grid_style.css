@@ -1,0 +1,77 @@
+.main_grid{
+	display: grid;
+	grid-template-areas:
+    	"header"
+        "banner"
+        "events_feed"
+        "footer";
+    grid-gap: 15px;
+    width: 90%;
+    margin: 0 auto;
+    font-family: "Open Sans";
+    min-width: 250px;
+    color: #696969;
+}
+
+.header{
+	grid-area: header;
+	border-bottom: thin solid #f2f2f2;
+}
+
+.header_website_title{
+	text-align: center;
+ 	font-size: 70px;
+ 	font-weight: 100;
+  	color: #85BF75;
+  	
+}
+
+.header_user_information{
+	float:right;
+	font-size: 15px;
+	margin: 10px;
+}
+
+.lower_header{
+	position: fixed;
+	left: -400px;
+}
+
+.banner{
+	grid-area:banner;
+	font-size: 20px;
+	font-weight: 100;
+}
+
+.banner_image{
+	max-width: 100%;
+	height: auto;
+	outline: 0;
+}
+.events_feed{
+	grid-area: events_feed;
+
+}
+
+.footer{
+	grid-area: footer;
+	border-top: thin solid #f2f2f2;
+	text-align: center;
+	font-size: 9px;
+  	padding: 5px;
+}
+
+.action_button{
+	background: white;
+    border: thin solid #85BF75;
+    color: #85BF75;
+    padding: 4px 8px;
+    font-family: "Roboto", "Open Sans";
+}
+
+.action_button:hover{
+	cursor: pointer;
+	background-color: #85BF75;
+	color: white;
+}
+
