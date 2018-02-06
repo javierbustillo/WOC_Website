@@ -64,7 +64,7 @@ $(document).ready(function() {
             },
             brief_description:{
               required: true,
-              minlength: 16, 
+              minlength: 16,
               maxlength: 128
             },
             detailed_description:{
@@ -99,7 +99,7 @@ $(document).ready(function() {
             },
             brief_description:{
               required: "The brief description is required.",
-              minlength: "The brief descript must have at least 16 characters.", 
+              minlength: "The brief descript must have at least 16 characters.",
               maxlength: "The brief description must not exceed 128 characters."
             },
             detailed_description:{
@@ -118,7 +118,7 @@ $(document).ready(function() {
             }
           }, submitHandler: function(form,event){
               event.preventDefault();
-              var user = firebase.auth().currentUser;         
+              var user = firebase.auth().currentUser;
               if(this.submitButton.id=="edit_button"){
                 uploadEditedEventToDatabase();
               }else{
@@ -176,7 +176,6 @@ function uploadEventToDatabase(user){
     var image_file = $("#imageUrl")[0].files[0];
     var path = newEvent.key;
     database.ref("events/"+path).update({
-      image_url: path,
       event_id: path
     });
     uploadEventImageToStorage(image_file, path);
@@ -213,7 +212,7 @@ function uploadEditedEventToDatabase(){
       contact_email: contact_email,
       contact_phone_number: contact_phone_number,
       last_update: new Date().getTime()
-  });  
+  });
     var image_file = $("#imageUrl")[0].files[0];
     if(!(image_file == null)){
       uploadEventImageToStorage(image_file, event_id);
@@ -263,7 +262,7 @@ function updateUserRecommendedCategories(last_saved_event_id, user){
       }
       database.ref("users/"+user.id).update({
         recommendedCategories: recommendedCategories
-      });  
+      });
     });
   });
 }
@@ -327,7 +326,7 @@ function fillEditEvent(){
     $("#upload_image_label").val("If you wish, upload a new event image...");
     $("#publish_button").prop("hidden", true);
     $("#edit_button").prop("hidden", false);
-    $("#edit_button").attr("name", event.image_url);
+    $("#edit_button").attr("name", event.event_id);
   });
 }
 
@@ -363,7 +362,7 @@ function displaySingleEvent(value){
           association_id = association.id;
           //Display Event
           var data = {title: value.title,
-                      imageUrl: value.image_url,
+                      imageUrl: value.event_id,
                       date: convertDateToWords(value.date),
                       start_time_hour: convert24HourToAmPm(value.start_time_hour),
                       place: value.place,
@@ -373,15 +372,15 @@ function displaySingleEvent(value){
                       association_id: association_id
                     };
           $("#eventsFeed").prepend(template(data));
-          var image_id = "#"+value.image_url;
-          storage.ref(value.image_url).getDownloadURL().then(function(url) {
+          var image_id = "#"+value.event_id;
+          storage.ref(value.event_id).getDownloadURL().then(function(url) {
               $(image_id).attr("src", url);
           });
         });
       });
     } else {
       // No user is signed in.
-      window.location.replace("login.html"); 
+      window.location.replace("login.html");
     }
   }
 }
@@ -405,7 +404,7 @@ function displaySavedEvents(user){
     var saved_events = user_reference.child("saved_events").val();
     if(saved_events!=null){
       database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
-        if(saved_events.includes(event.val().image_url)){
+        if(saved_events.includes(event.val().event_id)){
           displaySingleEvent(event.val());
         }
       });
@@ -454,7 +453,7 @@ function displayEditEventsTable(){
         var source = $("#associations-edit-events-table-cell-template").html();
         var template = Handlebars.compile(source);
         var data = {user_id: value.user_id,
-                    event_id: value.image_url,
+                    event_id: value.event_id,
                     event_title: value.title,
                     event_date: convertDateToWords(value.date),
                     event_start_time: convert24HourToAmPm(value.start_time_hour),
@@ -463,10 +462,10 @@ function displayEditEventsTable(){
                   };
         $("#edit_events_table").append(template(data));
       }
-    });   
+    });
   }else{
     // No user is signed in.
-    window.location.replace("login.html"); 
+    window.location.replace("login.html");
   }
 }
 
@@ -482,7 +481,7 @@ function displayUsersInTable(){
                 account_status: value.account_status
               };
     $("#admin_panel_users_table").append(template(data));
-  });      
+  });
 }
 
 function displayAssociationsInTable(){
@@ -501,7 +500,7 @@ function displayAssociationsInTable(){
        $("#admin_panel_associations_table").append(template(data));
     }
   });
-}   
+}
 
 function displayEventsInTable(){
   database.ref("events").on('child_added', function(event){
@@ -511,11 +510,11 @@ function displayEventsInTable(){
     var data = {title: value.title,
                 user_id: value.user_id,
                 date: convertDateToWords(value.date),
-                event_id: value.image_url,
+                event_id: value.event_id,
                 event_status: value.event_status
               };
     $("#admin_panel_events_table").append(template(data));
-  });      
+  });
 }
 
 function displayVerifyAccountModalBox(){
@@ -543,7 +542,7 @@ function setUserAccountStatus(){
   var user_id = this.name;
   var account_status_cell_id = "#account_status"+user_id;
   $(account_status_cell_id).html(selected_status);
-  database.ref("users/"+user_id).update({account_status: selected_status}); 
+  database.ref("users/"+user_id).update({account_status: selected_status});
 }
 
 function setEventStatus(){
