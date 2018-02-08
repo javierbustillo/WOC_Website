@@ -22,16 +22,18 @@ $(document).ready(function() {
         addAdminTabs(user);
         checkForVerifyEmailWarning(user.emailVerified);
         loadAllTabContent();
-        $("#logout_button").click(signOut);
+        $(".header_logout_button").click(signOut);
+        $(".mobile_menu_icon").click(showMobileMenu);
+        $(".lower_header").on("click", ".x_close_icon", hideMobileMenu);
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(user, loadRecommendedTabContent);
         $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
-        $(".lowerHeader").on("click", ".category_option_button", loadCategoriesTabContent);
+        $(".lower_header").on("click", ".category_option_button", loadCategoriesTabContent);
         $(".admin_option_button").click(loadAdminTabContent);
         $("#edit_events_tab").click(loadEditEventsTabContent);
-        $("#eventsFeed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
+        $(".events_feed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
         $("#admin_panel_users_table").on("click", ".status_user_button", setUserAccountStatus);
         $("#admin_panel_users_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
@@ -278,23 +280,18 @@ function updateUserSavedEvents(user){
       var user = user_reference.val();
       var saved_events = user.saved_events;
       if(saved_events==null||saved_events.length==0){
-        console.log("HERE");
         saved_events = [event_name];
         database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter+1});
         bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
         updateUserRecommendedCategories(event_name, user);
       }else{
-        console.log("HERE 2");
         for(i=0; i<saved_events.length; i++){
-          console.log("LOOP x"+i);
           if(saved_events[i]==event_name){
-            console.log("HERE 3");
             saved_events.splice(i, 1);
             database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter-1});
             bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_gray.png";
             break;
           }else if(i==saved_events.length-1){
-            console.log("HERE 4");
             saved_events.push(event_name);
             database.ref("users/"+user.id).update({current_saved_events_counter:current_saved_events_counter+1});
             bookmark_icon.src="assets/images/bookmark_icon_for_saved_events_green.png";
@@ -372,7 +369,7 @@ function displaySingleEvent(value){
                       association_name: association_name,
                       association_id: association_id
                     };
-          $("#eventsFeed").prepend(template(data));
+          $(".events_feed").prepend(template(data));
           var image_id = "#"+value.image_url;
           storage.ref(value.image_url).getDownloadURL().then(function(url) {
               $(image_id).attr("src", url);
@@ -586,17 +583,12 @@ function checkForVerifyEmailWarning(isVerified){
 function addAdminTabs(user) {
   database.ref("users/"+user.uid).once('value').then(function(user_from_database) {
     if(user_from_database.val().is_admin) {
-      $("#categories_tab_divisor").removeAttr("hidden");
-      $("#submit_event_tab").removeAttr("hidden");
-      $("#submit_event_tab_divisor").removeAttr("hidden");
-      $("#edit_events_tab").removeAttr("hidden");
-      $("#admin_tab_divisor").removeAttr("hidden");
-      $("#admin_tab").removeAttr("hidden");
+      $("#submit_event_tab").css("display", "block");
+      $("#edit_events_tab").css("display", "block");
+      $("#admin_tab").css("display", "block");
     } else if(user_from_database.val().is_association) {
-      $("#categories_tab_divisor").removeAttr("hidden");
-      $("#submit_event_tab").removeAttr("hidden");
-      $("#submit_event_tab_divisor").removeAttr("hidden");
-      $("#edit_events_tab").removeAttr("hidden");
+      $("#submit_event_tab").css("display", "block");
+      $("#edit_events_tab").css("display", "block");
     }
   });
 }
@@ -646,6 +638,7 @@ function loadPopularTabContent(){
 }
 
 function loadCategoriesTabContent(){
+  console.log("HERE");
   setTabActive("categories");
   hideAllTabContent();
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
@@ -659,6 +652,7 @@ function loadSubmitEventTabContent(){
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   $("#submit_event_form").prop("hidden", false);
+  $("#submit_event_form").css("display","grid");
   addCategoriesOptionsToForm();
   $(".event_form").trigger("reset");
 }
@@ -682,7 +676,7 @@ function loadEditEventsTabContent(){
 function hideAllTabContent() {
   $("#submit_event_form").prop("hidden", true);
   $(".admin_table").prop("hidden", true);
-  $("#eventsFeed").empty();
+  $(".events_feed").empty();
   $("td").remove();
 }
 
@@ -726,22 +720,17 @@ function setTabActive(tab_name){
   }
 }
 
-function convertDateToWords(date){
-  var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
-  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-  date = new Date(date);
-  var day = date.getDate()+1; //revisar esto luego
-  var month = monthNames[date.getMonth()];
-  var year = date.getFullYear();
-  return month + ' '+day + ', ' +year;
+function showMobileMenu(){
+  $(".lower_header").css("transform","translateX(120%)");
+  $(".header_menu").css("display","block")
 }
 
-function convert24HourToAmPm(hour) {
-  return moment(hour, 'HH:mm:ss').format('h:mm a');
+function hideMobileMenu(){
+  $(".lower_header").css("transform","translateX(-120%)");
 }
 
 function assignUsernameToHeader(user_name){
-  username.innerHTML = user_name;
+  $(".header_username").html(user_name);
 }
 
 function signOut(){
@@ -755,4 +744,18 @@ function reloadPage(){
 
 function redirectToLoginPage(){
   window.location.replace("login.html");
+}
+
+function convertDateToWords(date){
+  var monthNames = ["Jan", "Feb", "Mar", "April", "May", "June",
+  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  date = new Date(date);
+  var day = date.getDate()+1; //revisar esto luego
+  var month = monthNames[date.getMonth()];
+  var year = date.getFullYear();
+  return month + ' '+day + ', ' +year;
+}
+
+function convert24HourToAmPm(hour) {
+  return moment(hour, 'HH:mm:ss').format('h:mm a');
 }

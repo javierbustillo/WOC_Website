@@ -2,13 +2,14 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="assets/css/grid_style.css"/>
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 		<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-		<script src="js/index.js"></script>
+		<script src="js/grid_index.js"></script>
 		<script type='text/javascript' src='assets/js/handlebars.min.js'></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><!-- Avoid html cache -->
@@ -25,10 +26,13 @@
 			</div>
 			<div class="header main_grid_item">
 				<div class="upper_header">
-					<div class="message_notification_icon" hidden>
+					<div class="message_notification_icon">
 						<img class="message_notification_icon_image" src="assets/images/exclamation_icon.png" hidden>
 					</div>
 					<div href="/index.html" class="header_website_title">WOC</div>
+					<div class="mobile_menu_icon dropdown">
+						<img class="mobile_menu_icon_image dropbtn" src="assets/images/mobile_menu_icon.png">
+					</div>
 					<div class="header_user_information">
 						<a >Welcome,&nbsp</a>
 						<a class="header_username"></a>
@@ -36,25 +40,28 @@
 					</div>
 				</div>
 				<div class="lower_header">
-					<ul class="header_menu" >
-						<li><button class="active" id="all_tab">All</button></li>
-						<li><button class="desactive" id="recommended_tab">Recommended</button></li>
-						<li><button class="desactive" id="saved_tab">Saved</button></li>
-						<li><button class="desactive" id="popular_tab" hidden>Popular</button></li>
+					<ul class="header_menu dropdown-content">
+						<img class="x_close_icon x_close_icon_mobile_menu" src="assets/images/x_close_icon.png">
+						<li><button class="menutab active" id="all_tab">All</button></li>
+						<li><button class="menutab desactive" id="recommended_tab">Recommended</button></li>
+						<li><button class="menutab desactive" id="saved_tab">Saved</button></li>
+						<!--<li><button class="desactive" id="popular_tab" hidden>Popular</button></li>-->
+						<li class="dropdown_menu">
+							<div class="dropdown">
+								<button id="categories_tab" class="menutab dropbtn">Categories</button>
+								<div class="mobile_menu dropdown-content" id="categories_tab_container"></div>
+							</div>
+						</li>
+						<li><button class="menutab desactive" id="submit_event_tab">Create New Event</button></li>
+						<li><button class="menutab desactive" id="edit_events_tab">Edit Events</button></li>
 						<div class="dropdown">
-							<button id="categories_tab" class="dropbtn">Categories</button>
-							<div class="dropdown-content" id="categories_tab_container"></div>
-						</div>
-						<div class="dropdown">
-							<button id="admin_tab" class="dropbtn" hidden>Admin Panel</button>
+							<button id="admin_tab" class="menutab dropbtn">Admin Panel</button>
 							<div class="dropdown-content">
 								<button class="admin_option_button" name="Manage Users">Manage Users</button>
 								<button class="admin_option_button" name="Manage Events">Manage Events</button>
 								<button class="admin_option_button" name="Manage Associations">Manage Associations</button>
 							</div>
 						</div>
-						<li><button class="desactive" id="submit_event_tab" hidden >Create New Event</button></li>
-						<li><button class="desactive" id="edit_events_tab" hidden >Edit Events</button></li>
 					</ul>
 				</div>
 			</div>
@@ -63,6 +70,42 @@
 				<img class="banner_image" src="assets/images/medium_art_front_page.png"/>
 			</div>
 			<div class="events_feed main_grid_item"></div>
+
+			<div class="form main_grid_item" id="submit_event_form" hidden>
+			<form class="event_form" id="event_form" name="event_form">
+				<ul id="errors"></ul>
+				<input class="normal" id="title" name="title" type="text" placeholder="title"/>
+				<input class="normal" name="date" id="date" type="date" placeholder="date"/>
+				<a class="standard_text start_time_hour">Start Time </a><a class="standard_text end_time_hour">End Time </a><br>
+				<div id="hours_container">
+					<div class="time_hour_encapsulation">
+						<input class="small start_time_hour" name="start_time_hour" id="start_time_hour" type="time" placeholder="start time" label="start time"/>
+					</div>
+					<div class="time_hour_encapsulation time_hour_encapsulation_rite">
+						<input class="small end_time_hour" id="end_time_hour" type="time" name="end_time_hour" placeholder="end time"/>
+					</div>
+				</div>
+				<input class="normal" id="place" type="text" placeholder="place" name="place"/>
+				<textarea id="brief_description" name="brief_description" placeholder="brief description" rows="2" ></textarea>
+				<textarea id="detailed_description" placeholder="detailed description" name="detailed_description" rows="6" ></textarea>
+
+				<a class="standard_text">Select a category </a>
+
+				<select id="category" name="category">
+					<option value="" disabled selected>Select your option</option>
+				</select>
+
+				<input name="contact_email" class="normal" id="contact_email" type="text" placeholder="contact email"/>
+				<input name="contact_phone_number" class="normal" id="contact_phone_number" type="text" placeholder="contact phone number"/>
+				<a id="upload_image_label" class="standard_text">Upload a cover image </a> <a id="percent" class="standard_text"></a>
+				<input class="normal" id="imageUrl" type="file" name="pic" accept="image/*"/>
+
+				<input id="publish_button" class="form_button" type="submit" value="publish"/> <br>
+				<input id="edit_button" class="form_button" type="submit" value="publish changes" hidden/> <br>
+				<button id="cancel_button" class="form_button">cancel</button>
+			</form>
+			</div>
+
 			<div class="footer main_grid_item">A product by HackSquad from IEEE Computer Society. <br> Developed at University of Puerto Rico at Mayagüez. <br> Copyright @2017</div>
 		</div>
 	</body>

@@ -1,3 +1,4 @@
+
 .main_grid{
 	display: grid;
 	grid-template-areas:
@@ -18,6 +19,28 @@
 	border-bottom: thin solid #f2f2f2;
 }
 
+.upper_header{
+	height: 150px;
+}
+
+.mobile_menu_icon{
+	height: 30px;
+	width: 30px;
+	padding: 10px;
+	float: left;
+	z-index: 4;
+}
+
+.mobile_menu_icon:hover, active, focus{
+	filter:opacity(50%);
+	cursor: pointer;
+}
+
+.mobile_menu_icon_image{
+	width: 100%;
+	height: 100%;
+}
+
 .header_website_title{
 	text-align: center;
  	font-size: 70px;
@@ -33,14 +56,62 @@
 }
 
 .lower_header{
-	position: fixed;
-	left: -400px;
+	position: relative;
+	display: block;
+	background-color: #f9f9f9;
+	text-decoration: none;
+	left: -120%;
+	transition: transform .3s ease-in-out;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    font-size: 13px;
+
 }
+
+#submit_event_tab{
+	display: none;
+}
+
+#edit_events_tab{
+	display: none;
+}
+
+#admin_tab{
+	display: none;
+}
+
+.menutab{
+	background:none;
+	font-style: 12px;
+}
+
+.header_menu{
+	display: none;
+	padding: 10px;
+	margin: 0;
+	margin-bottom: 10px;
+	list-style: none;
+
+}
+
+.x_close_icon{
+	height: 10px;
+	width: 10px;
+	float: right;
+}
+
+.x_close_icon:hover, active, focus{
+	filter:opacity(50%);
+	cursor: pointer;
+}
+
+
 
 .banner{
 	grid-area:banner;
 	font-size: 20px;
 	font-weight: 100;
+	border-bottom: thin solid #f2f2f2;
 }
 
 .banner_image{
@@ -50,8 +121,14 @@
 }
 .events_feed{
 	grid-area: events_feed;
-
+	display: grid;
+	grid-gap: 15px;
+	justify-content: space-around;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-template-rows: 500px;
+	justify-items:center;
 }
+
 
 .footer{
 	grid-area: footer;
@@ -73,5 +150,268 @@
 	cursor: pointer;
 	background-color: #85BF75;
 	color: white;
+}
+
+.events_feed .event {
+  position: relative;
+  width: 300px;
+  height: 490px;
+  border: thin solid #f2f2f2;
+ }
+
+.events_feed .event_image{
+    display: block;
+    object-fit: cover;
+    width:300px;
+    height:300px;
+    border-bottom: thin solid #f2f2f2;
+}
+
+.event_title{
+  font-weight: 400;
+  font-size: 18px;
+  color:black;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.event_brief_description{
+  font-size: 13px;
+  font-weight: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-style: italic;
+}
+
+.event_info_header{
+  min-width: 100%;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 200;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.event_header #event_hour,
+.event_header #event_place,
+.event_header #event_date{
+  display: inline-block;
+}
+
+
+.event_image_container {
+  position: relative;
+  width: 100%;
+}
+
+
+.events_feed .saved_event_bookmark_icon{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  width: 50px;
+  padding: 15px;
+}
+
+.event_association_name{
+  position: absolute;
+  bottom: 0;
+  float: left;
+  margin-top:32px; 
+  padding: 10px;
+  padding-bottom: 15px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    font-size: 13px;
+}
+
+.dropdown-content button {
+    border: 0;
+    background: 0;
+    color: black;
+    text-align: left;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    font-family: "Open Sans", "Bariol", Arial, sans-serif;
+}
+
+
+.dropdown-content button:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
+.form {
+  grid-area: events_feed;
+  width: 250px;
+  position: relative;
+  top: 0px;
+  background: #FFFFFF;
+  max-width: 360px;
+  padding: 45px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.event_form{
+	grid-area: form;
+	justify-content: center;
+}
+
+.form input {
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 15px 0 0 0;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form select {
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 15px 0 0 0;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 14px;
+  width: 100%;
+
+}
+
+.form textarea {
+  width: 100%;
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  border: 0;
+  margin: 15px 0 0 0;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  resize: none;
+}
+
+.small{
+  width: 48%;
+}
+
+.normal{
+  width: 100%;
+}
+
+.submit_event_form{
+  position: absolute;
+  margin-top: 100px;
+}
+
+.form .start_time_hour{
+  float:left;
+  width: 100%;
+}
+
+.form .end_time_hour{
+  float:right;
+  width: 100%;
+  margin-left: auto;
+  text-align: right;
+}
+
+#hours_container{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.time_hour_encapsulation{
+  display: flex;
+  flex-flow: column;
+}
+
+
+.form_button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  margin-bottom: 10px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+#cancel_button{
+  background: #C0C0C0;
+}
+
+#publish_button{
+   margin-top: 15px;
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
+#edit_button{
+   background: white;
+   border: thin solid #85BF75;
+   color: #85BF75;
+}
+
+#percent{
+  float: right;
+}
+
+#cancel_button:hover{
+  background: #DC143C;
+}
+
+#publish_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+#edit_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+.standard_text{
+  font-family: "Open Sans", Bariol, Arial;
+  text-align: left;
+  font-size: 14px;
+  color:#696969;
+  padding-top: 15px;
+  display: block;
 }
 
