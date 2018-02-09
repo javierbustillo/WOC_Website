@@ -10,6 +10,7 @@ body{
     	"header"
       "banner"
       "form"
+      "tables"
       "events_feed"
       "footer";
     grid-gap: 15px;
@@ -483,6 +484,110 @@ body{
   font-weight: bold;
 }
 
+
+/*------ Tables -------*/
+
+#table_container{
+  grid-area: tables;
+}
+table {
+    font-family: "Open Sans", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #85BF75;
+    color: white;
+    font-weight: normal;
+    font-size: 13px;
+    margin: auto 0;
+}
+
+
+table td{
+  font-size: 12px;
+}
+
+
+.options_admin_panel_table{
+  border: 0;
+  color: white;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.table_options {
+  min-width: 200px;
+}
+
+.options_admin_panel_table:hover{
+  color:gray;
+}
+
+.user_options_admin_panel_table:active{
+  color:black;
+}
+
+.activate_button{
+  background-color: #85bf75;
+}
+
+.deactivate_button{
+  background-color: #fcb164;
+}
+
+.block_button{
+  background-color: blue;
+}
+
+.delete_user_button{
+  background-color: #fc5c5c;
+}
+
+.delete_event_button{
+  background-color: #fc5c5c;
+}
+
+.edit_event_button{
+  background: none;
+  border: thin solid #85BF75;
+  color: #85BF75;
+}
+
+.edit_event_button:hover{
+  border: thin solid gray;
+  color: gray;
+}
+
+#body_email_verification_handler{
+    margin-top: 1000px;
+    top: 0;
+    display: block;
+    position: fixed;
+    background-color: #85bf75;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    height: 100%;
+}
+
 /*------- Other -------*/
 
 .action_button{
@@ -513,6 +618,7 @@ label{
 }
 
 
+/* =========== MEDIA QUERIES ============ */
 
 /* ----------- Generic Tablet ----------- */
 

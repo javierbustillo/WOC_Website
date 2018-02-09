@@ -109,9 +109,62 @@
 			</form>
 			</div>
 
+			<div id="table_container" class="tables main_grid_item">
+				<table id="admin_panel_users_table" class="admin_table" hidden>
+				  <tr>
+				    <th>User Name</th>
+				    <th>Email</th>
+				    <th># Saved Events</th>
+				    <th>Date Created</th>
+				    <th>Status</th>
+				    <th>Options</th>
+				   </tr>
+				</table>
+
+				<table id="admin_panel_events_table" class="admin_table" hidden>
+				  <tr>
+				    <th>Event Name</th>
+				    <th>Association</th>
+				    <th>Event Date</th>
+				    <th>Date Created</th>
+				    <th>Status</th>
+				    <th>Options</th>
+				   </tr>
+				</table>
+
+				<table id="admin_panel_associations_table" class="admin_table" hidden>
+				  <tr>
+				    <th>User Name</th>
+				    <th>Email</th>
+				    <th># Events Active</th>
+				    <th># Events Created</th>
+				    <th>Date Created</th>
+				    <th>Status</th>
+				    <th>Options</th>
+				   </tr>
+				</table>
+
+				<table id="edit_events_table" class="admin_table" hidden>
+				  <tr>
+	              	<th>Event Name</th>
+				    <th>Event Date</th>
+				    <th>Start Time</th>
+				    <th>Place</th>
+				    <th>Date Created</th>
+				    <th>Times Saved</th>
+				    <th>Category</th>
+				    <th>Options</th>
+
+				   </tr>
+				</table>
+			</div>
+
 			<div class="footer main_grid_item">A product by HackSquad from IEEE Computer Society. <br> Developed at University of Puerto Rico at Mayagüez. <br> Copyright @2017</div>
 		</div>
+
+		
 	</body>
+
 	<script id='event-template' type="text/x-handlebars-template">
 			<div class='event' title='{{imageUrl}}'>
 					<div class='event_image_container'><img id='{{imageUrl}}' class='event_image' src=''></div>
@@ -128,4 +181,66 @@
 					<img class="saved_event_bookmark_icon" src={{bookmark_icon}}>
 			</div>
 	</script>
+
+	<script id="user-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{display_name}}</td>
+              <td>{{email}}</td>
+              <td>{{current_saved_events_counter}}</td>
+              <td>No info available</td>
+              <td id=account_status{{user_id}}>{{account_status}}</td>
+              <td class="table_options">
+              	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
+              	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
+
+		<script id="events-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{title}}</td>
+              <td>{{user_id}}</td>
+              <td>{{date}}</td>
+              <td>No info available</td>
+              <td id=event_status{{event_id}}>{{event_status}}</td>
+              <td class="table_options">
+              	<button class="status_event_button activate_button options_admin_panel_table" name={{event_id}} title="active">Activate</button>
+              	<button class="status_event_button deactivate_button options_admin_panel_table" name={{event_id}} title="disabled">Disable</button>
+              	<button class="delete_event_button options_admin_panel_table" name={{event_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
+
+		<script id="associations-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{display_name}}</td>
+              <td>{{email}}</td>
+              <td>{{total_event_active}}</td>
+              <td>{{total_event_created}}</td>
+              <td>No info available</td>
+              <td id=account_status{{user_id}}>{{account_status}}</td>
+              <td class="table_options">
+              	<button class="status_user_button activate_button options_admin_panel_table" name={{user_id}} title="active">Activate</button>
+              	<button class="status_user_button deactivate_button options_admin_panel_table" name={{user_id}} title="disabled">Disable</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{user_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
+
+		<script id="associations-edit-events-table-cell-template" type="text/x-handlebars-template">
+            <tr>
+              <td>{{event_title}}</td>
+              <td>{{event_date}}</td>
+              <td>{{event_start_time}}</td>
+              <td>{{event_place}}</td>
+              <td>No info available</td>
+              <td id=event_times_saved{{event_id}}>No info available</td>
+              <td>{{event_category}}</td>
+              <td class="table_options">
+              	<button class="edit_event_button options_admin_panel_table" name={{event_id}} title="edit">Edit</button>
+              	<button class="delete_user_button options_admin_panel_table" name={{event_id}} title="delete">Delete</button>
+              </td>
+            </tr>
+		</script>
 </html>
