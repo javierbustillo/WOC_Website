@@ -84,10 +84,12 @@ body{
   background: #f9f9f9;
   list-style-type: none;
   width: 200px;
-  padding: 15px 15px 15px 0;
+  padding: 0;
+  margin: 5px;
   position: absolute;
   z-index: 100;
   display: none;
+
 }
 
 .menu button{
@@ -365,6 +367,16 @@ body{
   flex-flow: column;
 }
 
+#title, #date, #place, #brief_description,
+#detailed_description, #contact_email,
+#contact_phone_number{
+  margin-top: 22.5px;
+}
+
+#category, #imageUrl{
+  margin-top: 3.5px;
+}
+
 
 .form_button {
   font-family: "Roboto", sans-serif;
@@ -374,6 +386,7 @@ body{
   border: 0;
   padding: 15px;
   margin-bottom: 10px;
+  margin-top: 15px;
   color: #FFFFFF;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
@@ -383,20 +396,20 @@ body{
 
 #cancel_button{
   background: white;
-  margin-top: 15px;
+  margin-top: 22.5px;
   border: thin solid #C0C0C0;
   color: #C0C0C0;
 }
 
 #publish_button{
-   margin-top: 15px;
+   margin-top: 22.5px;
    background: white;
    border: thin solid #85BF75;
    color: #85BF75;
 }
 
 #edit_button{
-   margin-top: 15px;
+   margin-top: 22.5px;
    background: white;
    border: thin solid #85BF75;
    color: #85BF75;
