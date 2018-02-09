@@ -7,9 +7,9 @@ body{
 	display: grid;
 	grid-template-areas:
     	"header"
-        "banner"
-        "events_feed"
-        "footer";
+      "banner"
+      "events_feed"
+      "footer";
     grid-gap: 15px;
     width: 90%;
     margin: 0 auto;
@@ -130,13 +130,13 @@ body{
 
 .banner{
 	grid-area:banner;
-  grid: display;
 	font-size: 20px;
 	font-weight: 100;
 	border-bottom: thin solid #f2f2f2;
   width: 90%;
   justify-content: space-around;
-  margin: 0 auto;
+  margin: 30px auto;
+  height: auto;
 }
 
 .banner_image{
@@ -464,9 +464,6 @@ body{
       background: #f9f9f9;
     }
 
-
-
-
     .menu li{
       display: inline-block;
     }
@@ -479,7 +476,22 @@ body{
       display: none;
     }
 
+    .banner{
+      display: flex;
+      justify-content: space-between;
 
+    }
+
+    .banner_text{
+      font-size: 30px;
+      width: 30%;
+    }
+
+
+    .banner_image{
+      width: 60%; 
+      height: auto; 
+    }
 
 }
 
