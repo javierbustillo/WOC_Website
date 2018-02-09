@@ -1,13 +1,15 @@
+/*------- Main Divs --------*/
+
 body{
   font-family: "Open Sans";
 }
-
 
 .main_grid{
 	display: grid;
 	grid-template-areas:
     	"header"
       "banner"
+      "form"
       "events_feed"
       "footer";
     grid-gap: 15px;
@@ -17,6 +19,8 @@ body{
     min-width: 250px;
     color: #696969;
 }
+
+/*------- Header -------*/
 
 .header{
 	grid-area: header;
@@ -59,67 +63,6 @@ body{
   filter: opacity(75%);
 }
 
-.message_modal_box{
-  position: fixed; 
-  z-index: 500;
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  /*overflow: auto; */
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4);
-}
-
-.message_modal_content{
-  display: block;
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-  height: 200px;
-}
-
-.message_modal_close_icon{
-  width: 15px;
-  height: 15px;
-  float: right;
-  padding: 5px;
-}
-
-.message_modal_close_icon:hover{
-  cursor: pointer;
-  filter: opacity(75%);
-}
-
-.message_modal_action_button{
-  margin-top: 15px;
-  background: white;
-  border: thin solid #85BF75;
-  color: #85BF75;
-  width: 200px;
-  margin-top: 20px;
-  float: right;
-  padding: 10px;
-}
-
-.message_modal_action_button:hover{
-  background: #85BF75;
-  color: white;
-}
-
-.message_modal_text_line_1{
-  margin-top: 40px;
-  display: block;
-  text-align: center;
-}
-
-.message_modal_text_line_2{
-  padding-top: 20px;
-  font-weight: bold;
-}
-
 .header_website_title{
 	text-align: center;
  	font-size: 70px;
@@ -133,6 +76,8 @@ body{
 	font-size: 15px;
 	margin: 10px;
 }
+
+/*------------ Menu -----------*/
 
 .menu{
   background: #f9f9f9;
@@ -189,25 +134,7 @@ body{
 	font-style: 12px;
 }
 
-.header_menu{
-	display: none;
-	padding: 10px;
-	margin: 0;
-	margin-bottom: 10px;
-	list-style: none;
-
-}
-
-.x_close_icon{
-	height: 10px;
-	width: 10px;
-	float: right;
-}
-
-.x_close_icon:hover, active, focus{
-	filter:opacity(50%);
-	cursor: pointer;
-}
+/*------- Banner ------*/
 
 .banner{
 	grid-area:banner;
@@ -225,6 +152,8 @@ body{
 	outline: 0;
 }
 
+/*-------- Events Feed ------*/
+
 .events_feed{
 	grid-area: events_feed;
   display: grid;
@@ -235,28 +164,6 @@ body{
   justify-items:center;
 }
 
-
-.footer{
-	grid-area: footer;
-	border-top: thin solid #f2f2f2;
-	text-align: center;
-	font-size: 9px;
-  padding: 5px;
-}
-
-.action_button{
-	background: white;
-  border: thin solid #85BF75;
-  color: #85BF75;
-  padding: 4px 8px;
-  font-family: "Roboto", "Open Sans";
-}
-
-.action_button:hover{
-	cursor: pointer;
-	background-color: #85BF75;
-	color: white;
-}
 
 .events_feed .event {
   position: relative;
@@ -333,66 +240,53 @@ body{
   font-weight: 100;
 }
 
+/*------ Footer -------*/
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2;
-    font-size: 13px;
-}
-
-.dropdown-content button {
-    border: 0;
-    background: 0;
-    color: black;
-    text-align: left;
-    padding: 6px 8px;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    font-size: 13px;
-    font-family: "Open Sans", "Bariol", Arial, sans-serif;
-}
-
-
-.dropdown-content button:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-    display: block;
+.footer{
+	grid-area: footer;
+	border-top: thin solid #f2f2f2;
+	text-align: center;
+	font-size: 9px;
+  padding: 5px;
 }
 
 
 
-.form {
-  grid-area: events_feed;
-  width: 250px;
-  position: relative;
-  top: 0px;
-  background: #FFFFFF;
-  max-width: 360px;
-  padding: 45px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+/*------- Form --------*/
+
+
+.form_input_box{
+  display: block;
+  width: 100%;
 }
 
 .event_form{
-	grid-area: form;
-	justify-content: center;
+  display: none;
+
+  grid-area: form;
+  grid-template-areas: "form_item";
+  grid-template-columns: repeat(auto-fill,225px);
+  grid-gap: 10px;
+  grid-auto-flow: row;
+  grid-auto-columns: 200px;
+
+  justify-content: space-around;
+  justify-items:center;
+  align-items: start;
+
+  background: #FFFFFF;
+  padding: 20px;
+
 }
 
 .form input {
-  font-family: "Open Sans", "Bariol", Arial, sans-serif;
-  outline: 0;
-  background: #f2f2f2;
   border: 0;
-  margin: 15px 0 0 0;
+  outline: 0;
+  margin: 0;
+  width: 100%;
+  font-family: "Open Sans", "Bariol", Arial, sans-serif;
+  background: #f2f2f2;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
@@ -402,9 +296,8 @@ body{
   font-family: "Open Sans", "Bariol", Arial, sans-serif;
   outline: 0;
   background: #f2f2f2;
-  border: 0;
-  margin: 15px 0 0 0;
-  padding: 30px;
+  padding: 10px;
+  border: none;
   box-sizing: border-box;
   font-size: 14px;
   width: 100%;
@@ -417,15 +310,16 @@ body{
   outline: 0;
   background: #f2f2f2;
   border: 0;
-  margin: 15px 0 0 0;
-  padding: 15px;
+  margin: 0;
+  padding: 10px;
   box-sizing: border-box;
   font-size: 14px;
   resize: none;
+  height: 60px;
 }
 
 .small{
-  width: 48%;
+  width: 100%;
 }
 
 .normal{
@@ -437,14 +331,23 @@ body{
   margin-top: 100px;
 }
 
+.form .start_time_hour_text{
+  float: left;
+  width: 50%;
+}
 .form .start_time_hour{
   float:left;
-  width: 100%;
+  width: 95%;
+}
+.form .end_time_hour_text{
+  text-align: right;
+  width: 50%;
+  float: right;
 }
 
 .form .end_time_hour{
   float:right;
-  width: 100%;
+  width: 95%;
   margin-left: auto;
   text-align: right;
 }
@@ -478,7 +381,10 @@ body{
 }
 
 #cancel_button{
-  background: #C0C0C0;
+  background: white;
+  margin-top: 15px;
+  border: thin solid #C0C0C0;
+  color: #C0C0C0;
 }
 
 #publish_button{
@@ -489,6 +395,7 @@ body{
 }
 
 #edit_button{
+   margin-top: 15px;
    background: white;
    border: thin solid #85BF75;
    color: #85BF75;
@@ -500,6 +407,7 @@ body{
 
 #cancel_button:hover{
   background: #DC143C;
+  color: white;
 }
 
 #publish_button:hover{
@@ -512,14 +420,99 @@ body{
   color: white;
 }
 
+/*-------- Modal Box -------*/
+
+.message_modal_box{
+  position: fixed; 
+  z-index: 500;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  /*overflow: auto; */
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4);
+}
+
+.message_modal_content{
+  display: block;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+  height: 200px;
+}
+
+.message_modal_close_icon{
+  width: 15px;
+  height: 15px;
+  float: right;
+  padding: 5px;
+}
+
+.message_modal_close_icon:hover{
+  cursor: pointer;
+  filter: opacity(75%);
+}
+
+.message_modal_action_button{
+  margin-top: 15px;
+  background: white;
+  border: thin solid #85BF75;
+  color: #85BF75;
+  width: 200px;
+  margin-top: 20px;
+  float: right;
+  padding: 10px;
+}
+
+.message_modal_action_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+.message_modal_text_line_1{
+  margin-top: 40px;
+  display: block;
+  text-align: center;
+}
+
+.message_modal_text_line_2{
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+/*------- Other -------*/
+
+.action_button{
+  background: white;
+  border: thin solid #85BF75;
+  color: #85BF75;
+  padding: 4px 8px;
+  font-family: "Roboto", "Open Sans";
+}
+
+.action_button:hover{
+  cursor: pointer;
+  background-color: #85BF75;
+  color: white;
+}
+
 .standard_text{
   font-family: "Open Sans", Bariol, Arial;
   text-align: left;
   font-size: 14px;
   color:#696969;
-  padding-top: 15px;
   display: block;
 }
+
+label{
+  font-size:12px;
+  color:red;
+}
+
+
 
 /* ----------- Generic Tablet ----------- */
 
@@ -573,6 +566,7 @@ body{
     }
 
 }
+
 
 @media only screen 
   and (min-device-width: 650px) 

@@ -677,7 +677,7 @@ function loadSubmitEventTabContent(){
   $('#banner_header').html("Let the campus know about the next big event.");
   $('#banner_image').attr("src","assets/images/medium_art_front_page.png");
   $("#submit_event_form").prop("hidden", false);
-  $("#submit_event_form").css("display","grid");
+  $(".event_form").css("display","grid");
   addCategoriesOptionsToForm();
   $(".event_form").trigger("reset");
 }
