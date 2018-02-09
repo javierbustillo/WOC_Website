@@ -44,9 +44,9 @@ $(document).ready(function() {
         $("#admin_panel_associations_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#edit_events_table").on("click",".edit_event_button", fillEditEvent);
         $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
-        $("html").on("click", "#verify_account_icon", displayVerifyAccountModalBox);
-        $(".verify_account_modal_box").on("click", ".verify_account_modal_x_close_icon", hideVerifyAccountModalBox);
-        $(".verify_account_modal_box").on("click", "#verify_account_modal_button", sendEmailVerification);
+        $(".header").on("click", ".message_notification_icon_image", displayVerifyAccountModalBox);
+        $(".message_modal_box").on("click", ".message_modal_close_icon", hideVerifyAccountModalBox);
+        $(".message_modal_box").on("click", ".message_modal_action_button", sendEmailVerification);
         $("#event_form").validate({
           rules: {
             title: {
@@ -538,11 +538,11 @@ function displayAdminOptionsInMenu(){
 
 
 function displayVerifyAccountModalBox(){
-  $(".verify_account_modal_box").prop("hidden", false);
+  $(".message_modal_box").prop("hidden", false);
 }
 
 function hideVerifyAccountModalBox(){
-  $(".verify_account_modal_box").prop("hidden", true);
+  $(".message_modal_box").prop("hidden", true);
 }
 
 
@@ -583,8 +583,10 @@ function sendEmailVerification(){
 }
 
 function checkForVerifyEmailWarning(isVerified){
+  console.log("HERE");
   if(!isVerified){
-    $("#verify_account_icon_container").prop("hidden", false);
+    console.log("HERE 2");
+    $(".message_notification_icon_image").prop("hidden", false);
   }else if(isVerified){
     var user = firebase.auth().currentUser;
     database.ref("users/"+user.uid).on('value', function(user_reference){

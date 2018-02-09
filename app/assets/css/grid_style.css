@@ -45,6 +45,80 @@ body{
 	height: 100%;
 }
 
+.message_notification_icon_image{
+  display: inline-block;
+  float: left;
+  height: 30px;
+  width: 30px;
+  padding: 10px;
+  filter: opacity(50%);
+}
+
+.message_notification_icon_image:hover{
+  cursor: pointer;
+  filter: opacity(75%);
+}
+
+.message_modal_box{
+  position: fixed; 
+  z-index: 500;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  /*overflow: auto; */
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4);
+}
+
+.message_modal_content{
+  display: block;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+  height: 200px;
+}
+
+.message_modal_close_icon{
+  width: 15px;
+  height: 15px;
+  float: right;
+  padding: 5px;
+}
+
+.message_modal_close_icon:hover{
+  cursor: pointer;
+  filter: opacity(75%);
+}
+
+.message_modal_action_button{
+  margin-top: 15px;
+  background: white;
+  border: thin solid #85BF75;
+  color: #85BF75;
+  width: 200px;
+  margin-top: 20px;
+  float: right;
+  padding: 10px;
+}
+
+.message_modal_action_button:hover{
+  background: #85BF75;
+  color: white;
+}
+
+.message_modal_text_line_1{
+  margin-top: 40px;
+  display: block;
+  text-align: center;
+}
+
+.message_modal_text_line_2{
+  padding-top: 20px;
+  font-weight: bold;
+}
 
 .header_website_title{
 	text-align: center;
