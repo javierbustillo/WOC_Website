@@ -81,7 +81,7 @@ body{
 }
 
 .dropdown_menu button{
-  display: none;
+  display: block;
   color: #888888;
   margin-left: 10px; 
 }
@@ -90,6 +90,13 @@ body{
   color: #85BF75;
 }
 
+#categories_tab_container{
+  display: none;
+}
+
+#admin_tab_container{
+  display: none;
+}
 
 #submit_event_tab{
 	display: none;
@@ -486,6 +493,26 @@ body{
       width: 30%;
     }
 
+    .banner_image{
+      width: 60%; 
+      height: auto; 
+    }
+
+}
+
+@media only screen 
+  and (min-device-width: 650px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+     .banner{
+      display: flex;
+      justify-content: space-between;
+
+    }
+
+    .banner_text{
+      font-size: 20px;
+      width: 30%;
+    }
 
     .banner_image{
       width: 60%; 

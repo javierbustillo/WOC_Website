@@ -24,7 +24,7 @@ $(document).ready(function() {
         loadAllTabContent();
         $(".header_logout_button").click(signOut);
         $(".mobile_menu_icon").click(showMobileMenu);
-        $(".lower_header").on("click", ".x_close_icon", hideMobileMenu);
+        //$(".lower_header").on("click", ".x_close_icon", hideMobileMenu);
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(user, loadRecommendedTabContent);
         $("#categories_tab").click(displayCategoriesInMenu);
@@ -518,15 +518,22 @@ function displayEventsInTable(){
 }
 
 function displayCategoriesInMenu(){
-  $(".category_option_button").css("display","block");
+  var x = document.getElementById("categories_tab_container");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
-function hideCategoriesInMenu(){
-  $(".category_option_button").css("display","none");
-}
 
 function displayAdminOptionsInMenu(){
-  $(".admin_option_button").css("display","block");
+  var x = document.getElementById("admin_tab_container");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
 
@@ -737,13 +744,15 @@ function setTabActive(tab_name){
 }
 
 function showMobileMenu(){
-  $(".menu").css("display","block");
+
+  var x = document.getElementById("menu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
-function hideMobileMenu(){
-  $(".menu").css("display","none");
-  hideCategoriesInMenu();
-}
 
 function assignUsernameToHeader(user_name){
   $(".header_username").html(user_name);
