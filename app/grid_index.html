@@ -40,24 +40,20 @@
 					</div>
 				</div>
 				<div class="lower_header">
-					<ul class="header_menu dropdown-content">
+					<ul class="menu">
 						<img class="x_close_icon x_close_icon_mobile_menu" src="assets/images/x_close_icon.png">
 						<li><button class="menutab active" id="all_tab">All</button></li>
 						<li><button class="menutab desactive" id="recommended_tab">Recommended</button></li>
 						<li><button class="menutab desactive" id="saved_tab">Saved</button></li>
 						<!--<li><button class="desactive" id="popular_tab" hidden>Popular</button></li>-->
-						<li class="dropdown_menu">
-							<div class="dropdown">
-								<button id="categories_tab" class="menutab dropbtn">Categories</button>
-								<div class="mobile_menu dropdown-content" id="categories_tab_container"></div>
-							</div>
+						<li><button id="categories_tab" class="menutab">Categories</button>
+								<div id="categories_tab_container" class="dropdown_menu"></div>
 						</li>
 						<li><button class="menutab desactive" id="submit_event_tab">Create New Event</button></li>
 						<li><button class="menutab desactive" id="edit_events_tab">Edit Events</button></li>
-						<div class="dropdown">
-							<button id="admin_tab" class="menutab dropbtn">Admin Panel</button>
-							<div class="dropdown-content">
-								<button class="admin_option_button" name="Manage Users">Manage Users</button>
+						<li><button id="admin_tab" class="menutab dropbtn">Admin Panel</button>
+							<div class="dropdown_menu">
+								<button class="admin_option_button dropdown_option" name="Manage Users">Manage Users</button>
 								<button class="admin_option_button" name="Manage Events">Manage Events</button>
 								<button class="admin_option_button" name="Manage Associations">Manage Associations</button>
 							</div>

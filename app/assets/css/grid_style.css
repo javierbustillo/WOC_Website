@@ -1,3 +1,7 @@
+body{
+  font-family: "Open Sans";
+}
+
 
 .main_grid{
 	display: grid;
@@ -41,11 +45,12 @@
 	height: 100%;
 }
 
+
 .header_website_title{
 	text-align: center;
  	font-size: 70px;
  	font-weight: 100;
-  	color: #85BF75;
+  color: #85BF75;
   	
 }
 
@@ -55,18 +60,36 @@
 	margin: 10px;
 }
 
-.lower_header{
-	position: relative;
-	display: block;
-	background-color: #f9f9f9;
-	text-decoration: none;
-	left: -120%;
-	transition: transform .3s ease-in-out;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2;
-    font-size: 13px;
-
+.menu{
+  background: #f9f9f9;
+  list-style-type: none;
+  width: 200px;
+  padding: 15px 15px 15px 0;
+  position: absolute;
+  z-index: 100;
+  display: none;
 }
+
+.menu button{
+  padding: 5px 8px;
+  color: #696969;
+  text-align: left;
+}
+
+.menu button:hover,active{
+  color: #85BF75;
+}
+
+.dropdown_menu button{
+  display: none;
+  color: #888888;
+  margin-left: 10px; 
+}
+
+.dropdown_menu button:hover,active{
+  color: #85BF75;
+}
+
 
 #submit_event_tab{
 	display: none;
@@ -105,13 +128,15 @@
 	cursor: pointer;
 }
 
-
-
 .banner{
 	grid-area:banner;
+  grid: display;
 	font-size: 20px;
 	font-weight: 100;
 	border-bottom: thin solid #f2f2f2;
+  width: 90%;
+  justify-content: space-around;
+  margin: 0 auto;
 }
 
 .banner_image{
@@ -119,6 +144,7 @@
 	height: auto;
 	outline: 0;
 }
+
 .events_feed{
 	grid-area: events_feed;
 	display: grid;
@@ -135,15 +161,15 @@
 	border-top: thin solid #f2f2f2;
 	text-align: center;
 	font-size: 9px;
-  	padding: 5px;
+  padding: 5px;
 }
 
 .action_button{
 	background: white;
-    border: thin solid #85BF75;
-    color: #85BF75;
-    padding: 4px 8px;
-    font-family: "Roboto", "Open Sans";
+  border: thin solid #85BF75;
+  color: #85BF75;
+  padding: 4px 8px;
+  font-family: "Roboto", "Open Sans";
 }
 
 .action_button:hover{
@@ -160,11 +186,11 @@
  }
 
 .events_feed .event_image{
-    display: block;
-    object-fit: cover;
-    width:300px;
-    height:300px;
-    border-bottom: thin solid #f2f2f2;
+  display: block;
+  object-fit: cover;
+  width:300px;
+  height:300px;
+  border-bottom: thin solid #f2f2f2;
 }
 
 .event_title{
@@ -414,4 +440,47 @@
   padding-top: 15px;
   display: block;
 }
+
+/* ----------- Generic Tablet ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 834px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .menu{
+      display: inline-block;
+      position: relative;
+      background: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .menu button{
+      text-align: center;
+    }
+
+    .dropdown_menu{
+      position: absolute;
+      background: #f9f9f9;
+    }
+
+
+
+
+    .menu li{
+      display: inline-block;
+    }
+
+    .mobile_menu_icon{
+      display: none;
+    }
+
+    .x_close_icon{
+      display: none;
+    }
+
+
+
+}
+
 

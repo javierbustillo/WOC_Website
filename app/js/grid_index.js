@@ -27,6 +27,8 @@ $(document).ready(function() {
         $(".lower_header").on("click", ".x_close_icon", hideMobileMenu);
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(user, loadRecommendedTabContent);
+        $("#categories_tab").click(displayCategoriesInMenu);
+        $("#admin_tab").click(displayAdminOptionsInMenu);
         $("#saved_tab").click(user, loadSavedTabContent);
         //$("#popular_tab").click(loadPopularTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
@@ -515,6 +517,19 @@ function displayEventsInTable(){
   });      
 }
 
+function displayCategoriesInMenu(){
+  $(".category_option_button").css("display","block");
+}
+
+function hideCategoriesInMenu(){
+  $(".category_option_button").css("display","none");
+}
+
+function displayAdminOptionsInMenu(){
+  $(".admin_option_button").css("display","block");
+}
+
+
 function displayVerifyAccountModalBox(){
   $(".verify_account_modal_box").prop("hidden", false);
 }
@@ -522,6 +537,8 @@ function displayVerifyAccountModalBox(){
 function hideVerifyAccountModalBox(){
   $(".verify_account_modal_box").prop("hidden", true);
 }
+
+
 
 
 function deleteUserAccountFromAdminPanelTable(){
@@ -595,7 +612,7 @@ function addAdminTabs(user) {
 
 function addCategoriesToCategoriesTab(){
   database.ref("assets/categories").on('child_added', function(category){
-    $("#categories_tab_container").append("<button class=category_option_button name="+category.val()+">"+category.val()+"</button>");
+    $("#categories_tab_container").append("<button class=\"category_option_button dropdown_option\" name="+category.val()+">"+category.val()+"</button>");
   });
 }
 
@@ -638,7 +655,6 @@ function loadPopularTabContent(){
 }
 
 function loadCategoriesTabContent(){
-  console.log("HERE");
   setTabActive("categories");
   hideAllTabContent();
   $('#banner_header').html("Go out. Connect. Explore. Know what is happening right now on campus!");
@@ -721,12 +737,12 @@ function setTabActive(tab_name){
 }
 
 function showMobileMenu(){
-  $(".lower_header").css("transform","translateX(120%)");
-  $(".header_menu").css("display","block")
+  $(".menu").css("display","block");
 }
 
 function hideMobileMenu(){
-  $(".lower_header").css("transform","translateX(-120%)");
+  $(".menu").css("display","none");
+  hideCategoriesInMenu();
 }
 
 function assignUsernameToHeader(user_name){
