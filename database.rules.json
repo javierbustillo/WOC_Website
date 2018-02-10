@@ -1,6 +1,20 @@
 {
   "rules": {
     ".read": true,
-    ".write": true
+    ".write": true,
+    "events":{
+      ".indexOn": ["event_id","event_date_end_time_timestamp_format"]
+    },
+    "saved_events":{
+      ".indexOn": ["event_id", "event_date_end_time_timestamp_format"]
+    },
+    "categories":{
+      "Engineering":{
+        ".indexOn": ["event_date_end_time_timestamp_format"]
+      },
+      "saved_events":{
+        ".indexOn":["event_id"]
+      }
+    }
   }
 }
