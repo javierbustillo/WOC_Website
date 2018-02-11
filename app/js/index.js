@@ -22,7 +22,6 @@ $(document).ready(function() {
         addAdminTabs(user);
         checkForVerifyEmailWarning(user.emailVerified);
         loadAllTabContent();
-
         $(".header_logout_button").click(signOut);
         $(".mobile_menu_icon").click(showMobileMenu);
         $("#all_tab").click(loadAllTabContent);
@@ -236,6 +235,7 @@ function uploadEditedEventToDatabase(){
       last_update: new Date().getTime()
   });  
     var image_file = $("#imageUrl")[0].files[0];
+    setNewUniqueTimestamp(event_date_start_time_timestamp_format+"00", path);
     if(!(image_file == null)){
       uploadEventImageToStorage(image_file, event_id);
     }
@@ -403,11 +403,22 @@ function displaySingleEvent(value){
 }
 
 function displayAllEvents(){
-
-  database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
+  loadNextEvents(0, 3);
+  /*database.ref("events").orderByChild("unique_id").on('child_added', function(event){
     displaySingleEvent(event.val());
-  });
+  });*/
+}
 
+function loadNextEvents(start_point, events_intervale){
+  var next_start_point, i=0;
+    database.ref("events").orderByChild("unique_id").limitToFirst(events_intervale).startAt(start_point).on('child_added', function(event){
+      displaySingleEvent(event.val());
+      next_start_point = event.val().unique_id+1;
+      i++;
+      if(i==events_intervale){
+        loadNextEvents(next_start_point, events_intervale);
+      }
+    });
 }
 
 function displayCategoriesEvents(category_name){
