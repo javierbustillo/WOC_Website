@@ -157,8 +157,6 @@ function uploadEventToDatabase(user){
       contact_phone_number = $("#contact_phone_number").val(),
       cancel_button = $("#cancel_button");
 
-  var unique_timestamp = getNewUniqueTimestamp(event_date_start_time_timestamp_format+"0000");
-
   cancel_button.disabled = true;
 
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
@@ -190,7 +188,7 @@ function uploadEventToDatabase(user){
       image_url: path,
       event_id: path
     });
-    setNewUniqueTimestamp(event_date_start_time_timestamp_format, path);
+    setNewUniqueTimestamp(event_date_start_time_timestamp_format+"00", path);
     uploadEventImageToStorage(image_file, path);
   });
 }
@@ -198,11 +196,11 @@ function uploadEventToDatabase(user){
 //Receives timestamp with 2 additional zeros and receives the event id.
 //It sets a new unique_id for the event.
 function setNewUniqueTimestamp(event_timestamp,event_id){
-  database.ref("events/").orderByChild("unique_id").equalTo(event_timestamp).once("value").then(function(event_reference){
+  database.ref("events/").orderByChild("unique_id").equalTo(parseInt(event_timestamp)).once("value").then(function(event_reference){
       if(event_reference.val()==null){
         database.ref("events/"+event_id).update({unique_id: parseInt(event_timestamp)});
       }else{
-        getNewUniqueTimestamp(Object.values(event_reference.val())[0].unique_id+1);
+        setNewUniqueTimestamp(Object.values(event_reference.val())[0].unique_id+1,event_id);
       }
   });
 }
@@ -604,9 +602,7 @@ function sendEmailVerification(){
 }
 
 function checkForVerifyEmailWarning(isVerified){
-  console.log("HERE");
   if(!isVerified){
-    console.log("HERE 2");
     $(".message_notification_icon_image").prop("hidden", false);
   }else if(isVerified){
     var user = firebase.auth().currentUser;
