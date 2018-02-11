@@ -22,20 +22,21 @@ $(document).ready(function() {
         addAdminTabs(user);
         checkForVerifyEmailWarning(user.emailVerified);
         loadAllTabContent();
+
         $(".header_logout_button").click(signOut);
         $(".mobile_menu_icon").click(showMobileMenu);
-        //$(".lower_header").on("click", ".x_close_icon", hideMobileMenu);
         $("#all_tab").click(loadAllTabContent);
         $("#recommended_tab").click(user, loadRecommendedTabContent);
         $("#categories_tab").click(displayCategoriesInMenu);
         $("#admin_tab").click(displayAdminOptionsInMenu);
         $("#saved_tab").click(user, loadSavedTabContent);
-        //$("#popular_tab").click(loadPopularTabContent);
         $("#submit_event_tab").click(loadSubmitEventTabContent);
         $(".lower_header").on("click", ".category_option_button", loadCategoriesTabContent);
         $(".admin_option_button").click(loadAdminTabContent);
         $("#edit_events_tab").click(loadEditEventsTabContent);
+
         $(".events_feed").on("click", ".saved_event_bookmark_icon", user, updateUserSavedEvents);
+
         $("#admin_panel_users_table").on("click", ".status_user_button", setUserAccountStatus);
         $("#admin_panel_users_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#admin_panel_events_table").on("click", ".status_event_button", setEventStatus);
@@ -44,9 +45,11 @@ $(document).ready(function() {
         $("#admin_panel_associations_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
         $("#edit_events_table").on("click",".edit_event_button", fillEditEvent);
         $("#edit_events_table").on("click", ".delete_user_button", deleteUserAccountFromAdminPanelTable);
+
         $(".header").on("click", ".message_notification_icon_image", displayVerifyAccountModalBox);
         $(".message_modal_box").on("click", ".message_modal_close_icon", hideVerifyAccountModalBox);
         $(".message_modal_box").on("click", ".message_modal_action_button", sendEmailVerification);
+
         $("#event_form").validate({
           rules: {
             title: {
@@ -137,7 +140,7 @@ $(document).ready(function() {
     });
 });
 
-
+//Rembember to deal with error and cancelations
 function uploadEventToDatabase(user){
   //Remember that changes here must be done in uploadEditedEventToDatabase function too.
   var title = $("#title").val(),
@@ -153,7 +156,11 @@ function uploadEventToDatabase(user){
       contact_email = $("#contact_email").val(),
       contact_phone_number = $("#contact_phone_number").val(),
       cancel_button = $("#cancel_button");
+
+  var unique_timestamp = getNewUniqueTimestamp(event_date_start_time_timestamp_format+"0000");
+
   cancel_button.disabled = true;
+
   database.ref("users/"+user.uid).once("value").then(function(user_reference){
     var user = user_reference.val();
     var total_event_created = user_reference.child("total_event_created").val();
@@ -183,9 +190,21 @@ function uploadEventToDatabase(user){
       image_url: path,
       event_id: path
     });
+    setNewUniqueTimestamp(event_date_start_time_timestamp_format, path);
     uploadEventImageToStorage(image_file, path);
   });
+}
 
+//Receives timestamp with 2 additional zeros and receives the event id.
+//It sets a new unique_id for the event.
+function setNewUniqueTimestamp(event_timestamp,event_id){
+  database.ref("events/").orderByChild("unique_id").equalTo(event_timestamp).once("value").then(function(event_reference){
+      if(event_reference.val()==null){
+        database.ref("events/"+event_id).update({unique_id: parseInt(event_timestamp)});
+      }else{
+        getNewUniqueTimestamp(Object.values(event_reference.val())[0].unique_id+1);
+      }
+  });
 }
 
 function uploadEditedEventToDatabase(){
@@ -386,9 +405,11 @@ function displaySingleEvent(value){
 }
 
 function displayAllEvents(){
+
   database.ref("events").orderByChild("event_date_start_time_timestamp_format").on('child_added', function(event){
     displaySingleEvent(event.val());
   });
+
 }
 
 function displayCategoriesEvents(category_name){
